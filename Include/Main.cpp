@@ -2,15 +2,14 @@
 //
 
 #include "ZCore.h"
-
+#include<functional>
 using namespace std;
 using namespace ZEngine;
 using namespace ZEngine::Console;
 
 
-
-constexpr ZConstArray<Int32,10> test;
-constexpr ZConstArray<Int32, 10> test1(test);
+constexpr auto testFunc = [](ZConstArray<Int32, 10>& test) constexpr-> const Void {for (int i = 0; i < 10; i++) { test(i) = 1; }};
+constexpr ZConstArray<Int32, 10> test(testFunc);
 
 
 class A {
@@ -38,15 +37,9 @@ A func(A a) {
 int main()
 {
 
-    
+    auto a = [](ZConstArray<Int32, 10>& test) {};
 
-    A a;
-    A&& b = func(a);
-    a.a = 3;
-    cout << a.a;
-    int i,j;
-    cin >> j;
-    for (i = 0; i < j; i++) {
+    for (int i = 0; i < 10; i++) {
         cout << test(i);
         cout << test.getSize();
     }

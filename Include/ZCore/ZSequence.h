@@ -1,8 +1,8 @@
 #ifndef ZSequence_h
 #define ZSequence_h
 
-#pragma warning(disable : 6387)
-#pragma warning(disable : 26495)
+
+
 
 
 #include"ZCoreDependence.h"

@@ -25,9 +25,33 @@ namespace ZEngine {
 	public:
 
 		/*
-			构造函数1
+			构造函数
+			参数：
+				const _ElementType& _initialValue 初始化值
 		*/
-		constexpr __forceinline ZConstArray() noexcept;
+		constexpr __forceinline ZConstArray(const _ElementType& _initialValue) noexcept;
+
+		/*
+			构造函数
+			参数：
+				const Void(*initialFunction)(_ElementType& _element, const Int32& _index) 通项公式函数
+				参数：
+					_ElementType& _element 数组元素引用
+					const Int32& _index 元素的下标
+		*/
+		constexpr __forceinline ZConstArray(const Void(*initialFunction)(_ElementType& _element, const Int32& _index)) noexcept;
+
+
+		/*
+			构造函数
+			参数：
+				const Void(*initialFunction)(_ElementType& _element, const Int32& _index) 通项公式函数
+				参数：
+					_ElementType& _element 数组元素引用
+					const Int32& _index 元素的下标
+		*/
+		constexpr __forceinline ZConstArray(const Void initialFunction(ZConstArray& _array)) noexcept;
+
 
 		/*
 			析构函数
@@ -92,11 +116,44 @@ namespace ZEngine {
 
 	/*
 		构造函数
+		参数：
+			const _ElementType& _initialValue 初始化值
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray() noexcept
+	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(const _ElementType& _initialValue) noexcept
 	{
+		for (Int32 index = 0; index < _size; index++) {
+			(*this)(index) = _initialValue;
+		}
 	}
+
+
+	/*
+		构造函数
+		参数：
+			const _ElementType& _initialValue 初始化值
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(const Void(*initialFunction)(_ElementType& _element, const Int32& _index)) noexcept {
+		for (Int32 index = 0; index < _size; index++) {
+			(*initialFunction)((*this)(index), index);
+		}
+	}
+
+	/*
+		构造函数
+		参数：
+			const Void(*initialFunction)(_ElementType& _element, const Int32& _index) 通项公式函数
+			参数：
+				_ElementType& _element 数组元素引用
+				const Int32& _index 元素的下标
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(const Void initialFunction(ZConstArray& _array)) noexcept {
+		initialFunction(*this);
+	}
+
+
 
 	/*
 		析构函数
