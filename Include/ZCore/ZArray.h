@@ -20,14 +20,28 @@ namespace ZEngine {
 	template<typename _ElementType, Int32 _size>
 	class ZConstArray {
 
+	public:
+
+
+		constexpr static const Void Init_AddSequence(ZConstArray* _array, const Int32& number) {
+			for (Int32 i = 0; i < _array->getSize(); i++) {
+				(*_array)(i) = number;
+			}
+		}
+
 
 
 	public:
 
 		/*
 			构造函数
+			参数：
+				_InitialFunc&& _initialFunc ZConstArray类空间下的静态函数，Init开头
+				_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
 		*/
-		constexpr ZConstArray(const _ElementType& _value) noexcept;
+		template <typename _InitialFunc, typename... _Args>
+		constexpr __forceinline ZConstArray(_InitialFunc&& _initialFunc, _Args&&... _args);
+
 
 		/*
 			析构函数
@@ -92,13 +106,14 @@ namespace ZEngine {
 
 	/*
 		构造函数
+		参数：
+			_InitialFunc&& _initialFunc ZConstArray类空间下的静态函数，Init开头
+			_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(const _ElementType& _value) noexcept
-	{
-		for (Int32 index = 0; index < _size; index++) {
-			(*this)(index) = _value;
-		}
+	template <typename _InitialFunc, typename... _Args>
+	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(_InitialFunc&& _initialFunc, _Args&&... _args) {
+		_initialFunc(this, std::forward<_Args...>(_args...));
 	}
 
 	/*

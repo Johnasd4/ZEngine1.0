@@ -2,27 +2,15 @@
 //
 
 #include "ZCore.h"
-#include<thread>
-
-
+#include"thread"
 using namespace std;
 using namespace ZEngine;
 using namespace ZEngine::Console;
 
 
+constexpr const Int32 a = 1;
+constexpr ZConstArray<Int32, 10> test(ZConstArray<Int32, 10>::Init_AddSequence,a);
 
-//constexpr ZConstArray<Int32,10> test;
-//constexpr ZConstArray<Int32, 10> test1(test);
-
-const Void testFunc1(int& i,const int& j) {
-    i = j + 1;
-}
-
-const Void testFunc2(const Void test(int,const int),int i,int j ) {
-    test(i, j);
-}
-
-constexpr const int firstItem = 1;
 
 
 class A {
@@ -49,12 +37,17 @@ A func(A a) {
 
 int main()
 {
-    constexpr ZConstArray<int, 10> testSequence(1);
     //constexpr ZConstSequence<int, 10> testSequence(1);
-
-    cout << 123;
-
+    for (int i = 0; i < 10; i++) {
+        cout << test(i);
+        cout << test.getSize();
+    }
+    //A a(test(2));
+    //cout << a.a << endl;
     return 0;
+    //print("123",1,1);
+    
+    //std::cout << "Hello World!\n";
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

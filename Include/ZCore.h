@@ -15,6 +15,7 @@
 #include"ZCore/ZMemoryPool.h"
 #include"ZCore/ZMutex.h"
 #include"ZCore/ZObject.h"
-#include"ZCore/ZSequence.h"
+#include"ZCore/ZMutex.h"
+
 
 #endif // !ZCore_h
