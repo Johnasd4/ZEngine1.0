@@ -25,7 +25,7 @@ namespace ZEngine {
 	public:
 
 		/*
-			构造函数
+			构造函数1
 		*/
 		constexpr __forceinline ZConstArray() noexcept;
 
