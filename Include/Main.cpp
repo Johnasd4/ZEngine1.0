@@ -8,7 +8,6 @@ using namespace ZEngine;
 using namespace ZEngine::Console;
 
 
-constexpr const Int32 a = 1;
 constexpr ZConstArray<Int32, 10> test(ZConstArray<Int32, 10>::Init_GeometricSequence<Int32>, 2, 2);
 
 
@@ -34,7 +33,7 @@ public:
 
 int main()
 {
-
+    auto c = ZConstArray<Int32, 10>;
     //std::thread
     //constexpr ZConstSequence<int, 10> testSequence(1);
     for (int i = 0; i < 10; i++) {

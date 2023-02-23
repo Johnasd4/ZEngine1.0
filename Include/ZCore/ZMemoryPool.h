@@ -12,51 +12,19 @@ namespace ZEngine {
 		/*
 			内存块
 		*/
-		template<Int32 _sizeIndex, UInt64 _size>
 		struct ZMemoryPiece {
 
+			//内存地址
+			Address memoryAddress;
 			//下一块内存块的地址
-			ZMemoryPiece* nextPiece;
-			//指向所在内存池
-			ZMemoryPool* ownerMemoryPoolPointer;
-			//内存指针，指向可用内存块
-			Byte memoryAddress[_size - sizeof(Address) * 2];
-
-			/*
-				获取内存块的大小编号
-				返回：
-					const Int32 获取内存块大小编号
-			*/
-			constexpr static __forceinline const Int32 getSizeIndex() noexcept;
-
-			/*
-				获取内存块的大小
-				返回：
-					const Int32 获取内存块大小
-			*/
-			constexpr static __forceinline const Int32 getSize() noexcept;
+			ZMemoryPiece* nextPiecePointer;
+			//内存块大小
+			UInt32 size;
+			//内存块类型
+			Int32 type;
 
 		};
 
-		/*
-			获取内存块的大小编号
-			返回：
-				const Int32 获取内存块大小编号
-		*/
-		template<Int32 _sizeIndex, UInt64 _size>
-		constexpr __forceinline const Int32 ZMemoryPiece<_sizeIndex, _size>::getSizeIndex() noexcept {
-			return _sizeIndex;
-		}
-
-		/*
-			获取内存块的大小
-			返回：
-				const Int32 获取内存块大小
-		*/
-		template<Int32 _sizeIndex, UInt64 _size>
-		constexpr __forceinline const Int32 ZMemoryPiece<_sizeIndex, _size>::getSize() noexcept {
-			return _size;
-		}
 
 
 
@@ -138,7 +106,7 @@ namespace ZEngine {
 		//内存块成长倍数
 		static constexpr UInt64 MEMORY_PIECE_MUTIPLE_GROW_FACTOR = 2;
 		//内存块大小数组
-		static constexpr ZConstArray<UInt64, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_SIZE_ARRAY = ZConstArray<UInt64, MEMORY_PIECE_TYPE_NUM>(
+		static constexpr ZConstArray<UInt64, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_TYPE_SIZE_ARRAY = ZConstArray<UInt64, MEMORY_PIECE_TYPE_NUM>(
 			ZConstArray<UInt64, MEMORY_PIECE_TYPE_NUM>::Init_GeometricSequence<UInt64>, MEMORY_PIECE_MIN_SIZE, MEMORY_PIECE_MUTIPLE_GROW_FACTOR);
 
 		//内存池初始每个大小申请数量

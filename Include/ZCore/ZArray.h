@@ -229,7 +229,7 @@ namespace ZEngine {
 			(*_array)(index) = (*_array)(index - 1) + _factor;
 		}
 	}
-
+	
 	/*
 		初始化函数
 		初始化方式为等比数列
