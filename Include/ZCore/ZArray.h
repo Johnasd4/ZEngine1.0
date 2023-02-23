@@ -134,6 +134,15 @@ namespace ZEngine {
 		constexpr __forceinline const Void swap(const Int32& _index1, const Int32& _index2) noexcept;
 
 
+		/*
+			交换数组中两个元素的位置
+			返回：
+				const Int32& _index1 元素1的下标
+				const Int32& _index2 元素2的下标
+		*/
+		constexpr __forceinline const Void swap(const Int32& _index1, const Int32& _index2) noexcept;
+
+
 
 	private:
 
@@ -180,6 +189,53 @@ namespace ZEngine {
 		参数：
 			const _ElementType& _firstElement 首项的值
 			const _FactorType& _factor 系数
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FactorType>
+	constexpr static const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_array)(0) = _firstElement;
+		for (Int32 index = 1; index < _array->getSize(); index++) {
+			(*_array)(index) = (*_array)(index - 1) * _factor;
+		}
+	}
+
+
+	/*
+		初始化函数
+		初始化方式为填充相同的元素
+		参数：
+			const _ElementType& _element 填充的元素
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr static const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _array, const _ElementType& _element) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) = _element;
+		}
+	}
+
+
+	/*
+		初始化函数
+		初始化方式为等差数列
+		参数：
+			const _ElementType& _firstElement 首项的值
+			const _FactorType& _factor 差值
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FactorType>
+	constexpr static const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_array)(0) = _firstElement;
+		for (Int32 index = 1; index < _array->getSize(); index++) {
+			(*_array)(index) = (*_array)(index - 1) + _factor;
+		}
+	}
+
+	/*
+		初始化函数
+		初始化方式为等比数列
+		参数：
+			const _ElementType& _firstElement 首项的值
+			const _FactorType& _factor 差值
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FactorType>
@@ -284,6 +340,19 @@ namespace ZEngine {
 		return _size;
 	}
 
+
+	/*
+		交换数组中两个元素的位置
+		返回：
+			const Int32& _index1 元素1的下标
+			const Int32& _index2 元素2的下标
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) noexcept {
+		_ElementType tempElement = std::move((*this)(_index1));
+		(*this)(_index1) = std::move((*this)(_index2));
+		(*this)(_index2) = std::move(tempElement);
+	}
 
 	/*
 		交换数组中两个元素的位置
