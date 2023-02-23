@@ -30,9 +30,6 @@
     <ClInclude Include="ZCore\ZCoreDependence.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZCore\ZMemoryPool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ZCore\ZObject.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -48,7 +45,7 @@
     <ClInclude Include="ZCore\ZArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZCore\ZSequence.h">
+    <ClInclude Include="ZCore\ZMemoryPool.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

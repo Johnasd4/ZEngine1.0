@@ -13,6 +13,7 @@
 #include"ZCore/ZCoreDependence.h"
 #include"ZCore/ZArray.h"
 #include"ZCore/ZMemoryPool.h"
+#include"ZCore/ZMutex.h"
 #include"ZCore/ZObject.h"
 #include"ZCore/ZMutex.h"
 

@@ -2,25 +2,14 @@
 //
 
 #include "ZCore.h"
-#include<functional>
+#include"thread"
 using namespace std;
 using namespace ZEngine;
 using namespace ZEngine::Console;
 
 
-//constexpr auto testFunc = [](ZConstArray<Int32, 10>& test) constexpr-> const Void {for (int i = 0; i < 10; i++) { test(i) = 1; }};
-//constexpr ZConstArray<Int32, 10> test(testFunc);
-
-
-template<typename Func>
-Void testFunc(Func c)
-{
-    c(1);
-
-
-}
-
-
+constexpr const Int32 a = 1;
+constexpr ZConstArray<Int32, 10> test(ZConstArray<Int32, 10>::Init_GeometricSequence<Int32>, 2, 2);
 
 
 
@@ -46,9 +35,11 @@ public:
 int main()
 {
 
-    auto a = [](ZConstArray<Int32, 10>& test) {};
-
-
+    //std::thread
+    //constexpr ZConstSequence<int, 10> testSequence(1);
+    for (int i = 0; i < 10; i++) {
+        cout << test(i) << endl;
+    }
     //A a(test(2));
     //cout << a.a << endl;
     return 0;
