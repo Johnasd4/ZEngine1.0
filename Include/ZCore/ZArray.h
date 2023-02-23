@@ -20,6 +20,38 @@ namespace ZEngine {
 	template<typename _ElementType, Int32 _size>
 	class ZConstArray {
 
+	public:
+
+
+		/*
+			初始化函数
+			初始化方式为填充相同的元素
+			参数：
+				const _ElementType& _element 填充的元素
+		*/
+		constexpr static const Void Init_FillSameElement(ZConstArray* _array, const _ElementType& _element) noexcept;
+
+
+
+		/*
+			初始化函数
+			初始化方式为等差数列
+			参数：
+				const _ElementType& _firstElement 首项的值
+				const _FactorType& _factor 差值
+		*/
+		template<typename _FactorType>
+		constexpr static const Void Init_ArithmeticSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
+
+		/*
+			初始化函数
+			初始化方式为等比数列
+			参数：
+				const _ElementType& _firstElement 首项的值
+				const _FactorType& _factor 差值
+		*/
+		template<typename _FactorType>
+		constexpr static const Void Init_GeometricSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
 
 
 	public:
@@ -27,36 +59,29 @@ namespace ZEngine {
 		/*
 			构造函数
 			参数：
-				const _ElementType& _initialValue 初始化值
+				_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+				_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+			注：
+				如果需要自定义初始化函数，函数的第一个参数必须是【ZConstArray*】，后续为公式所需参数
 		*/
-		constexpr __forceinline ZConstArray(const _ElementType& _initialValue) noexcept;
-
-		/*
-			构造函数
-			参数：
-				const Void(*initialFunction)(_ElementType& _element, const Int32& _index) 通项公式函数
-				参数：
-					_ElementType& _element 数组元素引用
-					const Int32& _index 元素的下标
-		*/
-		constexpr __forceinline ZConstArray(const Void(*initialFunction)(_ElementType& _element, const Int32& _index)) noexcept;
-
-
-		/*
-			构造函数
-			参数：
-				const Void(*initialFunction)(_ElementType& _element, const Int32& _index) 通项公式函数
-				参数：
-					_ElementType& _element 数组元素引用
-					const Int32& _index 元素的下标
-		*/
-		constexpr __forceinline ZConstArray(const Void initialFunction(ZConstArray& _array)) noexcept;
+		template <typename _InitFunc, typename... _Args>
+		constexpr __forceinline ZConstArray(_InitFunc&& _initFunc, _Args&&... _args) noexcept;
 
 
 		/*
 			析构函数
 		*/
 		constexpr __forceinline ~ZConstArray() noexcept;
+
+		/*
+			数组初始化
+			参数：
+				_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+				_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+		*/
+		template <typename _InitFunc, typename... _Args>
+		constexpr __forceinline const Void init(_InitFunc&& _initFunc, _Args&&... _args) noexcept;
+
 
 		/*
 			重载()
@@ -102,6 +127,15 @@ namespace ZEngine {
 		*/
 		constexpr __forceinline const Int32 getSize() const noexcept;
 
+		/*
+			交换数组中两个元素的位置
+			返回：
+				const Int32& _index1 元素1的下标
+				const Int32& _index2 元素2的下标
+		*/
+		constexpr __forceinline const Void swap(const Int32& _index1, const Int32& _index2) noexcept;
+
+
 
 	private:
 
@@ -114,16 +148,50 @@ namespace ZEngine {
 
 	};
 
+
 	/*
-		构造函数
+		初始化函数
+		初始化方式为填充相同的元素
 		参数：
-			const _ElementType& _initialValue 初始化值
+			const _ElementType& _element 填充的元素
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(const _ElementType& _initialValue) noexcept
-	{
-		for (Int32 index = 0; index < _size; index++) {
-			(*this)(index) = _initialValue;
+	constexpr static const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _array, const _ElementType& _element) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) = _element;
+		}
+	}
+
+
+	/*
+		初始化函数
+		初始化方式为等差数列
+		参数：
+			const _ElementType& _firstElement 首项的值
+			const _FactorType& _factor 差值
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FactorType>
+	constexpr static const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_array)(0) = _firstElement;
+		for (Int32 index = 1; index < _array->getSize(); index++) {
+			(*_array)(index) = (*_array)(index - 1) + _factor;
+		}
+	}
+
+	/*
+		初始化函数
+		初始化方式为等比数列
+		参数：
+			const _ElementType& _firstElement 首项的值
+			const _FactorType& _factor 差值
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FactorType>
+	constexpr static const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_array)(0) = _firstElement;
+		for (Int32 index = 1; index < _array->getSize(); index++) {
+			(*_array)(index) = (*_array)(index - 1) * _factor;
 		}
 	}
 
@@ -131,35 +199,35 @@ namespace ZEngine {
 	/*
 		构造函数
 		参数：
-			const _ElementType& _initialValue 初始化值
+			_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+			_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+			注：
+				如果需要自定义初始化函数，函数的第一个参数必须是【ZConstArray*】，后续为公式所需参数
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(const Void(*initialFunction)(_ElementType& _element, const Int32& _index)) noexcept {
-		for (Int32 index = 0; index < _size; index++) {
-			(*initialFunction)((*this)(index), index);
-		}
+	template <typename _InitFunc, typename... _Args>
+	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(_InitFunc&& _initFunc, _Args&&... _args) noexcept {
+		this->init(std::forward<_InitFunc>(_initFunc), std::forward<_Args>(_args)...);
 	}
-
-	/*
-		构造函数
-		参数：
-			const Void(*initialFunction)(_ElementType& _element, const Int32& _index) 通项公式函数
-			参数：
-				_ElementType& _element 数组元素引用
-				const Int32& _index 元素的下标
-	*/
-	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(const Void initialFunction(ZConstArray& _array)) noexcept {
-		initialFunction(*this);
-	}
-
-
 
 	/*
 		析构函数
 	*/
 	template<typename _ElementType, Int32 _size>
 	constexpr __forceinline ZConstArray<_ElementType, _size>::~ZConstArray() noexcept {}
+
+	/*
+		数组初始化
+		参数：
+			_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+			_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+	*/
+	template<typename _ElementType, Int32 _size>
+	template <typename _InitFunc, typename... _Args>
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::init(_InitFunc&& _initFunc, _Args&&... _args) noexcept {
+		_initFunc(this, std::forward<_Args>(_args)...);
+	}
+
 
 	/*
 		重载()
@@ -219,6 +287,20 @@ namespace ZEngine {
 	constexpr __forceinline const Int32 ZConstArray<_ElementType, _size>::getSize() const noexcept {
 		return this->size;
 	}
+
+	/*
+		交换数组中两个元素的位置
+		返回：
+			const Int32& _index1 元素1的下标
+			const Int32& _index2 元素2的下标
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) noexcept {
+		_ElementType tempElement = std::move((*this)(_index1));
+		(*this)(_index1) = std::move((*this)(_index2));
+		(*this)(_index2) = std::move(tempElement);
+	}
+
 
 #pragma endregion ZConstArray
 

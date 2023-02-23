@@ -30,7 +30,6 @@
     <ClInclude Include="ZCore\ZMutex.h" />
     <ClInclude Include="ZCore\ZCoreDependence\ZMacro.h" />
     <ClInclude Include="ZCore\ZArray.h" />
-    <ClInclude Include="ZCore\ZSequence.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
