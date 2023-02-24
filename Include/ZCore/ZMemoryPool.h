@@ -12,107 +12,18 @@ namespace ZEngine {
 		/*
 			内存块
 		*/
-		template<Int32 _sizeIndex, UInt64 _size>
 		struct ZMemoryPiece {
 
 			//下一块内存块的地址
-			ZMemoryPiece* nextPiece;
-			//指向所在内存池
-			ZMemoryPool* ownerMemoryPoolPointer;
-			//内存指针，指向可用内存块
-			Byte memoryAddress[_size - sizeof(Address) * 2];
-
-			/*
-				获取内存块的大小编号
-				返回：
-					const Int32 获取内存块大小编号
-			*/
-			constexpr static __forceinline const Int32 getSizeIndex() noexcept;
-
-			/*
-				获取内存块的大小
-				返回：
-					const Int32 获取内存块大小
-			*/
-			constexpr static __forceinline const Int32 getSize() noexcept;
+			Address memoryAddress;
+			//下一块内存块的地址
+			ZMemoryPool* nextPiecePointer;
+			//内存块类型
+			UInt32 size;
+			//内存块大小
+			Int32 type;
 
 		};
-
-		/*
-			获取内存块的大小编号
-			返回：
-				const Int32 获取内存块大小编号
-		*/
-		template<Int32 _sizeIndex, UInt64 _size>
-		constexpr __forceinline const Int32 ZMemoryPiece<_sizeIndex, _size>::getSizeIndex() noexcept {
-			return _sizeIndex;
-		}
-
-		/*
-			获取内存块的大小
-			返回：
-				const Int32 获取内存块大小
-		*/
-		template<Int32 _sizeIndex, UInt64 _size>
-		constexpr __forceinline const Int32 ZMemoryPiece<_sizeIndex, _size>::getSize() noexcept {
-			return _size;
-		}
-
-
-
-		/*
-			系统内存申请控制器
-			说明：
-				控制整个内存池向系统申请内存，会保存每次申请的指针方便统一释放
-				memoryPointerArray指向第一次申请的内存，
-				该片内存的前一部分内存（MEMORY_POINTER_ARRAY_MEMORY_SIZE_DEFAULT）保存后续需要补充申请内存的地址（申请内存时会自动+指针数组大小），
-				后续的为用于内存页的内存。
-		*/
-		class ZMemoryPoolBase {
-
-			friend class MemoryPool;
-
-		private:
-
-
-			//保存指针的数组
-			Address* memoryPointerArray;
-			//保存指针的数组的大小
-			Int32 memoryPointerArraySize;
-			//指针的数量
-			Int32 memoryPointerNum;
-
-		private:
-
-			/*
-				构造函数
-			*/
-			ZMemoryPoolBase();
-
-			/*
-				析构函数，释放所有申请空间，并且释放指针数组
-			*/
-			~ZMemoryPoolBase();
-
-		private:
-
-
-			/*
-				向系统申请内存
-				参数：
-					Address* memporyPointer 获取内存指针的容器
-					const UInt64& memorySize 申请的内存的大小
-				返回：
-					const Boolean 是否成功
-			*/
-			const Boolean applyMemory(Address* memporyPointer, const UInt64& memorySize);
-
-
-
-
-
-		};
-
 
 
 
@@ -129,10 +40,21 @@ namespace ZEngine {
 	*/
 	class ZMemoryPool {
 
+	public:
+
+		/*
+			创建单例
+		*/
+		static const Void CreateInstance();
+
+		//单例指针
+		static ZMemoryPool* InstancePtr;
+
+
 	private:
 
 		//内存块类型数量
-		static constexpr Int32 MEMORY_PIECE_TYPE_NUM = 20;
+		static constexpr Int32 MEMORY_PIECE_TYPE_NUM = 16;
 		//内存块最小大小
 		static constexpr UInt64 MEMORY_PIECE_MIN_SIZE = 64;
 		//内存块成长倍数
@@ -154,7 +76,7 @@ namespace ZEngine {
 
 
 		/*
-			内存块列表
+			内存块链表
 		*/
 		struct MemoryPieceList {
 			Address headPointer;
@@ -162,13 +84,38 @@ namespace ZEngine {
 		};
 
 	private:
+		
+		/*
+			构造函数
+		*/
+		ZMemoryPool();
 
+		/*
+			析构函数
+		*/
+		~ZMemoryPool();
 
+		/*
+			向系统申请内存
+			参数：
+				const UInt64& _applySize 申请内存的大小
+			返回：
+				const Boolean 是否申请成功
+		*/
+		const Address applyMemoryFromSystem(const UInt64& _applySize);
+
+		/*
+			添加内存块
+		*/
+		const Void addMemoryPiece();
 
 	private:
 
-		//当前使用的内存池
-		static ZMemoryPool* CurrentMemoryPoolPointer;
+		//内存块指针链表数组
+		ZFixedArray<MemoryPieceList, MEMORY_PIECE_TYPE_NUM> momoryPieceListArray;
+
+		//指向向系统申请内存的链表
+		Address systemMemoryAddress;
 
 	};
 

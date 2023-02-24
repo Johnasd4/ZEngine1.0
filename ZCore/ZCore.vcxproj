@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="ZConsole.cpp" />
     <ClCompile Include="ZMacro.cpp" />
+    <ClCompile Include="ZMemoryPool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
