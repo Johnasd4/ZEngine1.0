@@ -84,38 +84,38 @@ namespace ZEngine {
 		/*
 			重载()
 			参数：
-				const Int32& _elementIndex 元素下标
+				const Int32& _index 元素下标
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline _ElementType& operator()(const Int32& _elementIndex) noexcept;
+		constexpr __forceinline _ElementType& operator()(const Int32& _index) noexcept;
 
 		/*
 			重载()
 			参数：
-				const Int32& _elementIndex 元素下标
+				const Int32& _index 元素下标
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline const _ElementType& operator()(const Int32& _elementIndex) const noexcept;
+		constexpr __forceinline const _ElementType& operator()(const Int32& _index) const noexcept;
 
 		/*
 			重载()
 			参数：
-				const Int32&& _elementIndex 元素下标
+				const Int32&& _index 元素下标
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline _ElementType& operator()(const Int32&& _elementIndex) noexcept;
+		constexpr __forceinline _ElementType& operator()(const Int32&& _index) noexcept;
 
 		/*
 			重载()
 			参数：
-				const Int32&& _elementIndex 元素下标
+				const Int32&& _index 元素下标
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline const _ElementType& operator()(const Int32&& _elementIndex) const noexcept;
+		constexpr __forceinline const _ElementType& operator()(const Int32&& _index) const noexcept;
 
 
 		/*
@@ -133,14 +133,6 @@ namespace ZEngine {
 		*/
 		constexpr __forceinline const Void swap(const Int32& _index1, const Int32& _index2) noexcept;
 
-
-		/*
-			交换数组中两个元素的位置
-			返回：
-				const Int32& _index1 元素1的下标
-				const Int32& _index2 元素2的下标
-		*/
-		constexpr __forceinline const Void swap(const Int32& _index1, const Int32& _index2) noexcept;
 
 
 
@@ -283,49 +275,49 @@ namespace ZEngine {
 	/*
 		重载()
 		参数：
-			const Int32& _elementIndex 元素下标
+			const Int32& _index 元素下标
 		返回：
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _elementIndex) noexcept {
-		return this->array[_elementIndex];
+	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) noexcept {
+		return this->array[_index];
 	}
 
 	/*
 		重载()
 		参数：
-			const Int32& _elementIndex 元素下标
+			const Int32& _index 元素下标
 		返回：
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _elementIndex) const noexcept {
-		return this->array[_elementIndex];
+	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) const noexcept {
+		return this->array[_index];
 	}
 
 	/*
 		重载()
 		参数：
-			const Int32&& _elementIndex 元素下标
+			const Int32&& _index 元素下标
 		返回：
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _elementIndex) noexcept {
-		return this->array[_elementIndex];
+	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) noexcept {
+		return this->array[_index];
 	}
 
 	/*
 		重载()
 		参数：
-			const Int32&& _elementIndex 元素下标
+			const Int32&& _index 元素下标
 		返回：
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _elementIndex) const noexcept {
-		return this->array[_elementIndex];
+	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) const noexcept {
+		return this->array[_index];
 	}
 
 
@@ -349,27 +341,122 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) noexcept {
-		_ElementType tempElement = std::move((*this)(_index1));
-		(*this)(_index1) = std::move((*this)(_index2));
-		(*this)(_index2) = std::move(tempElement);
+		_ElementType tempElement = (*this)(_index1);
+		(*this)(_index1) = (*this)(_index2);
+		(*this)(_index2) = tempElement;
 	}
 
-	/*
-		交换数组中两个元素的位置
-		返回：
-			const Int32& _index1 元素1的下标
-			const Int32& _index2 元素2的下标
-	*/
-	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) noexcept {
-		_ElementType tempElement = std::move((*this)(_index1));
-		(*this)(_index1) = std::move((*this)(_index2));
-		(*this)(_index2) = std::move(tempElement);
-	}
 
 
 #pragma endregion ZConstArray
 
+#pragma region ZFixedArray
+
+
+	/*
+		静态数组，顺序存储，存储在栈区
+		注意，过大数组请使用ZArray将数组存储在堆区
+		不适合用于存储需要申请内存的类型
+	*/
+	template<typename _ElementType, Int32 _size>
+	class ZFixedArray {
+
+	public:
+
+		/*
+			构造函数
+		*/
+		__forceinline ZFixedArray();
+
+		/*
+			析构函数
+		*/
+		__forceinline ~ZFixedArray();
+
+		/*
+			重载()
+			参数：
+				const Int32& _index 元素下标
+			返回：
+				ElementType& 下标对应的元素的引用
+		*/
+		__forceinline _ElementType& operator()(const Int32& _index);
+
+		/*
+			重载()
+			参数：
+				const Int32& _index 元素下标
+			返回：
+				const _ElementType& 下标对应的元素的引用
+		*/
+		__forceinline const _ElementType& operator()(const Int32& _index) const;
+
+		/*
+			获取数组的大小
+			返回：
+				const Int32 数组大小
+		*/
+		constexpr static __forceinline const Int32 getSize() noexcept;
+
+
+
+	private:
+
+		//数组存储数组指针 
+		_ElementType array[_size];
+
+	};
+
+	/*
+		构造函数
+	*/
+	template<typename _ElementType, Int32 _size>
+	__forceinline ZFixedArray<_ElementType, _size>::ZFixedArray(){}
+
+
+	/*
+		析构函数
+	*/
+	template<typename _ElementType, Int32 _size>
+	__forceinline ZFixedArray<_ElementType, _size>::~ZFixedArray() {}
+
+
+	/*
+		重载()
+		参数：
+			const Int32& _index 元素下标
+		返回：
+			_ElementType& 下标对应的元素的引用
+	*/
+	template<typename _ElementType, Int32 _size>
+	__forceinline _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) {
+		return this->array[_index];
+	}
+
+	/*
+		重载()
+		参数：
+			const Int32& _index 元素下标
+		返回：
+			const _ElementType& 下标对应的元素的引用
+	*/
+	template<typename _ElementType, Int32 _size>
+	__forceinline const _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) const {
+		return this->array[_index];
+	}
+
+	/*
+		获取数组的大小
+		返回：
+			const Int32 数组大小
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline const Int32 ZFixedArray<_ElementType, _size>::getSize() noexcept {
+		return _size;
+	}
+
+
+#pragma endregion ZFixedArray
 
 
 }
