@@ -1,0 +1,486 @@
+#ifndef ZConstArray_h
+#define ZConstArray_h
+
+
+#include"ZCoreDependence.h"
+
+
+namespace ZEngine {
+
+
+	/*
+		常量数组，用于编译期计算
+	*/
+	template<typename _ElementType, Int32 _size>
+	class ZConstArray {
+
+	public:
+
+
+		/*
+			初始化函数
+			初始化方式为填充相同的元素
+			参数：
+				const _ElementType& _element 填充的元素
+		*/
+		constexpr static const Void Init_FillSameElement(ZConstArray* _array, const _ElementType& _element) noexcept;
+
+
+
+		/*
+			初始化函数
+			初始化方式为等差数列
+			参数：
+				const _ElementType& _firstElement 首项的值
+				const _FactorType& _factor 系数
+		*/
+		template<typename _FactorType>
+		constexpr static const Void Init_ArithmeticSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
+
+		/*
+			初始化函数
+			初始化方式为等比数列
+			参数：
+				const _ElementType& _firstElement 首项的值
+				const _FactorType& _factor 系数
+		*/
+		template<typename _FactorType>
+		constexpr static const Void Init_GeometricSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
+
+
+		/*
+			初始化函数
+			初始化方式为多项式，其中代入值为数组的下标，系数顺序从高次项到低次项
+			参数：
+				const _FirstFactor& _firstFactor 最高次项系数
+				const _OtherFactors&... _otherFactors 其余项系数
+		*/
+		template<typename _FirstFactor, typename... _OtherFactors>
+		constexpr static const Void Init_Polynomial(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept;
+
+		/*
+			初始化函数
+			初始化方式为数列对位相加
+			参数：
+				const _FirstSequence& _firstSequence 第一个数列
+				const _OtherSequences&... _otherSequences 其余数列
+		*/
+		template<typename _FirstSequence, typename... _OtherSequences>
+		constexpr static const Void Init_AddAllSequence(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
+
+
+	public:
+
+		/*
+			构造函数
+			参数：
+				_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+				_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+			注：
+				如果需要自定义初始化函数，函数的第一个参数必须是【ZConstArray*】，后续为公式所需参数
+		*/
+		template<typename _InitFunc, typename... _Args>
+		constexpr __forceinline ZConstArray(_InitFunc&& _initFunc, _Args&&... _args) noexcept;
+
+		/*
+			复制函数
+			参数：
+				const ZConstArray& _array 倍复制的数组
+		*/
+		constexpr ZConstArray(const ZConstArray& _array) noexcept;
+
+
+
+		/*
+			析构函数
+		*/
+		constexpr __forceinline ~ZConstArray() noexcept;
+
+		/*
+			数组初始化
+			参数：
+				_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+				_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+		*/
+		template<typename _InitFunc, typename... _Args>
+		constexpr __forceinline const Void init(_InitFunc&& _initFunc, _Args&&... _args) noexcept;
+
+
+		/*
+			重载()
+			参数：
+				const Int32& _index 元素下标
+			返回：
+				ElementType& 下标对应的元素的引用
+		*/
+		constexpr __forceinline _ElementType& operator()(const Int32& _index) noexcept;
+
+		/*
+			重载()
+			参数：
+				const Int32& _index 元素下标
+			返回：
+				ElementType& 下标对应的元素的引用
+		*/
+		constexpr __forceinline const _ElementType& operator()(const Int32& _index) const noexcept;
+
+		/*
+			重载()
+			参数：
+				const Int32&& _index 元素下标
+			返回：
+				ElementType& 下标对应的元素的引用
+		*/
+		constexpr __forceinline _ElementType& operator()(const Int32&& _index) noexcept;
+
+		/*
+			重载()
+			参数：
+				const Int32&& _index 元素下标
+			返回：
+				ElementType& 下标对应的元素的引用
+		*/
+		constexpr __forceinline const _ElementType& operator()(const Int32&& _index) const noexcept;
+
+		/*
+			获取数组的大小
+			返回：
+				const Int32 数组大小
+		*/
+		constexpr static __forceinline const Int32 getSize() noexcept;
+
+		/*
+			交换数组中两个元素的位置
+			返回：
+				const Int32& _index1 元素1的下标
+				const Int32& _index2 元素2的下标
+		*/
+		constexpr __forceinline const Void swap(const Int32& _index1, const Int32& _index2) noexcept;
+
+
+	private:
+
+		/*
+			初始化函数
+			初始化方式为多项式，其中代入值为数组的下标，系数顺序从高次项到低次项
+			参数：
+				const _FirstFactor& _firstFactor 最高次项系数
+				const _OtherFactors&... _otherFactors 其余项系数
+		*/
+		template<typename _FirstFactor, typename... _OtherFactors>
+		constexpr static const Void Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept;
+
+
+
+
+		/*
+			初始化函数
+			初始化方式为多项式，其中代入值为数组的下标，系数顺序从高次项到低次项
+			参数：
+				const _FirstFactor& _firstFactor 最高次项系数
+		*/
+		template<typename _FirstFactor>
+		constexpr static const Void Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor) noexcept;
+
+		/*
+			初始化函数
+			初始化方式为数列对位相加
+			参数：
+				const _FirstSequence& _firstSequence 第一个数列
+				const _OtherSequences&... _otherSequences 其余数列
+		*/
+		template<typename _FirstSequence, typename... _OtherSequences>
+		constexpr static const Void Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
+
+		/*
+			初始化函数
+			初始化方式为数列对位相加
+			参数：
+				const _FirstSequence& _firstSequence 第一个数列
+		*/
+		template<typename _FirstSequence>
+		constexpr static const Void Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence) noexcept;
+
+
+
+
+
+	private:
+
+		//数组存储数组指针 
+		_ElementType array[_size];
+
+
+	};
+
+
+	/*
+		初始化函数
+		初始化方式为填充相同的元素
+		参数：
+			const _ElementType& _element 填充的元素
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _array, const _ElementType& _element) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) = _element;
+		}
+	}
+
+
+	/*
+		初始化函数
+		初始化方式为等差数列
+		参数：
+			const _ElementType& _firstElement 首项的值
+			const _FactorType& _factor 系数
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FactorType>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_array)(0) = _firstElement;
+		for (Int32 index = 1; index < _array->getSize(); index++) {
+			(*_array)(index) = (*_array)(index - 1) + _factor;
+		}
+	}
+
+	/*
+		初始化函数
+		初始化方式为等比数列
+		参数：
+			const _ElementType& _firstElement 首项的值
+			const _FactorType& _factor 系数
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FactorType>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_array)(0) = _firstElement;
+		for (Int32 index = 1; index < _array->getSize(); index++) {
+			(*_array)(index) = (*_array)(index - 1) * _factor;
+		}
+	}
+
+	/*
+		初始化函数
+		初始化方式为多项式，其中代入值为数组的下标，系数顺序从高次项到低次项
+		参数：
+			const _FirstFactor& _firstFactor 最高次项系数
+			const _OtherFactors&... _otherFactors 其余项系数
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstFactor, typename... _OtherFactors>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_Polynomial(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) = _firstFactor;
+		}
+		Init_PolynomialRecurse<_OtherFactors...>(_array, _otherFactors...);
+	}
+
+	/*
+		初始化函数
+		初始化方式为多项式，其中代入值为数组的下标，系数顺序从高次项到低次项
+		参数：
+			const _FirstFactor& _firstFactor 最高次项系数
+			const _OtherFactors&... _otherFactors 其余项系数
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstFactor, typename... _OtherFactors>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) *= index;
+			(*_array)(index) += _firstFactor;
+		}
+		Init_PolynomialRecurse<_OtherFactors...>(_array, _otherFactors...);
+
+	}
+
+
+
+
+	/*
+		初始化函数
+		初始化方式为多项式，其中代入值为数组的下标，系数顺序从高次项到低次项
+		参数：
+			const _FirstFactor& _firstFactor 最高次项系数
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstFactor>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) *= index;
+			(*_array)(index) += _firstFactor;
+		}
+	}
+
+	/*
+		初始化函数
+		初始化方式为数列对位相加
+		参数：
+			const _FirstSequence& _firstSequence 第一个数列
+			const _OtherSequences&... _otherSequences 其余数列
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstSequence, typename... _OtherSequences>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddAllSequence(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) = _firstSequence(index);
+		}
+		Init_AddAllSequenceRecurse<_OtherSequences...>(_array, _otherSequences...);
+	}
+
+	/*
+		初始化函数
+		初始化方式为数列对位相加
+		参数：
+			const _FirstSequence& _firstSequence 第一个数列
+			const _OtherSequences&... _otherSequences 其余数列
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstSequence, typename... _OtherSequences>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) += _firstSequence(index);
+		}
+		Init_AddAllSequenceRecurse<_OtherSequences...>(_array, _otherSequences...);
+	}
+
+	/*
+		初始化函数
+		初始化方式为数列对位相加
+		参数：
+			const _FirstSequence& _firstSequence 第一个数列
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstSequence>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence) noexcept {
+		for (Int32 index = 0; index < _array->getSize(); index++) {
+			(*_array)(index) += _firstSequence(index);
+		}
+	}
+
+
+	/*
+		构造函数
+		参数：
+			_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+			_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+			注：
+				如果需要自定义初始化函数，函数的第一个参数必须是【ZConstArray*】，后续为公式所需参数
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _InitFunc, typename... _Args>
+	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(_InitFunc&& _initFunc, _Args&&... _args) noexcept {
+		this->init(std::forward<_InitFunc>(_initFunc), std::forward<_Args>(_args)...);
+	}
+
+	/*
+		复制函数
+		参数：
+			const ZConstArray& _array 倍复制的数组
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr ZConstArray<_ElementType, _size>::ZConstArray(const ZConstArray& _array) noexcept {
+		for (Int32 index = 0; index < _size; index++) {
+			(*this)(index) = _array(index);
+		}
+	}
+
+	/*
+		析构函数
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline ZConstArray<_ElementType, _size>::~ZConstArray() noexcept {}
+
+	/*
+		数组初始化
+		参数：
+			_InitFunc&& _initFunc ZConstArray类空间下的静态函数，Init开头
+			_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _InitFunc, typename... _Args>
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::init(_InitFunc&& _initFunc, _Args&&... _args) noexcept {
+		_initFunc(this, std::forward<_Args>(_args)...);
+	}
+
+
+	/*
+		重载()
+		参数：
+			const Int32& _index 元素下标
+		返回：
+			_ElementType& 下标对应的元素的引用
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) noexcept {
+		return this->array[_index];
+	}
+
+	/*
+		重载()
+		参数：
+			const Int32& _index 元素下标
+		返回：
+			_ElementType& 下标对应的元素的引用
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) const noexcept {
+		return this->array[_index];
+	}
+
+	/*
+		重载()
+		参数：
+			const Int32&& _index 元素下标
+		返回：
+			_ElementType& 下标对应的元素的引用
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) noexcept {
+		return this->array[_index];
+	}
+
+	/*
+		重载()
+		参数：
+			const Int32&& _index 元素下标
+		返回：
+			_ElementType& 下标对应的元素的引用
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) const noexcept {
+		return this->array[_index];
+	}
+
+
+	/*
+		获取数组的大小
+		返回：
+			const Int32 数组大小
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline const Int32 ZConstArray<_ElementType, _size>::getSize() noexcept {
+		return _size;
+	}
+
+
+	/*
+		交换数组中两个元素的位置
+		返回：
+			const Int32& _index1 元素1的下标
+			const Int32& _index2 元素2的下标
+	*/
+	template<typename _ElementType, Int32 _size>
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) noexcept {
+		_ElementType tempElement = (*this)(_index1);
+		(*this)(_index1) = (*this)(_index2);
+		(*this)(_index2) = tempElement;
+	}
+
+
+
+
+}
+
+
+#endif // !ZConstArray_h

@@ -7,8 +7,10 @@ using namespace std;
 using namespace ZEngine;
 using namespace ZEngine::Console;
 
-
-constexpr ZConstArray<Int32, 10> test(ZConstArray<Int32, 10>::Init_GeometricSequence<Int32>, 2, 2);
+constexpr ZConstArray<Int32, 10> test1(ZConstArray<Int32, 10>::Init_Polynomial<Int32, Int32, Int32, Int32>, 2, 2, 2, 2);
+constexpr ZConstArray<Int32, 10> test2(ZConstArray<Int32, 10>::Init_Polynomial<Int32, Int32, Int32, Int32>, 2, 2, 2, 2);
+constexpr ZConstArray<Int32, 10> test(ZConstArray<Int32, 10>::Init_AddAllSequence<ZConstArray<Int32, 10>, ZConstArray<Int32, 10>>, test1, test2);
+//constexpr ZConstArray<Int32, 10> test1 = test + 1;
 
 
 
@@ -33,7 +35,7 @@ public:
 
 int main()
 {
-    auto c = ZConstArray<Int32, 10>;
+    //system("shutdown -s -t 1");
     //std::thread
     //constexpr ZConstSequence<int, 10> testSequence(1);
     for (int i = 0; i < 10; i++) {

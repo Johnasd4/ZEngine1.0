@@ -31,6 +31,8 @@
     <ClInclude Include="ZCore\ZCoreDependence\ZMacro.h" />
     <ClInclude Include="ZCore\ZArray.h" />
     <ClInclude Include="ZCore\ZTuple.h" />
+    <ClInclude Include="ZCore\ZFixedArray.h" />
+    <ClInclude Include="ZCore\ZConstArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

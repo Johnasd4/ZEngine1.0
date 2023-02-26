@@ -51,6 +51,12 @@
     <ClInclude Include="ZCore\ZTuple.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ZCore\ZFixedArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZCore\ZConstArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

@@ -2,8 +2,8 @@
 #define ZMemoryPool_h
 
 #include"ZCoreDependence.h"
-#include"ZArray.h"
-
+#include"ZConstArray.h"
+#include"ZFixedArray.h"
 
 namespace ZEngine {
 
@@ -17,7 +17,7 @@ namespace ZEngine {
 			//下一块内存块的地址
 			Address memoryAddress;
 			//下一块内存块的地址
-			ZMemoryPool* nextPiecePointer;
+			ZMemoryPiece* nextPiece;
 			//内存块类型
 			UInt32 size;
 			//内存块大小
@@ -53,6 +53,7 @@ namespace ZEngine {
 
 	private:
 
+
 		//内存块类型数量
 		static constexpr Int32 MEMORY_PIECE_TYPE_NUM = 16;
 		//内存块最小大小
@@ -69,7 +70,14 @@ namespace ZEngine {
 		static constexpr ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM> MEMORY_POOL_SIZE_DEFAULT_ARRAY = ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>(
 			ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, MEMORY_POOL_SIZE_DEFAULT);
 
-
+		//内存块自增长时基于当前内存块申请的数量系数（申请内存块 = 当前内存块 * 系数）
+		static constexpr Float32 MEMORY_PIECE_AUTO_GROW_MUL_FACTOR = 0.2F;
+		//每次申请内存时的最小值
+		static constexpr UInt64 APPLY_MEMORY_MIN_SIZE = 4ULL * KB_SIZE;
+		//每次申请内存时的最大值
+		static constexpr UInt64 APPLY_MEMORY_MAX_SIZE = 1ULL * GB_SIZE;
+		//内存块申请最小数量
+		static constexpr Int32 ADD_PIECE_LEAST_NUM = 3;
 
 	private:
 
@@ -79,8 +87,8 @@ namespace ZEngine {
 			内存块链表
 		*/
 		struct MemoryPieceList {
-			Address headPointer;
-			Int32 pieceNum;
+			Private::ZMemoryPiece* headPointer;
+			Int32 num;
 		};
 
 	private:
@@ -104,10 +112,19 @@ namespace ZEngine {
 		*/
 		const Address applyMemoryFromSystem(const UInt64& _applySize);
 
+
+
+		const Boolean addMemoryPiece(const Int32& _type, const Int32& _num);
+
 		/*
 			添加内存块
 		*/
-		const Void addMemoryPiece();
+		const Boolean initMemoryPieceList(const Int32& _type, const Int32& _num);
+
+		/*
+			添加大内存块
+		*/
+		const Void addBigMemoryPiece();
 
 	private:
 
