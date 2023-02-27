@@ -13,27 +13,40 @@ constexpr ZConstArray<Int32, 10> test(ZConstArray<Int32, 10>::Init_AddSequence<Z
 
 class A {
 
+
 public:
 
-    int a;
-
-    A() {
-        cout << "构造A" << endl;
-    }
-
-    ~A() {
-        cout << "析构A" << endl;
-    }
+    static constexpr Boolean ifInitial = true;
 
 };
 
+class B:public A {
 
 
+public:
+
+    static constexpr Boolean ifInitial = false;
+
+};
+
+template<Boolean ifTest>
+Boolean testFunc();
+
+template<>
+Boolean testFunc<true>() {
+    return true;
+}
+
+template<>
+Boolean testFunc<false>() {
+    return false;
+}
 
 int main()
 {
     ZMemoryPool::CreateInstance();
-
     ZObject object(1000);
     sizeof(ZObject);
+
+    cout<<testFunc<A::ifInitial>();
 }
