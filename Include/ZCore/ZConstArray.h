@@ -23,7 +23,7 @@ namespace ZEngine {
 			参数：
 				const _ElementType& _element 填充的元素
 		*/
-		constexpr static const Void Init_FillSameElement(ZConstArray* _array, const _ElementType& _element) noexcept;
+		constexpr static const Void Init_FillSameElement(ZConstArray* _arrayPtr, const _ElementType& _element) noexcept;
 
 
 
@@ -35,7 +35,7 @@ namespace ZEngine {
 				const _FactorType& _factor 系数
 		*/
 		template<typename _FactorType>
-		constexpr static const Void Init_ArithmeticSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
+		constexpr static const Void Init_ArithmeticSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
 
 		/*
 			初始化函数
@@ -45,7 +45,7 @@ namespace ZEngine {
 				const _FactorType& _factor 系数
 		*/
 		template<typename _FactorType>
-		constexpr static const Void Init_GeometricSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
+		constexpr static const Void Init_GeometricSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept;
 
 
 		/*
@@ -56,7 +56,7 @@ namespace ZEngine {
 				const _OtherFactors&... _otherFactors 其余项系数
 		*/
 		template<typename _FirstFactor, typename... _OtherFactors>
-		constexpr static const Void Init_Polynomial(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept;
+		constexpr static const Void Init_Polynomial(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept;
 
 		/*
 			初始化函数
@@ -66,7 +66,18 @@ namespace ZEngine {
 				const _OtherSequences&... _otherSequences 其余数列
 		*/
 		template<typename _FirstSequence, typename... _OtherSequences>
-		constexpr static const Void Init_AddAllSequence(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
+		constexpr static const Void Init_AddSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
+
+
+		/*
+			初始化函数
+			初始化方式为数列对位相除（第一个数列除以其余数列）
+			参数：
+				const _FirstSequence& _firstSequence 第一个数列
+				const _OtherSequences&... _otherSequences 其余数列
+		*/
+		template<typename _FirstSequence, typename... _OtherSequences>
+		constexpr static const Void Init_DevideSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
 
 
 	public:
@@ -168,7 +179,7 @@ namespace ZEngine {
 				const _OtherFactors&... _otherFactors 其余项系数
 		*/
 		template<typename _FirstFactor, typename... _OtherFactors>
-		constexpr static const Void Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept;
+		constexpr static const Void Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept;
 
 
 
@@ -180,7 +191,7 @@ namespace ZEngine {
 				const _FirstFactor& _firstFactor 最高次项系数
 		*/
 		template<typename _FirstFactor>
-		constexpr static const Void Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor) noexcept;
+		constexpr static const Void Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor) noexcept;
 
 		/*
 			初始化函数
@@ -190,7 +201,7 @@ namespace ZEngine {
 				const _OtherSequences&... _otherSequences 其余数列
 		*/
 		template<typename _FirstSequence, typename... _OtherSequences>
-		constexpr static const Void Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
+		constexpr static const Void Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
 
 		/*
 			初始化函数
@@ -199,8 +210,27 @@ namespace ZEngine {
 				const _FirstSequence& _firstSequence 第一个数列
 		*/
 		template<typename _FirstSequence>
-		constexpr static const Void Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence) noexcept;
+		constexpr static const Void Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept;
 
+		/*
+			初始化函数
+			初始化方式为数列对位相除（第一个数列除以其余数列）
+			参数：
+				const _FirstSequence& _firstSequence 第一个数列
+				const _OtherSequences&... _otherSequences 其余数列
+		*/
+		template<typename _FirstSequence, typename... _OtherSequences>
+		constexpr static const Void Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept;
+
+		/*
+			初始化函数
+			初始化方式为数列对位相除（第一个数列除以其余数列）
+			参数：
+				const _FirstSequence& _firstSequence 第一个数列
+				const _OtherSequences&... _otherSequences 其余数列
+		*/
+		template<typename _FirstSequence>
+		constexpr static const Void Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept;
 
 
 
@@ -221,9 +251,9 @@ namespace ZEngine {
 			const _ElementType& _element 填充的元素
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _array, const _ElementType& _element) noexcept {
-		for (Int32 index = 0; index < _array->getSize(); index++) {
-			(*_array)(index) = _element;
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _arrayPtr, const _ElementType& _element) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) = _element;
 		}
 	}
 
@@ -237,10 +267,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FactorType>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
-		(*_array)(0) = _firstElement;
-		for (Int32 index = 1; index < _array->getSize(); index++) {
-			(*_array)(index) = (*_array)(index - 1) + _factor;
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_arrayPtr)(0) = _firstElement;
+		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) = (*_arrayPtr)(index - 1) + _factor;
 		}
 	}
 
@@ -253,10 +283,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FactorType>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _array, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
-		(*_array)(0) = _firstElement;
-		for (Int32 index = 1; index < _array->getSize(); index++) {
-			(*_array)(index) = (*_array)(index - 1) * _factor;
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+		(*_arrayPtr)(0) = _firstElement;
+		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) = (*_arrayPtr)(index - 1) * _factor;
 		}
 	}
 
@@ -269,11 +299,11 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor, typename... _OtherFactors>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_Polynomial(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
-		for (Int32 index = 0; index < _array->getSize(); index++) {
-			(*_array)(index) = _firstFactor;
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_Polynomial(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) = _firstFactor;
 		}
-		Init_PolynomialRecurse<_OtherFactors...>(_array, _otherFactors...);
+		Init_PolynomialRecurse<_OtherFactors...>(_arrayPtr, _otherFactors...);
 	}
 
 	/*
@@ -285,12 +315,12 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor, typename... _OtherFactors>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
-		for (Int32 index = 0; index < _array->getSize(); index++) {
-			(*_array)(index) *= index;
-			(*_array)(index) += _firstFactor;
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) *= index;
+			(*_arrayPtr)(index) += _firstFactor;
 		}
-		Init_PolynomialRecurse<_OtherFactors...>(_array, _otherFactors...);
+		Init_PolynomialRecurse<_OtherFactors...>(_arrayPtr, _otherFactors...);
 
 	}
 
@@ -305,10 +335,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _array, const _FirstFactor& _firstFactor) noexcept {
-		for (Int32 index = 0; index < _array->getSize(); index++) {
-			(*_array)(index) *= index;
-			(*_array)(index) += _firstFactor;
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) *= index;
+			(*_arrayPtr)(index) += _firstFactor;
 		}
 	}
 
@@ -321,11 +351,11 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddAllSequence(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
-		for (Int32 index = 0; index < _array->getSize(); index++) {
-			(*_array)(index) = _firstSequence(index);
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) = _firstSequence(index);
 		}
-		Init_AddAllSequenceRecurse<_OtherSequences...>(_array, _otherSequences...);
+		Init_AddSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
 	}
 
 	/*
@@ -337,11 +367,11 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
-		for (Int32 index = 0; index < _array->getSize(); index++) {
-			(*_array)(index) += _firstSequence(index);
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) += _firstSequence(index);
 		}
-		Init_AddAllSequenceRecurse<_OtherSequences...>(_array, _otherSequences...);
+		Init_AddSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
 	}
 
 	/*
@@ -352,11 +382,59 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddAllSequenceRecurse(ZConstArray* _array, const _FirstSequence& _firstSequence) noexcept {
-		for (Int32 index = 0; index < _array->getSize(); index++) {
-			(*_array)(index) += _firstSequence(index);
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) += _firstSequence(index);
 		}
 	}
+
+	/*
+		初始化函数
+		初始化方式为数列对位相除（第一个数列除以其余数列）
+		参数：
+			const _FirstSequence& _firstSequence 第一个数列
+			const _OtherSequences&... _otherSequences 其余数列
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstSequence, typename... _OtherSequences>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) = _firstSequence(index);
+		}
+		Init_DevideSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
+	}
+
+	/*
+		初始化函数
+		初始化方式为数列对位相除（第一个数列除以其余数列）
+		参数：
+			const _FirstSequence& _firstSequence 第一个数列
+			const _OtherSequences&... _otherSequences 其余数列
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstSequence, typename... _OtherSequences>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) /= _firstSequence(index);
+		}
+		Init_DevideSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
+	}
+
+	/*
+		初始化函数
+		初始化方式为数列对位相除（第一个数列除以其余数列）
+		参数：
+			const _FirstSequence& _firstSequence 第一个数列
+			const _OtherSequences&... _otherSequences 其余数列
+	*/
+	template<typename _ElementType, Int32 _size>
+	template<typename _FirstSequence>
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept {
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+			(*_arrayPtr)(index) /= _firstSequence(index);
+		}
+	}
+
 
 
 	/*
