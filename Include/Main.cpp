@@ -33,8 +33,7 @@ public:
 int main()
 {
     ZMemoryPool::CreateInstance();
-    ZMemoryPiece* piecePtr = ZMemoryPool::InstancePtr->applyMemory(1000);
 
-    ZMemoryPool::InstancePtr->releaseMemory(piecePtr);
-
+    ZObject object(1000);
+    sizeof(ZObject);
 }

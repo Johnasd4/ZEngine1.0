@@ -12,10 +12,12 @@
 
 #include"ZCore/ZCoreDependence.h"
 #include"ZCore/ZArray.h"
+#include"ZCore/ZConstArray.h"
+#include"ZCore/ZFixedArray.h"
 #include"ZCore/ZMemoryPool.h"
 #include"ZCore/ZMutex.h"
 #include"ZCore/ZObject.h"
-#include"ZCore/ZMutex.h"
+#include"ZCore/ZTuple.h"
 
 
 #endif // !ZCore_h
