@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ZCore.h" />
+    <ClInclude Include="ZCore\ZContainer.h" />
     <ClInclude Include="ZCore\ZCoreDependence.h" />
     <ClInclude Include="ZCore\ZCoreDependence\ZBasicConstant.h" />
     <ClInclude Include="ZCore\ZCoreDependence\ZBasicType.h" />

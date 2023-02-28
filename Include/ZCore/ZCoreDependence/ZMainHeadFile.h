@@ -2,7 +2,6 @@
 #define ZMainHeadFile_h
 
 
-//
 
 //忽视安全函数警告
 #define _CRT_SECURE_NO_WARNINGS

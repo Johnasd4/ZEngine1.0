@@ -1,10 +1,7 @@
 #ifndef ZArray_h
 #define ZArray_h
 
-
-
-#include"ZCoreDependence.h"
-
+#include"ZContainer.h"
 
 namespace ZEngine {
 
