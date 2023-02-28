@@ -28,6 +28,13 @@ namespace ZEngine {
 		*/
 		__forceinline ~ZObject();
 
+
+	public:
+
+		//作为容器对象时是否调用构造函数
+		constexpr static Boolean ContainerElementIfCallConstructor = false;
+
+
 	};
 
 	/*

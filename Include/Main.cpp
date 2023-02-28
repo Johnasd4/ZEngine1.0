@@ -59,16 +59,19 @@ Boolean testFunc<false>() {
 
 int main()
 {
+
     ZMemoryPool::CreateInstance();
-    //ZObject object(1000);
-    sizeof(B);
+
+   
+    Int32* b = new Int32(1);
     ZMemoryPiece *a = new ZMemoryPiece();
-    a->type = 1;
-    Address b = a->memoryAddress;
-    ZMemoryPiece* c = a->nextPiece;
-    UInt32 d = a->size;
-    Int32 e = a->type;
-    ZMemoryPiece* f = a;
+    //a->size = 0;
+    //cout << a->size;
+    a->memoryAddress = (Address)a;
+    cout << (UIntAddress)a->memoryAddress;
+    cout <<  (UIntAddress)(*(Address*)a);
+    cout << *b;
+
     return 0;
  
 }

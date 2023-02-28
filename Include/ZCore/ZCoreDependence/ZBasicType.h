@@ -44,6 +44,8 @@ typedef void Void;
 
 //地址
 typedef void* Address;
+//地址整形
+typedef UInt64 UIntAddress;
 
 //句柄
 typedef void* Handle;

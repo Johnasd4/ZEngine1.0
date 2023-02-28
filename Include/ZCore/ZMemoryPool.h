@@ -19,14 +19,17 @@ namespace ZEngine {
 	*/
 	struct ZMemoryPiece {
 
+		//内存块大小存储类型
+		typedef UInt32 MemoryPieceSizeType;
+
 		//下一块内存块的地址
 		Address memoryAddress;
-		//下一块内存块的地址
-		ZMemoryPiece* nextPiece;
 		//内存块类型
-		UInt32 size;
+		MemoryPieceSizeType size;
 		//内存块大小
 		Int32 type;
+		//下一块内存块的地址
+		ZMemoryPiece* nextPiece;
 
 	};
 
@@ -41,10 +44,7 @@ namespace ZEngine {
 	*/
 	class ZMemoryPool {
 
-	public:
 
-		//内存块大小存储类型
-		typedef UInt32 MemoryPieceSizeType;
 
 
 	public:
@@ -60,11 +60,11 @@ namespace ZEngine {
 		/*
 			申请内存
 			参数：
-				const MemoryPieceSizeType& _size 申请内存的大小
+				const ZMemoryPiece::MemoryPieceSizeType& _size 申请内存的大小
 			返回：
 				const ZMemoryPiece* 内存块指针
 		*/
-		DLL_API ZMemoryPiece* applyMemory(const MemoryPieceSizeType& _size);
+		DLL_API ZMemoryPiece* applyMemory(const ZMemoryPiece::MemoryPieceSizeType& _size);
 
 		/*
 			释放内存
@@ -79,18 +79,18 @@ namespace ZEngine {
 		//内存块类型数量
 		static constexpr Int32 MEMORY_PIECE_TYPE_NUM = 16;
 		//内存块最小大小
-		static constexpr MemoryPieceSizeType MEMORY_PIECE_MIN_SIZE = 64;
+		static constexpr ZMemoryPiece::MemoryPieceSizeType MEMORY_PIECE_MIN_SIZE = 64;
 		//内存块成长倍数
-		static constexpr MemoryPieceSizeType MEMORY_PIECE_MUTIPLE_GROW_FACTOR = 2;
+		static constexpr ZMemoryPiece::MemoryPieceSizeType MEMORY_PIECE_MUTIPLE_GROW_FACTOR = 2;
 		//内存块大小数组
-		static constexpr ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_SIZE_ARRAY = ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
-			ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_GeometricSequence<MemoryPieceSizeType>, MEMORY_PIECE_MIN_SIZE, MEMORY_PIECE_MUTIPLE_GROW_FACTOR);
+		static constexpr ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_SIZE_ARRAY = ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
+			ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_GeometricSequence<ZMemoryPiece::MemoryPieceSizeType>, MEMORY_PIECE_MIN_SIZE, MEMORY_PIECE_MUTIPLE_GROW_FACTOR);
 
 		//填充内存块类大小的数组
-		static constexpr ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_CLASS_SIZE_ARRAY = ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, (MemoryPieceSizeType)sizeof(ZMemoryPiece));
+		static constexpr ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_CLASS_SIZE_ARRAY = ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, (ZMemoryPiece::MemoryPieceSizeType)sizeof(ZMemoryPiece));
 		//内存块包含类大小数组
-		static constexpr ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY = ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
-			ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_AddSequence<ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>, ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>>,
+		static constexpr ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY = ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
+			ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_AddSequence<ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>, ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>>,
 			MEMORY_PIECE_SIZE_ARRAY,
 			MEMORY_PIECE_CLASS_SIZE_ARRAY);
 
@@ -101,24 +101,24 @@ namespace ZEngine {
 			ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, MEMORY_POOL_SIZE_DEFAULT);
 
 		//内存块自增长时基于当前内存块申请的数量系数（申请内存块 = 当前内存块 * 系数）
-		static constexpr Float32 MEMORY_PIECE_AUTO_GROW_MUL_FACTOR = 0.2F;
+		static constexpr Float32 MEMORY_PIECE_AUTO_EXTEND_MUL_FACTOR = 0.2F;
 		//每次申请内存时的最大值
-		static constexpr MemoryPieceSizeType APPLY_MEMORY_MAX_SIZE = 1 * GB_SIZE;
-		static constexpr ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> APPLY_MEMORY_MAX_SIZE_ARRAY = ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
-			ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, APPLY_MEMORY_MAX_SIZE);
+		static constexpr ZMemoryPiece::MemoryPieceSizeType APPLY_MEMORY_MAX_SIZE = 1 * GB_SIZE;
+		static constexpr ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> APPLY_MEMORY_MAX_SIZE_ARRAY = ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
+			ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, APPLY_MEMORY_MAX_SIZE);
 		//每次申请内存时的最小值
-		static constexpr MemoryPieceSizeType APPLY_MEMORY_MIN_SIZE = 16 * KB_SIZE;
-		static constexpr ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> APPLY_MEMORY_MIN_SIZE_ARRAY = ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
-			ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, APPLY_MEMORY_MIN_SIZE);
+		static constexpr ZMemoryPiece::MemoryPieceSizeType APPLY_MEMORY_MIN_SIZE = 16 * KB_SIZE;
+		static constexpr ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> APPLY_MEMORY_MIN_SIZE_ARRAY = ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
+			ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, APPLY_MEMORY_MIN_SIZE);
 		//内存块申请最大数量
 		static constexpr ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM> ADD_PIECE_MAX_NUM_ARRAY = ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>(
-			ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>::Init_DevideSequence<ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>, ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>>, 
+			ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>::Init_DevideSequence<ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>, ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>>,
 			APPLY_MEMORY_MAX_SIZE_ARRAY,
 			MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY);
 
 		//内存块申请最小数量
 		static constexpr ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM> ADD_PIECE_MIN_NUM_ARRAY = ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>(
-			ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>::Init_DevideSequence<ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>, ZConstArray<MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>>,
+			ZConstArray<Int32, MEMORY_PIECE_TYPE_NUM>::Init_DevideSequence<ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>, ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>>,
 			APPLY_MEMORY_MIN_SIZE_ARRAY,
 			MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY);
 
