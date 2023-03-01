@@ -11,7 +11,8 @@ namespace ZEngine {
 		¶¯Ì¬Êý×é£¬Ë³Ðò´æ´¢
 	*/
 	template<typename _ElementType>
-	class ZArray :public ZContainer<_ElementType> {
+	class ZArray :public ZContainer<_ElementType> 
+	{
 
 	public:
 

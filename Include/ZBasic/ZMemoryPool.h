@@ -18,7 +18,8 @@ namespace ZEngine {
 	/*
 		内存块
 	*/
-	struct ZMemoryPiece {
+	struct ZMemoryPiece 
+	{
 
 		//内存块大小存储类型
 		typedef UInt32 MemoryPieceSizeType;

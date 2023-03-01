@@ -47,7 +47,8 @@ namespace ZEngine {
 	/*
 		构造函数
 	*/
-	__forceinline ZMutex::ZMutex() {
+	__forceinline ZMutex::ZMutex() 
+	{
 		handle = CreateMutex(nullptr, FALSE, nullptr);
 	}
 
@@ -59,14 +60,16 @@ namespace ZEngine {
 	/*
 		互斥锁上锁
 	*/
-	__forceinline const Void ZMutex::lock() {
+	__forceinline const Void ZMutex::lock() 
+	{
 		WaitForSingleObject(handle, INFINITE);
 	}
 
 	/*
 		互斥锁解锁
 	*/
-	__forceinline const Void ZMutex::unLock() {
+	__forceinline const Void ZMutex::unLock() 
+	{
 		ReleaseMutex(handle);
 	}
 

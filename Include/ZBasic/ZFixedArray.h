@@ -16,7 +16,8 @@ namespace ZEngine {
 		不适合用于存储需要申请内存的类型
 	*/
 	template<typename _ElementType, Int32 _size>
-	class ZFixedArray {
+	class ZFixedArray 
+	{
 
 	public:
 
@@ -86,7 +87,8 @@ namespace ZEngine {
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	__forceinline _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) {
+	__forceinline _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) 
+	{
 		return this->array[_index];
 	}
 
@@ -98,7 +100,8 @@ namespace ZEngine {
 			const _ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	__forceinline const _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) const {
+	__forceinline const _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) const 
+	{
 		return this->array[_index];
 	}
 
@@ -108,7 +111,8 @@ namespace ZEngine {
 			const Int32 数组大小
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr static __forceinline const Int32 ZFixedArray<_ElementType, _size>::getSize() noexcept {
+	constexpr static __forceinline const Int32 ZFixedArray<_ElementType, _size>::getSize() noexcept 
+	{
 		return _size;
 	}
 

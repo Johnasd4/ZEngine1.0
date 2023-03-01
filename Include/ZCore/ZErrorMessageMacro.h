@@ -14,7 +14,8 @@
 		_errorMessage ±®¥Ì–≈œ¢
 */
 #define Return(_condition, _returnValue, _errorMessage) \
-	if(_condition){	\
+	if(_condition)	\
+	{	\
 		ErrorMessageOutput(_errorMessage);	\
 		return _returnValue;	\
 	}
