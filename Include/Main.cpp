@@ -19,12 +19,31 @@ template<typename T>struct has_member_s {
 };
 
 
+class A {
+public:
+    int a;
+
+};
+
+
+template <typename T>
+void f(typename T::foo) {}
+
+struct Derived : A {
+    int a;
+};
+
+
+typedef char ArrayOfOne[1];
 
 int main()
 {
+    decltype(A::a) a;
 
+    ArrayOfOne a;
     ZMemoryPool::CreateInstance();
 
+    Int32 A::* b = new Int32(1);
 
     return 0;
  

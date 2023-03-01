@@ -15,7 +15,8 @@ DLL_API ZMemoryPool* ZMemoryPool::InstancePtr = nullptr;
 /*
 	创建单例
 */
-DLL_API const Void ZMemoryPool::CreateInstance() {
+DLL_API const Void ZMemoryPool::CreateInstance() 
+{
 	static ZMemoryPool memoryPool;
 	ZMemoryPool::InstancePtr = &memoryPool;
 }
@@ -27,7 +28,8 @@ DLL_API const Void ZMemoryPool::CreateInstance() {
 	返回：
 		const ZMemoryPiece* 内存块指针
 */
-DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSizeType& _size) {
+DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSizeType& _size) 
+{
 
 #ifdef MEMORY_POOL_THREAD_SAFE
 	//线程锁
@@ -38,13 +40,16 @@ DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSi
 
 	/*申请常规内存块*/
 
-	for (Int32 index = 0; index < MEMORY_PIECE_TYPE_NUM; index++) {
+	for (Int32 index = 0; index < MEMORY_PIECE_TYPE_NUM; index++) 
+	{
 		//是否超过当前内存链表存储大小
-		if (_size > MEMORY_PIECE_SIZE_ARRAY(index)) {
+		if (_size > MEMORY_PIECE_SIZE_ARRAY(index)) 
+		{
 			continue;
 		}
 		//分配内存
-		if (momoryPieceListArray(index).headPointer == nullptr) {
+		if (momoryPieceListArray(index).headPointer == nullptr) 
+		{
 			//不足则自动申请内存
 			this->autoAddMemoryPiece(index);
 		}
@@ -57,7 +62,8 @@ DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSi
 #ifdef MEMORY_POOL_TEST_SIZE
 		momoryPieceListUsedArray(index) += 1;
 		momoryPieceListApplyedArray(index) += 1;
-		if (momoryPieceListUsedMaxArray(index) < momoryPieceListUsedArray(index)) {
+		if (momoryPieceListUsedMaxArray(index) < momoryPieceListUsedArray(index)) 
+		{
 			momoryPieceListUsedMaxArray(index) = momoryPieceListUsedArray(index);
 		}
 #endif // MEMORY_POOL_TEST_SIZE
@@ -81,7 +87,8 @@ DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSi
 	参数：
 		ZMemoryPiece* _memoryPiecePtr 内存块指针
 */
-DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr) {
+DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr) 
+{
 
 #ifdef MEMORY_POOL_THREAD_SAFE
 	//线程锁
@@ -114,7 +121,8 @@ ZMemoryPool::ZMemoryPool() :
 	systemMemoryAddress(nullptr)
 {
 	//初始化每种内存块链表
-	for (Int32 index = 0; index < MEMORY_PIECE_TYPE_NUM; index++) {
+	for (Int32 index = 0; index < MEMORY_PIECE_TYPE_NUM; index++) 
+	{
 		momoryPieceListArray(index).headPointer = nullptr;
 		momoryPieceListArray(index).num = 0;
 		initMemoryPieceList(index);
@@ -135,13 +143,15 @@ ZMemoryPool::ZMemoryPool() :
 /*
 	析构函数
 */
-ZMemoryPool::~ZMemoryPool() {
+ZMemoryPool::~ZMemoryPool() 
+{
 
 	/*释放内存池的内存*/
 
 	//下一块内存
 	Address nextSystemMemoryAddress;
-	while (systemMemoryAddress != nullptr) {
+	while (systemMemoryAddress != nullptr) 
+	{
 		//暂存下一内存块地址	
 		nextSystemMemoryAddress = *((Address*)systemMemoryAddress);
 		//释放当前内存块
@@ -153,7 +163,8 @@ ZMemoryPool::~ZMemoryPool() {
 #ifdef MEMORY_POOL_TEST_SIZE
 
 	printf("\n/*********内存池使用情况*********/\n");
-	for (Int32 index = 0; index < MEMORY_PIECE_TYPE_NUM; index++) {
+	for (Int32 index = 0; index < MEMORY_PIECE_TYPE_NUM; index++) 
+	{
 		printf("编号 %d:大小为 %u 的内存块同时使用数量最多为 %d 块,共申请 %d 次,释放内存池时 %d 块未释放\n",
 			index,
 			MEMORY_PIECE_SIZE_ARRAY(index),
@@ -174,23 +185,27 @@ ZMemoryPool::~ZMemoryPool() {
 /*
 	添加内存块
 */
-const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) {
+const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) 
+{
 	//需要申请内存块数量
 	Int32 addPieceNum = MEMORY_POOL_SIZE_DEFAULT_ARRAY(_type);
 	//如果申请大小大于最大值则1个G，1个G申请
-	while (addPieceNum > ADD_PIECE_MAX_NUM_ARRAY(_type)) {
+	while (addPieceNum > ADD_PIECE_MAX_NUM_ARRAY(_type)) 
+	{
 		//申请内存块
 		addMemoryPiece(_type, ADD_PIECE_MAX_NUM_ARRAY(_type));
 		//需要申请内存的总大小减去当前申请的大小
 		addPieceNum -= ADD_PIECE_MAX_NUM_ARRAY(_type);
 	}
 	//是否还有需要申请的
-	if (addPieceNum == 0) {
+	if (addPieceNum == 0) 
+	{
 		return;
 	}
 
 	//如果小于最申请最小值则补充
-	if (addPieceNum < ADD_PIECE_MIN_NUM_ARRAY(_type)) {
+	if (addPieceNum < ADD_PIECE_MIN_NUM_ARRAY(_type)) 
+	{
 		addPieceNum = ADD_PIECE_MIN_NUM_ARRAY(_type);
 	}
 	//申请内存块
@@ -202,13 +217,16 @@ const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) {
 	参数：
 		const Int32& _type 内存块类型
 */
-const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) {
+const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) 
+{
 	Int32 addPieceNum = (Int32)(momoryPieceListArray(_type).num * MEMORY_PIECE_AUTO_EXTEND_MUL_FACTOR);
 	//判断数量是否过少或者过多
-	if (addPieceNum < ADD_PIECE_MIN_NUM_ARRAY(_type)) {
+	if (addPieceNum < ADD_PIECE_MIN_NUM_ARRAY(_type)) 
+	{
 		addPieceNum = ADD_PIECE_MIN_NUM_ARRAY(_type);
 	}
-	else if (addPieceNum > ADD_PIECE_MAX_NUM_ARRAY(_type)) {
+	else if (addPieceNum > ADD_PIECE_MAX_NUM_ARRAY(_type)) 
+	{
 		addPieceNum = ADD_PIECE_MAX_NUM_ARRAY(_type);
 	}
 	//申请内存块
@@ -221,7 +239,8 @@ const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) {
 		const Int32& _type 内存块类型
 		const Int32& _num 内存块数量
 */
-const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) {
+const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) 
+{
 	//申请内存
 	Address memoryApplyAddress = malloc(_num * MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY(_type) + sizeof(Address));//多申请一个地址大小的内存用于链表存储
 	*((Address*)memoryApplyAddress) = systemMemoryAddress;	//新内存块为链表头
@@ -232,7 +251,8 @@ const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) {
 	UIntAddress pieceAddress = (UIntAddress)memoryApplyAddress;
 	UIntAddress memoryAddress = pieceAddress + sizeof(ZMemoryPiece) * _num;
 	//初始化内存块
-	for (Int32 pieceCount = 0; pieceCount < _num; pieceCount++) {
+	for (Int32 pieceCount = 0; pieceCount < _num; pieceCount++) 
+	{
 		((ZMemoryPiece*)pieceAddress)->nextMemoryPiece = (ZMemoryPiece*)(pieceAddress + sizeof(ZMemoryPiece));
 		((ZMemoryPiece*)pieceAddress)->memoryAddress = (Address)memoryAddress;
 		((ZMemoryPiece*)pieceAddress)->type = _type;

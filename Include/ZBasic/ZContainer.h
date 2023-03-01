@@ -7,7 +7,8 @@
 #include"ZObject.h"
 #include"ZMemoryPool.h"
 
-namespace ZEngine {
+namespace ZEngine 
+{
 
 
 	/*
@@ -18,7 +19,8 @@ namespace ZEngine {
 			析构函数中会自动释放内存。
 	*/
 	template<typename _ObjectType>
-	class ZContainer: ZObject{
+	class ZContainer: ZObject
+	{
 
 	public:
 
@@ -157,7 +159,8 @@ namespace ZEngine {
 		//申请内存
 		memoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(memorySize);
 		//申请成功则在指定地址上new该对象或数据（如果需要的话）,并保存到容器指针上
-		if (_containerElementIfCallConstructor) {
+		if (_containerElementIfCallConstructor) 
+		{
 			new(memoryPiecePtr->memoryAddress) _ObjectType[_capacity];
 		}
 	}
@@ -166,7 +169,8 @@ namespace ZEngine {
 		析构函数
 	*/
 	template<typename _ObjectType>
-	__forceinline ZContainer<_ObjectType>::~ZContainer() noexcept {
+	__forceinline ZContainer<_ObjectType>::~ZContainer() noexcept 
+	{
 		//释放内存
 		ZMemoryPool::InstancePtr->releaseMemory(memoryPiecePtr);
 	}
@@ -178,7 +182,8 @@ namespace ZEngine {
 			const Boolean&& _containerElementIfCallConstructor = false 默认不调用构造函数
 	*/
 	template<typename _ObjectType>
-	const Void ZContainer<_ObjectType>::extend(const Int32& _capacity, const Boolean&& _containerElementIfCallConstructor) {
+	const Void ZContainer<_ObjectType>::extend(const Int32& _capacity, const Boolean&& _containerElementIfCallConstructor) 
+	{
 		//拓展前容器需要的内存大小
 		ZMemoryPiece::MemoryPieceSizeType originMemorySize = capacity * sizeof(_ObjectType);
 		//拓展后容器需要的内存大小
@@ -209,7 +214,8 @@ namespace ZEngine {
 			_ObjectType* 容器存储指针
 	*/
 	template<typename _ObjectType>
-	__forceinline _ObjectType* ZContainer<_ObjectType>::getObjectPtr() noexcept {
+	__forceinline _ObjectType* ZContainer<_ObjectType>::getObjectPtr() noexcept 
+	{
 		return (_ObjectType*)memoryPiecePtr->memoryAddress;
 	}
 
@@ -219,7 +225,8 @@ namespace ZEngine {
 			const _ObjectType* 容器存储指针
 	*/
 	template<typename _ObjectType>
-	__forceinline const _ObjectType* ZContainer<_ObjectType>::getObjectPtr() const noexcept {
+	__forceinline const _ObjectType* ZContainer<_ObjectType>::getObjectPtr() const noexcept 
+	{
 		return (_ObjectType*)memoryPiecePtr->memoryAddress;
 	}
 
@@ -229,7 +236,8 @@ namespace ZEngine {
 			const Int32& 容器大小
 	*/
 	template<typename _ObjectType>
-	__forceinline const Int32& ZContainer<_ObjectType>::getCapacity() const noexcept {
+	__forceinline const Int32& ZContainer<_ObjectType>::getCapacity() const noexcept 
+	{
 		return capacity;
 	}
 
@@ -239,7 +247,8 @@ namespace ZEngine {
 			const Int32& 容器元素数量
 	*/
 	template<typename _ObjectType>
-	__forceinline const Int32& ZContainer<_ObjectType>::getSize() const noexcept {
+	__forceinline const Int32& ZContainer<_ObjectType>::getSize() const noexcept 
+	{
 		return size;
 	}
 
@@ -249,16 +258,17 @@ namespace ZEngine {
 			const Int32& 容器元素数量
 	*/
 	template<typename _ObjectType>
-	__forceinline const Void ZContainer<_ObjectType>::setSize(const Int32& _size) noexcept {
+	__forceinline const Void ZContainer<_ObjectType>::setSize(const Int32& _size) noexcept 
+	{
 		size = _size;
-
 	}
 
 	/*
 		清空容器
 	*/
 	template<typename _ObjectType>
-	__forceinline const Void ZContainer<_ObjectType>::clear() {
+	__forceinline const Void ZContainer<_ObjectType>::clear() 
+	{
 		this->size = 0;
 	}
 

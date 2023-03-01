@@ -13,7 +13,8 @@ namespace ZEngine {
 		常量数组，用于编译期计算
 	*/
 	template<typename _ElementType, Int32 _size>
-	class ZConstArray {
+	class ZConstArray 
+	{
 
 	public:
 
@@ -252,8 +253,10 @@ namespace ZEngine {
 			const _ElementType& _element 填充的元素
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _arrayPtr, const _ElementType& _element) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _arrayPtr, const _ElementType& _element) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) = _element;
 		}
 	}
@@ -268,9 +271,11 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FactorType>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept 
+	{
 		(*_arrayPtr)(0) = _firstElement;
-		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) {
+		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) = (*_arrayPtr)(index - 1) + _factor;
 		}
 	}
@@ -284,9 +289,11 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FactorType>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) noexcept 
+	{
 		(*_arrayPtr)(0) = _firstElement;
-		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) {
+		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) = (*_arrayPtr)(index - 1) * _factor;
 		}
 	}
@@ -300,8 +307,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor, typename... _OtherFactors>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_Polynomial(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_Polynomial(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) = _firstFactor;
 		}
 		Init_PolynomialRecurse<_OtherFactors...>(_arrayPtr, _otherFactors...);
@@ -316,8 +325,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor, typename... _OtherFactors>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) *= index;
 			(*_arrayPtr)(index) += _firstFactor;
 		}
@@ -336,8 +347,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) *= index;
 			(*_arrayPtr)(index) += _firstFactor;
 		}
@@ -352,8 +365,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) = _firstSequence(index);
 		}
 		Init_AddSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
@@ -368,8 +383,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) += _firstSequence(index);
 		}
 		Init_AddSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
@@ -383,8 +400,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) += _firstSequence(index);
 		}
 	}
@@ -398,8 +417,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) = _firstSequence(index);
 		}
 		Init_DevideSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
@@ -414,8 +435,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) /= _firstSequence(index);
 		}
 		Init_DevideSequenceRecurse<_OtherSequences...>(_arrayPtr, _otherSequences...);
@@ -430,8 +453,10 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept {
-		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) {
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) noexcept 
+	{
+		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
+		{
 			(*_arrayPtr)(index) /= _firstSequence(index);
 		}
 	}
@@ -448,7 +473,8 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _InitFunc, typename... _Args>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(_InitFunc&& _initFunc, _Args&&... _args) noexcept {
+	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(_InitFunc&& _initFunc, _Args&&... _args) noexcept 
+	{
 		this->init(std::forward<_InitFunc>(_initFunc), std::forward<_Args>(_args)...);
 	}
 
@@ -458,8 +484,10 @@ namespace ZEngine {
 			const ZConstArray& _array 倍复制的数组
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr ZConstArray<_ElementType, _size>::ZConstArray(const ZConstArray& _array) noexcept {
-		for (Int32 index = 0; index < _size; index++) {
+	constexpr ZConstArray<_ElementType, _size>::ZConstArray(const ZConstArray& _array) noexcept 
+	{
+		for (Int32 index = 0; index < _size; index++) 
+		{
 			(*this)(index) = _array(index);
 		}
 	}
@@ -478,7 +506,8 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _InitFunc, typename... _Args>
-	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::init(_InitFunc&& _initFunc, _Args&&... _args) noexcept {
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::init(_InitFunc&& _initFunc, _Args&&... _args) noexcept 
+	{
 		_initFunc(this, std::forward<_Args>(_args)...);
 	}
 
@@ -491,7 +520,8 @@ namespace ZEngine {
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) noexcept {
+	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) noexcept 
+	{
 		return this->array[_index];
 	}
 
@@ -503,7 +533,8 @@ namespace ZEngine {
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) const noexcept {
+	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) const noexcept 
+	{
 		return this->array[_index];
 	}
 
@@ -515,7 +546,8 @@ namespace ZEngine {
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) noexcept {
+	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) noexcept 
+	{
 		return this->array[_index];
 	}
 
@@ -527,7 +559,8 @@ namespace ZEngine {
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) const noexcept {
+	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) const noexcept 
+	{
 		return this->array[_index];
 	}
 
@@ -538,7 +571,8 @@ namespace ZEngine {
 			const Int32 数组大小
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const Int32 ZConstArray<_ElementType, _size>::getSize() noexcept {
+	constexpr __forceinline const Int32 ZConstArray<_ElementType, _size>::getSize() noexcept 
+	{
 		return _size;
 	}
 
@@ -550,7 +584,8 @@ namespace ZEngine {
 			const Int32& _index2 元素2的下标
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) noexcept {
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) noexcept 
+	{
 		_ElementType tempElement = (*this)(_index1);
 		(*this)(_index1) = (*this)(_index2);
 		(*this)(_index2) = tempElement;

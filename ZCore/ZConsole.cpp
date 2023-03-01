@@ -17,7 +17,8 @@ extern ZMutex ZEngine::Console::Private::ConsoleMutex = ZMutex();
 		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
 		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::setPrintColour(const UInt16&& _frontColour, const UInt16&& _backColour) noexcept {
+DLL_API const Void ZEngine::Console::setPrintColour(const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+{
 	ConsoleMutex.lock();
 	ConsoleFrontColour = _frontColour;
 	ConsoleBackColour = _backColour;
@@ -31,7 +32,8 @@ DLL_API const Void ZEngine::Console::setPrintColour(const UInt16&& _frontColour,
 		const CChar* _string 要输出的字符串
 */
 
-DLL_API const Void ZEngine::Console::print(const CChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::print(const CChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	printf("%s", _string);
 	ConsoleMutex.unLock();
@@ -43,7 +45,8 @@ DLL_API const Void ZEngine::Console::print(const CChar* _string) noexcept {
 	参数：
 		const CChar* _string 要输出的字符串
 */
-DLL_API const Void ZEngine::Console::printInLine(const CChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printInLine(const CChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	printf("%s\n", _string);
 	ConsoleMutex.unLock();
@@ -54,7 +57,8 @@ DLL_API const Void ZEngine::Console::printInLine(const CChar* _string) noexcept 
 	参数：
 		const TChar* _string 要输出的字符串
 */
-DLL_API const Void ZEngine::Console::print(const TChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::print(const TChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	printf("%ls", _string);
 	ConsoleMutex.unLock();
@@ -64,7 +68,8 @@ DLL_API const Void ZEngine::Console::print(const TChar* _string) noexcept {
 	参数：
 		const TChar* _string 要输出的字符串
 */
-DLL_API const Void ZEngine::Console::printInLine(const TChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printInLine(const TChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	printf("%ls\n", _string);
 	ConsoleMutex.unLock();
@@ -77,7 +82,8 @@ DLL_API const Void ZEngine::Console::printInLine(const TChar* _string) noexcept 
 		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
 		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::print(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept {
+DLL_API const Void ZEngine::Console::print(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色
 	printf("%s", _string);
@@ -92,7 +98,8 @@ DLL_API const Void ZEngine::Console::print(const CChar* _string, const UInt16&& 
 		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
 		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::printInLine(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept {
+DLL_API const Void ZEngine::Console::printInLine(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色
 	printf("%s\n", _string);
@@ -107,7 +114,8 @@ DLL_API const Void ZEngine::Console::printInLine(const CChar* _string, const UIn
 		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
 		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::print(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept {
+DLL_API const Void ZEngine::Console::print(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色
 	printf("%ls", _string);
@@ -122,7 +130,8 @@ DLL_API const Void ZEngine::Console::print(const TChar* _string, const UInt16&& 
 		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
 		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::printInLine(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept {
+DLL_API const Void ZEngine::Console::printInLine(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色
 	printf("%ls\n", _string);
@@ -138,7 +147,8 @@ DLL_API const Void ZEngine::Console::printInLine(const TChar* _string, const UIn
 	参数：
 		const CChar* _string 要输出的字符串
 */
-DLL_API const Void ZEngine::Console::printSuccess(const CChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printSuccess(const CChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_PRINT_FRONT_COLOUR_LIGHT_GREEN | CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK);//设置颜色，没有添加颜色，故为原色
 	printf("%s\n", _string);
@@ -151,7 +161,8 @@ DLL_API const Void ZEngine::Console::printSuccess(const CChar* _string) noexcept
 	参数：
 		const TChar* _string 要输出的字符串
 */
-DLL_API const Void ZEngine::Console::printSuccess(const TChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printSuccess(const TChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_PRINT_FRONT_COLOUR_LIGHT_GREEN | CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK);//设置颜色，没有添加颜色，故为原色
 	printf("%ls\n", _string);
@@ -164,7 +175,8 @@ DLL_API const Void ZEngine::Console::printSuccess(const TChar* _string) noexcept
 	参数：
 		const CChar* _string 要输出的字符串
 */
-DLL_API const Void ZEngine::Console::printFail(const CChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printFail(const CChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_PRINT_FRONT_COLOUR_LIGHT_RED | CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK);//设置颜色，没有添加颜色，故为原色
 	printf("%s\n", _string);
@@ -177,7 +189,8 @@ DLL_API const Void ZEngine::Console::printFail(const CChar* _string) noexcept {
 	参数：
 		const TChar* _string 要输出的字符串
 */
-DLL_API const Void ZEngine::Console::printFail(const TChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printFail(const TChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_PRINT_FRONT_COLOUR_LIGHT_RED | CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK);//设置颜色，没有添加颜色，故为原色
 	printf("%ls\n", _string);
@@ -190,7 +203,8 @@ DLL_API const Void ZEngine::Console::printFail(const TChar* _string) noexcept {
 	参数：
 		const CChar* _string 要输出的错误信息
 */
-DLL_API const Void ZEngine::Console::printErrorMessage(const CChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printErrorMessage(const CChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_PRINT_FRONT_COLOUR_DARK_RED | CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK);
 	printf("报错信息：%s\n", _string);
@@ -203,7 +217,8 @@ DLL_API const Void ZEngine::Console::printErrorMessage(const CChar* _string) noe
 	参数：
 		const TChar* _string 要输出的错误信息
 */
-DLL_API const Void ZEngine::Console::printErrorMessage(const TChar* _string) noexcept {
+DLL_API const Void ZEngine::Console::printErrorMessage(const TChar* _string) noexcept 
+{
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_PRINT_FRONT_COLOUR_DARK_RED | CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK);
 	printf("报错信息：%ls\n", _string);
