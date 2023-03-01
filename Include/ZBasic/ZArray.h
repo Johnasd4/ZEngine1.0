@@ -1,6 +1,8 @@
 #ifndef ZArray_h
 #define ZArray_h
 
+#include"ZBasicDrive.h"
+
 #include"ZContainer.h"
 
 namespace ZEngine {
@@ -9,7 +11,7 @@ namespace ZEngine {
 		动态数组，顺序存储
 	*/
 	template<typename _ElementType>
-	class ZArray :protected ZContainer {
+	class ZArray :public ZContainer<_ElementType> {
 
 	public:
 
@@ -32,25 +34,11 @@ namespace ZEngine {
 			说明：
 				默认数组增长形式为倍增
 				默认增长参数大小为1.2
-				默认不调用元素的构造函数
-			参数：
-				const Int32& _arraySize 数组大小
-
-		*/
-		ZArray(const Int32& _arraySize);
-
-
-
-		/*
-			构造函数，创造指定大小的数组
-			说明：
-				默认数组增长形式为倍增
-				默认增长参数大小为1.2
 			参数：
 				const Int32& _arraySize 数组大小
 				const Boolean& _ifInitialElement 是否调用元素的构造函数
 		*/
-		ZArray(const Int32& _arraySize, const Boolean& _ifInitialElement);
+		ZArray(const Int32& _size, const Boolean& _containerElementIfCallConstructor = false);
 
 
 
@@ -67,52 +55,6 @@ namespace ZEngine {
 		*/
 		~ZArray();
 
-		/*
-			创建数组，修改arraySize
-			参数：
-				const Int32& _arraySize 数组大小
-			返回：
-				const Boolean 是否成功
-		*/
-		__forceinline const Boolean create(const Int32& _arraySize);
-
-		/*
-			创建数组，修改arraySize
-			参数：
-				const Int32& _arraySize 数组大小
-				const Boolean& _ifInitialElement 是否调用元素的构造函数，不会修改对象本身的设置
-			返回：
-				const Boolean 是否成功
-		*/
-		__forceinline const Boolean create(const Int32& _arraySize, const Boolean& _ifInitialElement);
-
-
-		/*
-			拓展数组，修改arraySize
-			参数：
-				const Int32& _extendArraySize 拓展后的数组大小
-			返回：
-				const Boolean 是否成功
-		*/
-		__forceinline const Boolean extend(const Int32& _extendArraySize);
-
-
-		/*
-			拓展数组，修改arraySize
-			参数：
-				const Int32& _extendArraySize 拓展后的数组大小
-				const Boolean& _ifInitialElement 是否调用元素的构造函数，不会修改对象本身的设置
-			返回：
-				const Boolean 是否成功
-		*/
-		__forceinline const Boolean extend(const Int32& _extendArraySize, const Boolean& _ifInitialElement);
-
-
-
-		/*
-			删除数组
-		*/
-		__forceinline const Void destroy();
 
 
 		/*
@@ -133,26 +75,6 @@ namespace ZEngine {
 		*/
 		__forceinline const _ElementType& operator()(const Int32& _elementIndex) const;
 
-
-		/*
-			获取字符
-			参数：
-				const Int32& _elementIndex 元素下标
-			返回：
-				_ElementType& 下标对应的元素的引用
-		*/
-		__forceinline _ElementType& at(const Int32& _elementIndex);
-
-
-		/*
-			获取字符
-			参数：
-				const Int32& _elementIndex 元素下标
-			返回：
-				_ElementType& 下标对应的元素的引用
-		*/
-		__forceinline const _ElementType& at(const Int32& _elementIndex) const;
-
 		/*
 			重载=
 			参数：
@@ -160,8 +82,7 @@ namespace ZEngine {
 			返回：
 				const Boolean 是否成功
 		*/
-		const Boolean operator=(const ZArray& _array);
-
+		const Void operator=(const ZArray& _array);
 
 		/*
 			获取数组元素数量
@@ -171,38 +92,13 @@ namespace ZEngine {
 		__forceinline const Int32& getLength() const;
 
 		/*
-			设置数组元素数量
-			参数：
-				const Int32& _arrayLength 元素数量
-		*/
-		__forceinline const Void setLength(const Int32& _arrayLength);
-
-
-		/*
-			获取数组的大小
-			返回：
-				const Int32& 数组大小
-		*/
-		__forceinline const Int32& getSize() const;
-
-
-
-
-		/*
-			是否存在
-			返回：
-				const Boolean 是否存在
-		*/
-		__forceinline const Boolean ifExsit() const;
-
-		/*
 			添加元素到最后，逻辑使用memcpy进行复制整个元素
 			参数：
 				const _ElementType& _element 需要添加的元素
 			返回：
 				const Boolean 是否成功
 		*/
-		const Boolean add(const _ElementType& _element);
+		const Boolean push(const _ElementType& _element);
 
 
 		/*
@@ -212,7 +108,7 @@ namespace ZEngine {
 			返回：
 				const Boolean 是否成功
 		*/
-		__forceinline const Boolean addEmpty(const Int32& _emptyElementNum);
+		__forceinline const Boolean pushEmpty(const Int32& _emptyElementNum);
 
 
 
@@ -267,12 +163,8 @@ namespace ZEngine {
 
 	private:
 
-		//数组存储数组指针 
-		_ElementType* array;
 		//数组的元素数量
 		Int32 length;
-		//数组的大小
-		Int32 Size;
 
 
 

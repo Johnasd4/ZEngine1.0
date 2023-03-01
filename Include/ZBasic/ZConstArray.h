@@ -2,7 +2,8 @@
 #define ZConstArray_h
 
 
-#include"ZCoreDependence.h"
+#include"ZBasicDrive.h"
+
 
 
 namespace ZEngine {

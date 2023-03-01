@@ -15,6 +15,11 @@
 #include<process.h>
 
 
+//使用控制台错误输出
+#define USE_ERROR_MESSAGE_CONSOLE_PRINT
+
+
+
 #ifdef DLL_API_FILE
 #define DLL_API __declspec(dllexport)//导出
 #else

@@ -1,16 +1,10 @@
-#ifndef ZMacro_h
-#define ZMacro_h
+#ifndef ZErrorMessageMacro_h
+#define ZErrorMessageMacro_h
 
 
-#pragma warning(disable : 4005)
-#pragma warning(disable : 4002)
 
 
 #include"ZBasicType.h"
-
-#pragma region 返回报错宏
-
-
 
 /*
 	当条件成立时返回指定值并输出错误信息
@@ -71,22 +65,4 @@ namespace ZEngine {
 #endif // USE_ERROR_CONSOLE_PRINT
 
 
-#pragma endregion 返回报错宏
-
-#pragma region 测试宏
-
-
-#define TimeTest(_code)\
-	{	\
-		Int32 StartTime,EndTime;	\
-		StartTime = clock();	\
-		_code;	\
-		EndTime = clock();	\
-		std::cout << "代码运行总共消耗：" << EndTime - StartTime << "ms" << std::endl;\
-	}
-
-
-
-#pragma endregion 测试宏
-
-#endif // !ZMacro_h
+#endif // !ZErrorMessageMacro_h

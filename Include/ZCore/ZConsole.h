@@ -2,7 +2,7 @@
 #define ZConsole_h
 
 #include"ZBasicType.h"
-#include"..\ZMutex.h"
+#include"..\ZBasic\ZMutex.h"
 
 namespace ZEngine {
 

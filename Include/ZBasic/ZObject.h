@@ -2,7 +2,7 @@
 #define ZObject_h
 
 
-#include"ZCoreDependence.h"
+#include"ZBasicDrive.h"
 
 
 namespace ZEngine {
@@ -21,12 +21,12 @@ namespace ZEngine {
 		/*
 			构造函数
 		*/
-		__forceinline ZObject();
+		__forceinline ZObject() noexcept;
 
 		/*
 			析构函数
 		*/
-		__forceinline ~ZObject();
+		__forceinline ~ZObject() noexcept;
 
 
 	public:
@@ -40,14 +40,14 @@ namespace ZEngine {
 	/*
 		构造函数
 	*/
-	__forceinline ZObject::ZObject() {}
+	__forceinline ZObject::ZObject() noexcept{}
 
 
 
 	/*
 		析构函数
 	*/
-	__forceinline ZObject::~ZObject(){}
+	__forceinline ZObject::~ZObject() noexcept{}
 
 
 

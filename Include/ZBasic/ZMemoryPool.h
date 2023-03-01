@@ -1,7 +1,8 @@
 #ifndef ZMemoryPool_h
 #define ZMemoryPool_h
 
-#include"ZCoreDependence.h"
+#include"ZBasicDrive.h"
+
 #include"ZConstArray.h"
 #include"ZFixedArray.h"
 #include"ZMutex.h"
@@ -29,7 +30,7 @@ namespace ZEngine {
 		//内存块大小
 		Int32 type;
 		//下一块内存块的地址
-		ZMemoryPiece* nextPiece;
+		ZMemoryPiece* nextMemoryPiece;
 
 	};
 

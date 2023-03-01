@@ -4,7 +4,8 @@
 #pragma warning(disable : 26495)
 
 
-#include"ZCoreDependence.h"
+#include"ZBasicDrive.h"
+
 
 
 namespace ZEngine {
@@ -107,7 +108,7 @@ namespace ZEngine {
 			const Int32 数组大小
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const Int32 ZFixedArray<_ElementType, _size>::getSize() noexcept {
+	constexpr static __forceinline const Int32 ZFixedArray<_ElementType, _size>::getSize() noexcept {
 		return _size;
 	}
 

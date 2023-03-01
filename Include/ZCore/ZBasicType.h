@@ -1,7 +1,7 @@
 #ifndef ZBasicType_h
 #define ZBasicType_h
 
-#include"ZMainHeadFile.h"
+#include"ZCoreDrive.h"
 
 //Ó¢ÎÄ×Ö·û£¬Ã¿¸ö1B
 typedef char CChar;

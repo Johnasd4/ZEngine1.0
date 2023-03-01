@@ -19,21 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ZBasic\ZContainer.h" />
+    <ClInclude Include="ZBasic\ZBasicDrive.h" />
+    <ClInclude Include="ZBasic.h" />
+    <ClInclude Include="ZEngine.h" />
     <ClInclude Include="ZCore.h" />
-    <ClInclude Include="ZCore\ZContainer.h" />
-    <ClInclude Include="ZCore\ZCoreDependence.h" />
-    <ClInclude Include="ZCore\ZCoreDependence\ZBasicConstant.h" />
-    <ClInclude Include="ZCore\ZCoreDependence\ZBasicType.h" />
-    <ClInclude Include="ZCore\ZCoreDependence\ZConsole.h" />
-    <ClInclude Include="ZCore\ZCoreDependence\ZMainHeadFile.h" />
-    <ClInclude Include="ZCore\ZMemoryPool.h" />
-    <ClInclude Include="ZCore\ZObject.h" />
-    <ClInclude Include="ZCore\ZMutex.h" />
-    <ClInclude Include="ZCore\ZCoreDependence\ZMacro.h" />
-    <ClInclude Include="ZCore\ZArray.h" />
-    <ClInclude Include="ZCore\ZTuple.h" />
-    <ClInclude Include="ZCore\ZFixedArray.h" />
-    <ClInclude Include="ZCore\ZConstArray.h" />
+    <ClInclude Include="ZCore\ZBasicConstant.h" />
+    <ClInclude Include="ZCore\ZBasicType.h" />
+    <ClInclude Include="ZCore\ZConsole.h" />
+    <ClInclude Include="ZCore\ZCoreDrive.h" />
+    <ClInclude Include="ZCore\ZErrorMessageMacro.h" />
+    <ClInclude Include="ZBasic\ZMemoryPool.h" />
+    <ClInclude Include="ZBasic\ZObject.h" />
+    <ClInclude Include="ZBasic\ZMutex.h" />
+    <ClInclude Include="ZCore\ZTestMacro.h" />
+    <ClInclude Include="ZBasic\ZArray.h" />
+    <ClInclude Include="ZBasic\ZTuple.h" />
+    <ClInclude Include="ZBasic\ZFixedArray.h" />
+    <ClInclude Include="ZBasic\ZConstArray.h" />
+    <ClInclude Include="ZCore\ZMainHeadFile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />

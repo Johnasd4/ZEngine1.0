@@ -1,6 +1,6 @@
 #define DLL_API_FILE
 
-#include"ZCore/ZMemoryPool.h"
+#include"ZMemoryPool.h"
 
 #pragma warning(disable : 6011)
 
@@ -52,7 +52,7 @@ DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSi
 		memoryPiecePtr = momoryPieceListArray(index).headPointer;
 
 		//将当前指针指向下一个内存块
-		momoryPieceListArray(index).headPointer = momoryPieceListArray(index).headPointer->nextPiece;
+		momoryPieceListArray(index).headPointer = momoryPieceListArray(index).headPointer->nextMemoryPiece;
 
 #ifdef MEMORY_POOL_TEST_SIZE
 		momoryPieceListUsedArray(index) += 1;
@@ -90,7 +90,7 @@ DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr) {
 
 
 	//将释放的内存块指向头指针
-	_memoryPiecePtr->nextPiece = momoryPieceListArray(_memoryPiecePtr->type).headPointer;
+	_memoryPiecePtr->nextMemoryPiece = momoryPieceListArray(_memoryPiecePtr->type).headPointer;
 	//头指针指向当前内存块
 	momoryPieceListArray(_memoryPiecePtr->type).headPointer = _memoryPiecePtr;
 
@@ -233,7 +233,7 @@ const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) {
 	UIntAddress memoryAddress = pieceAddress + sizeof(ZMemoryPiece) * _num;
 	//初始化内存块
 	for (Int32 pieceCount = 0; pieceCount < _num; pieceCount++) {
-		((ZMemoryPiece*)pieceAddress)->nextPiece = (ZMemoryPiece*)(pieceAddress + sizeof(ZMemoryPiece));
+		((ZMemoryPiece*)pieceAddress)->nextMemoryPiece = (ZMemoryPiece*)(pieceAddress + sizeof(ZMemoryPiece));
 		((ZMemoryPiece*)pieceAddress)->memoryAddress = (Address)memoryAddress;
 		((ZMemoryPiece*)pieceAddress)->type = _type;
 		((ZMemoryPiece*)pieceAddress)->size = MEMORY_PIECE_SIZE_ARRAY(_type);
@@ -242,7 +242,7 @@ const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) {
 	}
 	//初始化头尾
 	//尾
-	((ZMemoryPiece*)(pieceAddress - sizeof(ZMemoryPiece)))->nextPiece = momoryPieceListArray(_type).headPointer;
+	((ZMemoryPiece*)(pieceAddress - sizeof(ZMemoryPiece)))->nextMemoryPiece = momoryPieceListArray(_type).headPointer;
 	//头
 	momoryPieceListArray(_type).headPointer = (ZMemoryPiece*)(memoryApplyAddress);
 	//修正列表数量

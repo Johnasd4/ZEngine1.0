@@ -1,7 +1,7 @@
 #define DLL_API_FILE
 
-#include"ZCore/ZCoreDependence/ZMacro.h"
-#include"ZCore/ZCoreDependence/ZConsole.h"
+#include"ZErrorMessageMacro.h"
+#include"ZConsole.h"
 
 using namespace ZEngine::Console;
 using namespace ZEngine::Console::Private;
