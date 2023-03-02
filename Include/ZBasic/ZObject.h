@@ -21,12 +21,45 @@ namespace ZEngine {
 		/*
 			构造函数
 		*/
-		__forceinline ZObject() noexcept;
+		__forceinline ZObject();
+
+		/*
+			构造函数
+			完全复制
+			参数：
+				const ZObject& _object 被复制的object
+		*/
+		__forceinline ZObject(const ZObject& _object);
+
+		/*
+			构造函数
+			移动语义
+			参数：
+				const ZObject&& _object 被移动的object
+		*/
+		__forceinline ZObject(const ZObject&& _object);
 
 		/*
 			析构函数
 		*/
-		__forceinline ~ZObject() noexcept;
+		__forceinline ~ZObject();
+
+		/*
+			重载=
+			深度复制
+			参数：
+				const ZObject& _object 被复制的object
+		*/
+		__forceinline const Void operator=(const ZObject& _object);
+
+		/*
+			重载=
+			浅度复制
+			参数：
+				const ZObject&& _object 被复制的object
+		*/
+		__forceinline const Void operator=(const ZObject&& _object);
+
 
 
 	public:
@@ -40,16 +73,44 @@ namespace ZEngine {
 	/*
 		构造函数
 	*/
-	__forceinline ZObject::ZObject() noexcept{}
+	__forceinline ZObject::ZObject(){}
 
+	/*
+		构造函数
+		完全复制
+		参数：
+			const ZObject& _object 被复制的object
+	*/
+	__forceinline ZObject::ZObject(const ZObject& _object) {}
 
+	/*
+		构造函数
+		移动语义
+		参数：
+			const ZObject&& _object 被移动的object
+	*/
+	__forceinline ZObject::ZObject(const ZObject&& _object){}
 
 	/*
 		析构函数
 	*/
-	__forceinline ZObject::~ZObject() noexcept{}
+	__forceinline ZObject::~ZObject(){}
 
+	/*
+		重载=
+		深度复制
+		参数：
+			const ZObject& _object 被复制的object
+	*/
+	__forceinline const Void ZObject::operator=(const ZObject& _object){}
 
+	/*
+		重载=
+		浅度复制
+		参数：
+			const ZObject&& _object 被复制的object
+	*/
+	__forceinline const Void ZObject::operator=(const ZObject&& _object){}
 
 }
 

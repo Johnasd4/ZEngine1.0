@@ -15,6 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ZBasic\ZArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZBasicDrive.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZConstArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZContainer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZFixedArray.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZMemoryPool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZMutex.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZTuple.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
     <ClInclude Include="ZCore\ZBasicConstant.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -27,46 +54,22 @@
     <ClInclude Include="ZCore\ZCoreDrive.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZCore.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZObject.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZMutex.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZCore\ZTestMacro.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZArray.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZMemoryPool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZTuple.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZFixedArray.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZConstArray.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZBasic\ZContainer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="ZCore\ZErrorMessageMacro.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZCore\ZMainHeadFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZBasic\ZBasicDrive.h">
+    <ClInclude Include="ZCore\ZMetaProgram.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZCore\ZTestMacro.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZBasic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZCore.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZEngine.h">
