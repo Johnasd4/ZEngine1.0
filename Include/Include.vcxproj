@@ -19,25 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ZBasic\ZContainer.h" />
-    <ClInclude Include="ZBasic\ZBasicDrive.h" />
     <ClInclude Include="ZBasic.h" />
-    <ClInclude Include="ZEngine.h" />
+    <ClInclude Include="ZBasic\ZArray.h" />
+    <ClInclude Include="ZBasic\ZBasicDrive.h" />
+    <ClInclude Include="ZBasic\ZConstArray.h" />
+    <ClInclude Include="ZBasic\ZContainer.h" />
+    <ClInclude Include="ZBasic\ZFixedArray.h" />
+    <ClInclude Include="ZBasic\ZMemoryPool.h" />
+    <ClInclude Include="ZBasic\ZMutex.h" />
+    <ClInclude Include="ZBasic\ZObject.h" />
+    <ClInclude Include="ZBasic\ZTuple.h" />
+    <ClInclude Include="ZBasic\ZInstance.h" />
     <ClInclude Include="ZCore.h" />
     <ClInclude Include="ZCore\ZBasicConstant.h" />
     <ClInclude Include="ZCore\ZBasicType.h" />
     <ClInclude Include="ZCore\ZConsole.h" />
     <ClInclude Include="ZCore\ZCoreDrive.h" />
     <ClInclude Include="ZCore\ZErrorMessageMacro.h" />
-    <ClInclude Include="ZBasic\ZMemoryPool.h" />
-    <ClInclude Include="ZBasic\ZObject.h" />
-    <ClInclude Include="ZBasic\ZMutex.h" />
-    <ClInclude Include="ZCore\ZTestMacro.h" />
-    <ClInclude Include="ZBasic\ZArray.h" />
-    <ClInclude Include="ZBasic\ZTuple.h" />
-    <ClInclude Include="ZBasic\ZFixedArray.h" />
-    <ClInclude Include="ZBasic\ZConstArray.h" />
     <ClInclude Include="ZCore\ZMainHeadFile.h" />
+    <ClInclude Include="ZCore\ZMetaProgram.h" />
+    <ClInclude Include="ZCore\ZTestMacro.h" />
+    <ClInclude Include="ZEngine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
@@ -129,6 +131,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,6 +149,8 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeaderFile />
+      <PrecompiledHeaderOutputFile />
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

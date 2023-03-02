@@ -15,7 +15,7 @@ DLL_API ZMemoryPool* ZMemoryPool::InstancePtr = nullptr;
 /*
 	创建单例
 */
-DLL_API const Void ZMemoryPool::CreateInstance() 
+DLL_API const Void ZMemoryPool::CreateInstance() noexcept
 {
 	static ZMemoryPool memoryPool;
 	ZMemoryPool::InstancePtr = &memoryPool;
@@ -28,7 +28,7 @@ DLL_API const Void ZMemoryPool::CreateInstance()
 	返回：
 		const ZMemoryPiece* 内存块指针
 */
-DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSizeType& _size) 
+DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSizeType& _size) noexcept
 {
 
 #ifdef MEMORY_POOL_THREAD_SAFE
@@ -87,8 +87,12 @@ DLL_API ZMemoryPiece* ZMemoryPool::applyMemory(const ZMemoryPiece::MemoryPieceSi
 	参数：
 		ZMemoryPiece* _memoryPiecePtr 内存块指针
 */
-DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr) 
+DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr) noexcept
 {
+	//判断内存碎片是否存在
+	if(_memoryPiecePtr == nullptr){
+		return;
+	}
 
 #ifdef MEMORY_POOL_THREAD_SAFE
 	//线程锁
@@ -117,7 +121,7 @@ DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr)
 /*
 	构造函数
 */
-ZMemoryPool::ZMemoryPool() :
+ZMemoryPool::ZMemoryPool() noexcept :
 	systemMemoryAddress(nullptr)
 {
 	//初始化每种内存块链表
@@ -143,7 +147,7 @@ ZMemoryPool::ZMemoryPool() :
 /*
 	析构函数
 */
-ZMemoryPool::~ZMemoryPool() 
+ZMemoryPool::~ZMemoryPool() noexcept
 {
 
 	/*释放内存池的内存*/
@@ -185,7 +189,7 @@ ZMemoryPool::~ZMemoryPool()
 /*
 	添加内存块
 */
-const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) 
+const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) noexcept
 {
 	//需要申请内存块数量
 	Int32 addPieceNum = MEMORY_POOL_SIZE_DEFAULT_ARRAY(_type);
@@ -217,7 +221,7 @@ const Void ZMemoryPool::initMemoryPieceList(const Int32& _type)
 	参数：
 		const Int32& _type 内存块类型
 */
-const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) 
+const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) noexcept
 {
 	Int32 addPieceNum = (Int32)(momoryPieceListArray(_type).num * MEMORY_PIECE_AUTO_EXTEND_MUL_FACTOR);
 	//判断数量是否过少或者过多
@@ -239,7 +243,7 @@ const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type)
 		const Int32& _type 内存块类型
 		const Int32& _num 内存块数量
 */
-const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) 
+const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) noexcept
 {
 	//申请内存
 	Address memoryApplyAddress = malloc(_num * MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY(_type) + sizeof(Address));//多申请一个地址大小的内存用于链表存储

@@ -10,45 +10,39 @@ namespace ZEngine {
 	/*
 		动态数组，顺序存储
 	*/
-	template<typename _ElementType>
-	class ZArray :public ZContainer<_ElementType> 
+	template<typename _Object>
+	class ZArray :public ZContainer<_Object> 
 	{
 
 	public:
 
-
-
-	public:
-
 		/*
-			构造函数，仅初始化成员，数组为空
-			说明：
-				默认数组增长形式为倍增
-				默认增长参数大小为1.2
-				默认不调用元素的构造函数
-
+			构造函数
 		*/
 		ZArray();
 
 		/*
 			构造函数，创造指定大小的数组
-			说明：
-				默认数组增长形式为倍增
-				默认增长参数大小为1.2
 			参数：
-				const Int32& _arraySize 数组大小
-				const Boolean& _ifInitialElement 是否调用元素的构造函数
+				const Int32& _capacity 数组大小 
 		*/
-		ZArray(const Int32& _size, const Boolean& _containerElementIfCallConstructor = false);
-
-
+		ZArray(const Int32& _capacity);
 
 		/*
 			构造函数
+			深度复制
 			参数：
 				const Array& _array 被复制的数组
 		*/
 		ZArray(const ZArray& _array);
+
+		/*
+			构造函数
+			移动语义
+			参数：
+				const Array&& _array 被移动的数组
+		*/
+		ZArray(const ZArray&& _array);
 
 
 		/*
@@ -56,84 +50,86 @@ namespace ZEngine {
 		*/
 		~ZArray();
 
-
+		/*
+			重载()
+			参数：
+				const Int32& _index object下标
+			返回：
+				_Object& 下标对应的object的引用
+		*/
+		__forceinline _Object& operator()(const Int32& _index);
 
 		/*
 			重载()
 			参数：
-				const Int32& _elementIndex 元素下标
+				const Int32& _index object下标
 			返回：
-				_ElementType& 下标对应的元素的引用
+				const _Object& 下标对应的object的引用
 		*/
-		__forceinline _ElementType& operator()(const Int32& _elementIndex);
-
-		/*
-			重载()
-			参数：
-				const Int32& _elementIndex 元素下标
-			返回：
-				const _ElementType& 下标对应的元素的引用
-		*/
-		__forceinline const _ElementType& operator()(const Int32& _elementIndex) const;
+		__forceinline const _Object& operator()(const Int32& _index) const;
 
 		/*
 			重载=
+			深度复制
 			参数：
-				const Array& _array 数组
-			返回：
-				const Boolean 是否成功
+				const Array& _array 被复制的数组
 		*/
 		const Void operator=(const ZArray& _array);
 
 		/*
-			获取数组元素数量
-			返回：
-				const Int32& 元素数量
-		*/
-		__forceinline const Int32& getLength() const;
-
-		/*
-			添加元素到最后，逻辑使用memcpy进行复制整个元素
+			重载=
+			移动语义
 			参数：
-				const _ElementType& _element 需要添加的元素
-			返回：
-				const Boolean 是否成功
+				const Array&& _array 数组
 		*/
-		const Boolean push(const _ElementType& _element);
+		const Void operator=(const ZArray&& _array);
 
 
 		/*
-			添加空的元素
+			添加object到最后，逻辑使用memcpy进行复制整个object
 			参数：
-				const Int32& _emptyElementNum 添加的元素数量
-			返回：
-				const Boolean 是否成功
+				const _Object& _object 需要添加的object
 		*/
-		__forceinline const Boolean pushEmpty(const Int32& _emptyElementNum);
+		const Void push(const _Object& _object);
 
 
 
 		/*
-			插入元素到指定位置，将其余元素依次后移
+			添加空的object
+			参数：
+				const Int32& _num 添加的object数量
+		*/
+		const Void pushEmpty(const Int32& _num);
+
+
+		/*
+			设置object数量
+			会判断是否需要拓展空间
+			参数：
+				const Int32& 容器object数量
+		*/
+		const Void setSize(const Int32& _num);
+
+		/*
+			插入object到指定位置，将其余object依次后移
 			非常费时，无特别需要慎用
 			参数：
-				const _ElementType& _element 需要插入的元素
-				const Int32& _elementIndex 插入的下标
+				const Int32& _index 插入的下标
+				const _Object& _object 需要插入的object
 			返回：
 				const Boolean 是否成功
 		*/
-		const Boolean insert(const _ElementType& _element, const Int32& _elementIndex);
+		const Boolean insert(const Int32& _index, const _Object& _object);
 
 		/*
-			删除指定位置的元素，将后置元素前移
+			删除指定位置的object，将后置object前移
 			非常费时，无特别需要慎用
 			参数：
-				const Int32& _elementIndex 删除的下标
+				const Int32& _index 删除的下标
 			返回：
 				const Boolean 是否成功
 		*/
-		const Boolean remove(const Int32& _elementIndex);
-
+		const Boolean remove(const Int32& _index);
 
 		/*
 			清空数组
@@ -141,36 +137,202 @@ namespace ZEngine {
 		__forceinline const Void clear();
 
 
-
-	private:
-
-
-		/*
-			用该函数在类内调整数组长度
-			参数：
-				const Int32& _changeLength 长度变化的大小
-			返回：
-				const Boolean 是否成功
-		*/
-		const Boolean changeLength(const Int32& _changeLength);
-
-		/*
-			数组根据设定好的参数自增，直到能容下当前的数组大小
-			返回：
-				const Boolean 是否成功
-		*/
-		const Boolean autoExtend();
-
-
-	private:
-
-		//数组的元素数量
-		Int32 length;
-
-
-
-
 	};
+
+	/*
+		构造函数
+	*/
+	template<typename _Object>
+	ZArray<_Object>::ZArray() :
+		ZContainer<_Object>()
+	{}
+
+	/*
+		构造函数，创造指定大小的数组
+		参数：
+			const Int32& _capacity 数组大小
+	*/
+	template<typename _Object>
+	ZArray<_Object>::ZArray(const Int32& _capacity) :
+		ZContainer<_Object>(_capacity)
+	{}
+
+	/*
+		构造函数
+		深度复制
+		参数：
+			const Array& _array 被复制的数组
+	*/
+	template<typename _Object>
+	ZArray<_Object>::ZArray(const ZArray& _array) :
+		ZContainer<_Object>(_array)
+	{}
+
+	/*
+		构造函数
+		移动语义
+		参数：
+			const Array&& _array 被移动的数组
+	*/
+	template<typename _Object>
+	ZArray<_Object>::ZArray(const ZArray&& _array) :
+		ZContainer<_Object>(std::forward<ZArray>(_array))
+	{}
+
+
+	/*
+		析构函数
+	*/
+	template<typename _Object>
+	ZArray<_Object>::~ZArray() {}
+
+	/*
+		重载()
+		参数：
+			const Int32& _index object下标
+		返回：
+			_Object& 下标对应的object的引用
+	*/
+	template<typename _Object>
+	__forceinline _Object& ZArray<_Object>::operator()(const Int32& _index) 
+	{
+		return ZContainer<_Object>::operator()(_index);
+	}
+
+	/*
+		重载()
+		参数：
+			const Int32& _index object下标
+		返回：
+			const _Object& 下标对应的object的引用
+	*/
+	template<typename _Object>
+	__forceinline const _Object& ZArray<_Object>::operator()(const Int32& _index) const 
+	{
+		return ZContainer<_Object>::operator()(_index);
+	}
+
+	/*
+		重载=
+		深度复制
+		参数：
+			const Array& _array 被复制的数组
+	*/
+	template<typename _Object>
+	const Void ZArray<_Object>::operator=(const ZArray& _array) 
+	{
+		ZContainer<_Object>::operator=(_array);
+	}
+
+	/*
+		重载=
+		移动语义
+		参数：
+			const Array&& _array 数组
+	*/
+	template<typename _Object>
+	const Void ZArray<_Object>::operator=(const ZArray&& _array) 
+	{
+		ZContainer<_Object>::operator=(std::forward<ZArray>(_array));
+	}
+
+
+	/*
+		添加object到最后，逻辑使用memcpy进行复制整个object
+		参数：
+			const _Object& _object 需要添加的object
+	*/
+	template<typename _Object>
+	const Void ZArray<_Object>::push(const _Object& _object)
+	{
+		ZContainer<_Object>::changeSize(1);
+		(*this)(ZContainer<_Object>::getSize() - 1) = _object;
+	}
+
+
+
+	/*
+		添加空的object
+		参数：
+			const Int32& _num 添加的object数量
+	*/
+	template<typename _Object>
+	const Void ZArray<_Object>::pushEmpty(const Int32& _num) 
+	{
+		ZContainer<_Object>::changeSize(_num);
+	}
+
+	/*
+		设置object数量
+		会判断是否需要拓展空间
+		参数：
+			const Int32& 容器object数量
+	*/
+	template<typename _Object>
+	const Void ZArray<_Object>::setSize(const Int32& _num) 
+	{
+		ZContainer<_Object>::setSize(_num);
+	}
+
+	/*
+		插入object到指定位置，将其余object依次后移
+		非常费时，无特别需要慎用
+		参数：
+			const Int32& _index 插入的下标
+			const _Object& _object 需要插入的object
+		返回：
+			const Boolean 是否成功
+	*/
+	template<typename _Object>
+	const Boolean ZArray<_Object>::insert(const Int32& _index, const _Object& _object)
+	{
+		if (_index > ZContainer<_Object>::getSize()) 
+		{
+			return false;
+		}
+		//增加object数量
+		ZContainer<_Object>::changeSize(1);
+		//插入位置后的object后移
+		for (Int32 index = ZContainer<_Object>::getSize() - 1; index > _index; index--) 
+		{
+			(*this)(index) = (*this)(index - 1);
+		}
+		//插入object
+		(*this)(_index) = _object;
+		return true;
+	}
+
+	/*
+		删除指定位置的object，将后置object前移
+		非常费时，无特别需要慎用
+		参数：
+			const Int32& _index 删除的下标
+		返回：
+			const Boolean 是否成功
+	*/
+	template<typename _Object>
+	const Boolean ZArray<_Object>::remove(const Int32& _index) {
+		if (_index >= ZContainer<_Object>::getSize()) {
+			return false;
+		}
+		//减少object数量
+		ZContainer<_Object>::changeSize(-1);
+		//先释放删除object的资源
+		ZContainer<_Object>::freeObject<_Object>(_index);
+		//将删除object后面的object前移
+		memcpy((Address)(&(*this)(_index)), (Address)(&(*this)(_index + 1)), (ZContainer<_Object>::getSize() - _index) * sizeof(_Object));
+		//空余元素位置补充，防止析构时二次释放
+		ZContainer<_Object>::newObject<_Object>(ZContainer<_Object>::getSize());
+		return true;
+	}
+
+	/*
+		清空数组
+	*/
+	template<typename _Object>
+	__forceinline const Void ZArray<_Object>::clear() {
+		ZContainer<_Object>::clear();
+	}
 
 
 }
