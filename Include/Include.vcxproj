@@ -22,6 +22,7 @@
     <ClInclude Include="ZBasic\ZContainer.h" />
     <ClInclude Include="ZBasic\ZBasicDrive.h" />
     <ClInclude Include="ZBasic.h" />
+    <ClInclude Include="ZCore\ZMetaProgram.h" />
     <ClInclude Include="ZEngine.h" />
     <ClInclude Include="ZCore.h" />
     <ClInclude Include="ZCore\ZBasicConstant.h" />

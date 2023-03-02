@@ -21,16 +21,6 @@ namespace ZEngine {
 	public:
 
 		/*
-			构造函数，仅初始化成员，数组为空
-			说明：
-				默认数组增长形式为倍增
-				默认增长参数大小为1.2
-				默认不调用元素的构造函数
-
-		*/
-		ZArray();
-
-		/*
 			构造函数，创造指定大小的数组
 			说明：
 				默认数组增长形式为倍增
@@ -39,9 +29,7 @@ namespace ZEngine {
 				const Int32& _arraySize 数组大小
 				const Boolean& _ifInitialElement 是否调用元素的构造函数
 		*/
-		ZArray(const Int32& _size, const Boolean& _containerElementIfCallConstructor = false);
-
-
+		ZArray(const Int32& _capacity = DEFAULT_CAPACITY);
 
 		/*
 			构造函数
@@ -160,13 +148,6 @@ namespace ZEngine {
 				const Boolean 是否成功
 		*/
 		const Boolean autoExtend();
-
-
-	private:
-
-		//数组的元素数量
-		Int32 length;
-
 
 
 

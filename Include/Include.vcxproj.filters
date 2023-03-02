@@ -72,6 +72,9 @@
     <ClInclude Include="ZEngine.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ZCore\ZMetaProgram.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

@@ -54,7 +54,7 @@ namespace ZEngine {
 		/*
 			创建单例
 		*/
-		DLL_API static const Void CreateInstance();
+		DLL_API static const Void CreateInstance() noexcept;
 
 		//单例指针
 		DLL_API static ZMemoryPool* InstancePtr;
@@ -66,14 +66,14 @@ namespace ZEngine {
 			返回：
 				const ZMemoryPiece* 内存块指针
 		*/
-		DLL_API ZMemoryPiece* applyMemory(const ZMemoryPiece::MemoryPieceSizeType& _size);
+		DLL_API ZMemoryPiece* applyMemory(const ZMemoryPiece::MemoryPieceSizeType& _size) noexcept;
 
 		/*
 			释放内存
 			参数：
 				ZMemoryPiece* _memoryPiecePtr 内存块指针
 		*/
-		DLL_API const Void releaseMemory(ZMemoryPiece* _memoryPiecePtr);
+		DLL_API const Void releaseMemory(ZMemoryPiece* _memoryPiecePtr) noexcept;
 
 	private:
 
@@ -144,12 +144,12 @@ namespace ZEngine {
 		/*
 			构造函数
 		*/
-		ZMemoryPool();
+		ZMemoryPool() noexcept;
 
 		/*
 			析构函数
 		*/
-		~ZMemoryPool();
+		~ZMemoryPool() noexcept;
 
 
 
@@ -158,14 +158,14 @@ namespace ZEngine {
 			参数：
 				const Int32& _type 内存块类型
 		*/
-		const Void initMemoryPieceList(const Int32& _type);
+		const Void initMemoryPieceList(const Int32& _type) noexcept;
 
 		/*
 			添加内存块
 			参数：
 				const Int32& _type 内存块类型
 		*/
-		const Void autoAddMemoryPiece(const Int32& _type);
+		const Void autoAddMemoryPiece(const Int32& _type) noexcept;
 
 
 		/*
@@ -174,12 +174,12 @@ namespace ZEngine {
 				const Int32& _type 内存块类型
 				const Int32& _num 内存块数量
 		*/
-		const Void addMemoryPiece(const Int32& _type, const Int32& _num);
+		const Void addMemoryPiece(const Int32& _type, const Int32& _num) noexcept;
 
 		/*
 			添加大内存块
 		*/
-		const Void addBigMemoryPiece();
+		const Void addBigMemoryPiece() noexcept;
 
 	private:
 
