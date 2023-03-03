@@ -283,6 +283,7 @@ namespace ZEngine
 			}
 		}
 
+
 		/*
 			复制函数
 			容器object复制
@@ -530,6 +531,79 @@ namespace ZEngine
 	*/
 	template<typename _Object>
 	__forceinline const _Object& ZContainer<_Object>::operator()(const Int32& _index) const
+	{
+		return getObjectPtr()[_index];
+	}
+
+	/*
+		重载=
+		深度复制
+		参数：
+			const ZContainer& _container 被复制的容器
+	*/
+	template<typename _ObjectType>
+	__forceinline const Void ZContainer<_ObjectType>::operator=(const ZContainer& _container) 
+	{
+		ZObject::operator=(_container);
+		//拓展前容器需要的内存大小
+		ZMemoryPiece::MemoryPieceSizeType memorySize = _container.capacity * sizeof(_ObjectType);
+		//判断当前内存块是否不够大
+		if (memorySize > memoryPiecePtr->size) {
+			//向内存池申请内存
+			ZMemoryPiece* tempMemoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(memorySize);
+			//释放当前内存块
+			ZMemoryPool::InstancePtr->releaseMemory(memoryPiecePtr);
+			//修改当前容器的内存块
+			memoryPiecePtr = tempMemoryPiecePtr;
+		}
+		//复制元素
+		capacity = _container.capacity;
+		size = _container.size;
+		copyObject<_ObjectType>(_container);
+		
+	}
+
+	/*
+		重载=
+		浅度复制
+		参数：
+			const ZContainer&& _container 被复制的容器
+	*/
+	template<typename _ObjectType>
+	__forceinline const Void ZContainer<_ObjectType>::operator=(const ZContainer&& _container) 
+	{
+		ZObject::operator=(std::forward<ZContainer>(_container));
+		memoryPiecePtr = _container.memoryPiecePtr;
+		capacity = _container.capacity;
+		size = _container.size;
+		//防止内存块被释放两次
+		_container.memoryPiecePtr = nullptr;
+	}
+
+	/*
+		重载（）
+		获取容器元素的引用
+		参数：
+			const Int32& _index 元素下标
+		返回：
+			_ObjectType& 元素的引用
+	*/
+	template<typename _ObjectType>
+	__forceinline _ObjectType& ZContainer<_ObjectType>::operator()(const Int32& _index)
+	{
+		return getObjectPtr()[_index];
+	}
+
+	/*
+		重载（）
+		获取容器元素的引用
+		参数：
+			const Int32& _index 元素下标
+		返回：
+			const _ObjectType& 元素的引用
+	*/
+	template<typename _ObjectType>
+	__forceinline const _ObjectType& ZContainer<_ObjectType>::operator()(const Int32& _index) const
 	{
 		return getObjectPtr()[_index];
 	}

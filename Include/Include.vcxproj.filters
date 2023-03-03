@@ -54,10 +54,10 @@
     <ClInclude Include="ZCore\ZCoreDrive.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZCore\ZErrorMessageMacro.h">
+    <ClInclude Include="ZCore\ZMainHeadFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZCore\ZMainHeadFile.h">
+    <ClInclude Include="ZCore\ZMetaProgram.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZCore\ZMetaProgram.h">
