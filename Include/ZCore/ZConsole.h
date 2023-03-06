@@ -4,9 +4,11 @@
 #include"ZBasicType.h"
 #include"..\ZBasic\ZMutex.h"
 
-namespace ZEngine {
+namespace ZEngine 
+{
 
-	namespace Console {
+	namespace Console 
+	{
 
 
 	/*
@@ -14,7 +16,8 @@ namespace ZEngine {
 	*/
 #pragma region 控制台输出
 
-		namespace Private{
+		namespace Private
+		{
 
 			//控制台输出颜色
 			extern UInt16 ConsoleFrontColour;
@@ -65,10 +68,10 @@ namespace ZEngine {
 		/*
 			设置输出字符串到屏幕的颜色
 			参数：
-				const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-				const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+				const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+				const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 		*/
-		DLL_API const Void setPrintColour(const UInt16&& _frontColour, const UInt16&& _backColour) noexcept;
+		DLL_API const Void setPrintColour(const UInt16 _frontColour, const UInt16 _backColour) noexcept;
 
 		/*
 			输出字符串到屏幕
@@ -110,37 +113,37 @@ namespace ZEngine {
 			输出字符串到屏幕
 			参数：
 				const CChar* _string 要输出的字符串
-				const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-				const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+				const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+				const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 		*/
-		DLL_API const Void print(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept;
+		DLL_API const Void print(const CChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept;
 
 		/*
 			输出字符串到屏幕，自动换行
 			参数：
 				const CChar* _string 要输出的字符串
-				const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-				const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+				const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+				const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 		*/
-		DLL_API const Void printInLine(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept;
+		DLL_API const Void printInLine(const CChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept;
 
 		/*
 			输出字符串到屏幕
 			参数：
 				const CChar* _string 要输出的字符串
-				const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-				const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+				const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+				const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 		*/
-		DLL_API const Void print(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept;
+		DLL_API const Void print(const TChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept;
 
 		/*
 			输出字符串到屏幕，自动换行
 			参数：
 				const CChar* _string 要输出的字符串
-				const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-				const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+				const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+				const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 		*/
-		DLL_API const Void printInLine(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept;
+		DLL_API const Void printInLine(const TChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept;
 
 		/*
 			输出字符串到屏幕

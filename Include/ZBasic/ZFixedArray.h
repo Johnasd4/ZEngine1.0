@@ -8,7 +8,8 @@
 
 
 
-namespace ZEngine {
+namespace ZEngine 
+{
 
 	/*
 		静态数组，顺序存储，存储在栈区
@@ -34,20 +35,20 @@ namespace ZEngine {
 		/*
 			重载()
 			参数：
-				const Int32& _index 元素下标
+				const Int32 _index 元素下标
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		__forceinline _ElementType& operator()(const Int32& _index);
+		__forceinline _ElementType& operator()(const Int32 _index);
 
 		/*
 			重载()
 			参数：
-				const Int32& _index 元素下标
+				const Int32 _index 元素下标
 			返回：
 				const _ElementType& 下标对应的元素的引用
 		*/
-		__forceinline const _ElementType& operator()(const Int32& _index) const;
+		__forceinline const _ElementType& operator()(const Int32 _index) const;
 
 		/*
 			获取数组的大小
@@ -82,12 +83,12 @@ namespace ZEngine {
 	/*
 		重载()
 		参数：
-			const Int32& _index 元素下标
+			const Int32 _index 元素下标
 		返回：
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	__forceinline _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) 
+	__forceinline _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32 _index) 
 	{
 		return this->array[_index];
 	}
@@ -95,12 +96,12 @@ namespace ZEngine {
 	/*
 		重载()
 		参数：
-			const Int32& _index 元素下标
+			const Int32 _index 元素下标
 		返回：
 			const _ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	__forceinline const _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32& _index) const 
+	__forceinline const _ElementType& ZFixedArray<_ElementType, _size>::operator()(const Int32 _index) const 
 	{
 		return this->array[_index];
 	}

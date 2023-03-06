@@ -122,7 +122,7 @@ DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr) noe
 	构造函数
 */
 ZMemoryPool::ZMemoryPool() noexcept :
-	systemMemoryAddress(nullptr)
+	momoryPieceSystemMemoryAddress(nullptr)
 {
 	//初始化每种内存块链表
 	for (Int32 index = 0; index < MEMORY_PIECE_TYPE_NUM; index++) 
@@ -154,14 +154,14 @@ ZMemoryPool::~ZMemoryPool() noexcept
 
 	//下一块内存
 	Address nextSystemMemoryAddress;
-	while (systemMemoryAddress != nullptr) 
+	while (momoryPieceSystemMemoryAddress != nullptr) 
 	{
 		//暂存下一内存块地址	
-		nextSystemMemoryAddress = *((Address*)systemMemoryAddress);
+		nextSystemMemoryAddress = *((Address*)momoryPieceSystemMemoryAddress);
 		//释放当前内存块
-		free(systemMemoryAddress);
+		free(momoryPieceSystemMemoryAddress);
 		//将链表头指向下一块内存地址
-		systemMemoryAddress = nextSystemMemoryAddress;
+		momoryPieceSystemMemoryAddress = nextSystemMemoryAddress;
 	}
 
 #ifdef MEMORY_POOL_TEST_SIZE
@@ -188,12 +188,14 @@ ZMemoryPool::~ZMemoryPool() noexcept
 
 /*
 	添加内存块
+	参数：
+		const Int32 _type 内存块类型
 */
-const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) noexcept
+const Void ZMemoryPool::initMemoryPieceList(const Int32 _type) noexcept
 {
 	//需要申请内存块数量
 	Int32 addPieceNum = MEMORY_POOL_SIZE_DEFAULT_ARRAY(_type);
-	//如果申请大小大于最大值则1个G，1个G申请
+	//如果申请大小大于最大值
 	while (addPieceNum > ADD_PIECE_MAX_NUM_ARRAY(_type)) 
 	{
 		//申请内存块
@@ -206,12 +208,6 @@ const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) noexcept
 	{
 		return;
 	}
-
-	//如果小于最申请最小值则补充
-	if (addPieceNum < ADD_PIECE_MIN_NUM_ARRAY(_type)) 
-	{
-		addPieceNum = ADD_PIECE_MIN_NUM_ARRAY(_type);
-	}
 	//申请内存块
 	addMemoryPiece(_type, addPieceNum);
 }
@@ -219,17 +215,13 @@ const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) noexcept
 /*
 	添加内存块
 	参数：
-		const Int32& _type 内存块类型
+		const Int32 _type 内存块类型
 */
-const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) noexcept
+const Void ZMemoryPool::autoAddMemoryPiece(const Int32 _type) noexcept
 {
 	Int32 addPieceNum = (Int32)(momoryPieceListArray(_type).num * MEMORY_PIECE_AUTO_EXTEND_MUL_FACTOR);
-	//判断数量是否过少或者过多
-	if (addPieceNum < ADD_PIECE_MIN_NUM_ARRAY(_type)) 
-	{
-		addPieceNum = ADD_PIECE_MIN_NUM_ARRAY(_type);
-	}
-	else if (addPieceNum > ADD_PIECE_MAX_NUM_ARRAY(_type)) 
+	//判断是否超过最大值
+	if (addPieceNum > ADD_PIECE_MAX_NUM_ARRAY(_type)) 
 	{
 		addPieceNum = ADD_PIECE_MAX_NUM_ARRAY(_type);
 	}
@@ -240,22 +232,26 @@ const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) noexcept
 /*
 	为内存池添加内存块
 	参数：
-		const Int32& _type 内存块类型
-		const Int32& _num 内存块数量
+		const Int32 _type 内存块类型
+		const Int32 _num 内存块数量
 */
-const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) noexcept
+const Void ZMemoryPool::addMemoryPiece(const Int32 _type, const Int32 _num) noexcept
 {
+	//计算申请内存的大小，对齐最小申请内存单位
+	UInt32 applyMemorySize = ((_num * MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY(_type) + sizeof(Address)) / APPLY_MEMORY_UNIT_SIZE + 1) * APPLY_MEMORY_UNIT_SIZE;	
+	//计算修正后申请多少个内存块
+	Int32 applyPieceNum = applyMemorySize / MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY(_type);
 	//申请内存
-	Address memoryApplyAddress = malloc(_num * MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY(_type) + sizeof(Address));//多申请一个地址大小的内存用于链表存储
-	*((Address*)memoryApplyAddress) = systemMemoryAddress;	//新内存块为链表头
-	systemMemoryAddress = memoryApplyAddress;
+	Address memoryApplyAddress = malloc(applyMemorySize);//多申请一个地址大小的内存用于链表存储
+	*((Address*)memoryApplyAddress) = momoryPieceSystemMemoryAddress;	//新内存块为链表头
+	momoryPieceSystemMemoryAddress = memoryApplyAddress;
 	//将地址指向去除头部信息的内存块的地址
 	memoryApplyAddress = (Address)((UIntAddress)memoryApplyAddress + sizeof(Address));
 	//分配内存块
 	UIntAddress pieceAddress = (UIntAddress)memoryApplyAddress;
-	UIntAddress memoryAddress = pieceAddress + sizeof(ZMemoryPiece) * _num;
+	UIntAddress memoryAddress = pieceAddress + sizeof(ZMemoryPiece) * applyPieceNum;
 	//初始化内存块
-	for (Int32 pieceCount = 0; pieceCount < _num; pieceCount++) 
+	for (Int32 pieceCount = 0; pieceCount < applyPieceNum; pieceCount++)
 	{
 		((ZMemoryPiece*)pieceAddress)->nextMemoryPiece = (ZMemoryPiece*)(pieceAddress + sizeof(ZMemoryPiece));
 		((ZMemoryPiece*)pieceAddress)->memoryAddress = (Address)memoryAddress;
@@ -270,7 +266,7 @@ const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) no
 	//头
 	momoryPieceListArray(_type).headPointer = (ZMemoryPiece*)(memoryApplyAddress);
 	//修正列表数量
-	momoryPieceListArray(_type).num += _num;
+	momoryPieceListArray(_type).num += applyPieceNum;
 
 
 

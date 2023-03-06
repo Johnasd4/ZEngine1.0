@@ -36,16 +36,16 @@ namespace ZEngine
 		/*
 			获取容器大小
 			返回：
-				const Int32& 容器大小
+				const Int32 容器大小
 		*/
-		__forceinline const Int32& getCapacity() const;
+		__forceinline const Int32 getCapacity() const;
 
 		/*
 			获取容器object数量
 			返回：
-				const Int32& 容器object数量
+				const Int32 容器object数量
 		*/
-		__forceinline const Int32& getSize() const;
+		__forceinline const Int32 getSize() const;
 
 	protected:
 
@@ -58,9 +58,9 @@ namespace ZEngine
 		/*
 			构造函数
 			参数：
-				const Int32& _capacity 容器大小
+				const Int32 _capacity 容器大小
 		*/
-		__forceinline ZContainer(const Int32& _capacity);
+		__forceinline ZContainer(const Int32 _capacity);
 
 		/*
 			构造函数
@@ -74,9 +74,9 @@ namespace ZEngine
 			构造函数
 			移动语义
 			参数：
-				const ZContainer&& _container 被移动的容器
+				ZContainer&& _container 被移动的容器
 		*/
-		__forceinline ZContainer(const ZContainer&& _container);
+		__forceinline ZContainer(ZContainer&& _container);
 
 		/*
 			析构函数
@@ -98,29 +98,29 @@ namespace ZEngine
 			重载=
 			移动语义
 			参数：
-				const ZContainer&& _container 被复制的容器
+				ZContainer&& _container 被复制的容器
 		*/
-		__forceinline const Void operator=(const ZContainer&& _container);
+		__forceinline const Void operator=(ZContainer&& _container);
 
 		/*
 			重载（）
 			获取容器object的引用
 			参数：
-				const Int32& _index object下标
+				const Int32 _index object下标
 			返回：
 				_Object& object的引用
 		*/
-		__forceinline _Object& operator()(const Int32& _index);
+		__forceinline _Object& operator()(const Int32 _index);
 
 		/*
 			重载（）
 			获取容器object的引用
 			参数：
-				const Int32& _index object下标
+				const Int32 _index object下标
 			返回：
 				const _Object& object的引用
 		*/
-		__forceinline const _Object& operator()(const Int32& _index) const;
+		__forceinline const _Object& operator()(const Int32 _index) const;
 
 
 
@@ -141,16 +141,16 @@ namespace ZEngine
 		/*
 			设置object数量
 			参数：
-				const Int32& 容器object数量
+				const Int32 容器object数量
 		*/
-		__forceinline const Void setSize(const Int32& _size);
+		__forceinline const Void setSize(const Int32 _size);
 
 		/*
 			改变object数量
 			参数：
-				const Int32& _offset 偏差值
+				const Int32 _offset 偏差值
 		*/
-		__forceinline const Void changeSize(const Int32& _offset);
+		__forceinline const Void changeSize(const Int32 _offset);
 
 		/*
 			清空容器
@@ -191,10 +191,10 @@ namespace ZEngine
 				判断类是否存在NEW_CALL_CONSTRUCTOR_FREE_CALL_DESTRUCTOR成员
 				如果存在则判断是否需要进行析构
 			参数：
-				const Int32& _index 析构object的下标
+				const Int32 _index 析构object的下标
 		*/
 		template<typename _CheckMemberObject, decltype(_CheckMemberObject::NEW_CALL_CONSTRUCTOR_FREE_CALL_DESTRUCTOR) _memberExist = true>
-		__forceinline const Void freeObject(const Int32& _index)
+		__forceinline const Void freeObject(const Int32 _index)
 		{
 			freeObjectCallDestructor<_CheckMemberObject::NEW_CALL_CONSTRUCTOR_FREE_CALL_DESTRUCTOR>(_index);
 		}
@@ -202,10 +202,10 @@ namespace ZEngine
 		__forceinline const Void freeObject(...) {}
 		//不调用析构函数
 		template<Boolean _ifCallDestructor>
-		__forceinline const Void freeObjectCallDestructor(const Int32& _index) {}
+		__forceinline const Void freeObjectCallDestructor(const Int32 _index) {}
 		//调用析构函数
 		template<>
-		__forceinline const Void freeObjectCallDestructor<true>(const Int32& _index)
+		__forceinline const Void freeObjectCallDestructor<true>(const Int32 _index)
 		{
 			(*this)(_index).~_Object();
 		}
@@ -217,14 +217,21 @@ namespace ZEngine
 		/*
 			容器拓展函数
 			参数：
-				const Int32& _capacity 扩展后容器大小
+				const Int32 _capacity 扩展后容器大小
 		*/
-		const Void extend(const Int32& _capacity) noexcept;
+		const Void extend(const Int32 _capacity) noexcept;
 
 		/*
 			容器自动拓展函数
 		*/
 		const Void autoExtend() noexcept;
+
+		/*
+			移动语义摧毁容器
+			会将所有容器属性清空而不进行任何操作
+			不会归还内存，仅用于移动语义
+		*/
+		__forceinline const Void move_destroy();
 
 		/*
 			构造函数
@@ -233,11 +240,11 @@ namespace ZEngine
 				判断类是否存在NEW_CALL_CONSTRUCTOR_FREE_CALL_DESTRUCTOR成员
 				如果存在则判断是否需要初始化object
 			参数：
-				const Address& _address 初始化的地址
-				const Int32& _num 初始化的数量
+				const Address _address 初始化的地址
+				const Int32 _num 初始化的数量
 		*/
 		template<typename _CheckMemberObject, decltype(_CheckMemberObject::NEW_CALL_CONSTRUCTOR_FREE_CALL_DESTRUCTOR) _memberExist = true>
-		__forceinline const Void newContainer(const Address& _address, const Int32& _num)
+		__forceinline const Void newContainer(const Address _address, const Int32 _num)
 		{
 			newContainerCallConstructor<_CheckMemberObject::NEW_CALL_CONSTRUCTOR_FREE_CALL_DESTRUCTOR>(_address, _num);
 		}
@@ -245,10 +252,10 @@ namespace ZEngine
 		__forceinline const Void newContainer(...) {}
 		//不调用构造函数
 		template<Boolean _ifCallConstructor>
-		__forceinline const Void newContainerCallConstructor(const Address& _address, const Int32& _num) {}
+		__forceinline const Void newContainerCallConstructor(const Address _address, const Int32 _num) {}
 		//调用构造函数
 		template<>
-		__forceinline const Void newContainerCallConstructor<true>(const Address& _address, const Int32& _num)
+		__forceinline const Void newContainerCallConstructor<true>(const Address _address, const Int32 _num)
 		{
 			new(_address) _Object[_num];
 		}
@@ -390,10 +397,10 @@ namespace ZEngine
 		构造函数
 		多object容器初始化
 		参数：
-			const Int32& _capacity 容器大小
+			const Int32 _capacity 容器大小
 	*/
 	template<typename _Object>
-	__forceinline ZContainer<_Object>::ZContainer(const Int32& _capacity) :
+	__forceinline ZContainer<_Object>::ZContainer(const Int32 _capacity) :
 		ZObject(),
 		capacity(_capacity),
 		size(0)
@@ -430,17 +437,17 @@ namespace ZEngine
 		构造函数
 		移动语义
 		参数：
-			const ZContainer&& _container 被移动的容器
+			ZContainer&& _container 被移动的容器
 	*/
 	template<typename _Object>
-	__forceinline ZContainer<_Object>::ZContainer(const ZContainer&& _container) :
+	__forceinline ZContainer<_Object>::ZContainer(ZContainer&& _container) :
 		ZObject(std::forward<ZContainer>(_container)),
 		memoryPiecePtr(_container.memoryPiecePtr),
 		capacity(_container.capacity),
 		size(_container.size)
 	{
 		//防止内存块被释放两次
-		_container.memoryPiecePtr = nullptr;
+		_container.move_destroy();
 	}
 
 	/*
@@ -494,29 +501,29 @@ namespace ZEngine
 		重载=
 		移动语义
 		参数：
-			const ZContainer&& _container 被移动的容器
+			ZContainer&& _container 被移动的容器
 	*/
 	template<typename _Object>
-	__forceinline const Void ZContainer<_Object>::operator=(const ZContainer&& _container) 
+	__forceinline const Void ZContainer<_Object>::operator=(ZContainer&& _container) 
 	{
 		ZObject::operator=(std::forward<ZContainer>(_container));
 		memoryPiecePtr = _container.memoryPiecePtr;
 		capacity = _container.capacity;
 		size = _container.size;
 		//防止内存块被释放两次
-		_container.memoryPiecePtr = nullptr;
+		_container.move_destroy();
 	}
 
 	/*
 		重载（）
 		获取容器object的引用
 		参数：
-			const Int32& _index object下标
+			const Int32 _index object下标
 		返回：
 			_Object& object的引用
 	*/
 	template<typename _Object>
-	__forceinline _Object& ZContainer<_Object>::operator()(const Int32& _index)
+	__forceinline _Object& ZContainer<_Object>::operator()(const Int32 _index)
 	{
 		return getObjectPtr()[_index];
 	}
@@ -525,88 +532,17 @@ namespace ZEngine
 		重载（）
 		获取容器object的引用
 		参数：
-			const Int32& _index object下标
+			const Int32 _index object下标
 		返回：
 			const _Object& object的引用
 	*/
 	template<typename _Object>
-	__forceinline const _Object& ZContainer<_Object>::operator()(const Int32& _index) const
+	__forceinline const _Object& ZContainer<_Object>::operator()(const Int32 _index) const
 	{
 		return getObjectPtr()[_index];
 	}
 
-	/*
-		重载=
-		深度复制
-		参数：
-			const ZContainer& _container 被复制的容器
-	*/
-	template<typename _ObjectType>
-	__forceinline const Void ZContainer<_ObjectType>::operator=(const ZContainer& _container) 
-	{
-		ZObject::operator=(_container);
-		//拓展前容器需要的内存大小
-		ZMemoryPiece::MemoryPieceSizeType memorySize = _container.capacity * sizeof(_ObjectType);
-		//判断当前内存块是否不够大
-		if (memorySize > memoryPiecePtr->size) {
-			//向内存池申请内存
-			ZMemoryPiece* tempMemoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(memorySize);
-			//释放当前内存块
-			ZMemoryPool::InstancePtr->releaseMemory(memoryPiecePtr);
-			//修改当前容器的内存块
-			memoryPiecePtr = tempMemoryPiecePtr;
-		}
-		//复制元素
-		capacity = _container.capacity;
-		size = _container.size;
-		copyObject<_ObjectType>(_container);
-		
-	}
 
-	/*
-		重载=
-		浅度复制
-		参数：
-			const ZContainer&& _container 被复制的容器
-	*/
-	template<typename _ObjectType>
-	__forceinline const Void ZContainer<_ObjectType>::operator=(const ZContainer&& _container) 
-	{
-		ZObject::operator=(std::forward<ZContainer>(_container));
-		memoryPiecePtr = _container.memoryPiecePtr;
-		capacity = _container.capacity;
-		size = _container.size;
-		//防止内存块被释放两次
-		_container.memoryPiecePtr = nullptr;
-	}
-
-	/*
-		重载（）
-		获取容器元素的引用
-		参数：
-			const Int32& _index 元素下标
-		返回：
-			_ObjectType& 元素的引用
-	*/
-	template<typename _ObjectType>
-	__forceinline _ObjectType& ZContainer<_ObjectType>::operator()(const Int32& _index)
-	{
-		return getObjectPtr()[_index];
-	}
-
-	/*
-		重载（）
-		获取容器元素的引用
-		参数：
-			const Int32& _index 元素下标
-		返回：
-			const _ObjectType& 元素的引用
-	*/
-	template<typename _ObjectType>
-	__forceinline const _ObjectType& ZContainer<_ObjectType>::operator()(const Int32& _index) const
-	{
-		return getObjectPtr()[_index];
-	}
 
 
 	/*
@@ -634,10 +570,10 @@ namespace ZEngine
 	/*
 		获取容器大小
 		返回：
-			const Int32& 容器大小
+			const Int32 容器大小
 	*/
 	template<typename _Object>
-	__forceinline const Int32& ZContainer<_Object>::getCapacity() const 
+	__forceinline const Int32 ZContainer<_Object>::getCapacity() const 
 	{
 		return capacity;
 	}
@@ -645,10 +581,10 @@ namespace ZEngine
 	/*
 		获取容器object数量
 		返回：
-			const Int32& 容器object数量
+			const Int32 容器object数量
 	*/
 	template<typename _Object>
-	__forceinline const Int32& ZContainer<_Object>::getSize() const 
+	__forceinline const Int32 ZContainer<_Object>::getSize() const 
 	{
 		return size;
 	}
@@ -657,10 +593,10 @@ namespace ZEngine
 		设置object数量
 		会判断是否需要拓展空间
 		参数：
-			const Int32& 容器object数量
+			const Int32 容器object数量
 	*/
 	template<typename _Object>
-	__forceinline const Void ZContainer<_Object>::setSize(const Int32& _size) 
+	__forceinline const Void ZContainer<_Object>::setSize(const Int32 _size) 
 	{
 		size = _size;
 		//如果object过多，则自动拓展容器
@@ -672,10 +608,10 @@ namespace ZEngine
 	/*
 		改变object数量
 		参数：
-			const Int32& _offset 偏差值
+			const Int32 _offset 偏差值
 	*/
 	template<typename _Object>
-	__forceinline const Void ZContainer<_Object>::changeSize(const Int32& _offset) {
+	__forceinline const Void ZContainer<_Object>::changeSize(const Int32 _offset) {
 		size += _offset;
 		//如果object过多，则自动拓展容器
 		if (size > capacity) {
@@ -695,10 +631,10 @@ namespace ZEngine
 	/*
 		容器拓展函数
 		参数：
-			const Int32& _capacity 扩展后容器大小
+			const Int32 _capacity 扩展后容器大小
 	*/
 	template<typename _Object>
-	const Void ZContainer<_Object>::extend(const Int32& _capacity) noexcept
+	const Void ZContainer<_Object>::extend(const Int32 _capacity) noexcept
 	{
 		//拓展前容器需要的内存大小
 		ZMemoryPiece::MemoryPieceSizeType originMemorySize = capacity * sizeof(_Object);
@@ -732,6 +668,17 @@ namespace ZEngine
 		} while (tempCapacity < this->size);
 		extend((Int32)tempCapacity);
 	}
+
+	/*
+		摧毁容器
+	*/
+	template<typename _Object>
+	__forceinline const Void ZContainer<_Object>::move_destroy() {
+		memoryPiecePtr = nullptr;
+		capacity = 0;
+		size = 0;
+	}
+
 
 }
 

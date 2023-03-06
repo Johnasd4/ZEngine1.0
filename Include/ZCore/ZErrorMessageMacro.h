@@ -21,27 +21,20 @@
 	}
 
 
-namespace ZEngine {
-	namespace Private {
+namespace ZEngine 
+{
+	namespace Private 
+	{
 		/*
 			输出错误信息
 			参数：
 				const CChar* _file 文件名
 				const CChar* _func 函数名
-				const Int32&& _line 行数
+				const Int32 _line 行数
 				const CChar* _string 要输出的错误信息
 		*/
-		DLL_API const Void errorMessageConsolePrint(const CChar* _file, const CChar* _func, const Int32&& _line, const CChar* _string) noexcept;
+		DLL_API const Void errorMessageConsolePrint(const CChar* _file, const CChar* _func, const Int32 _line, const CChar* _string) noexcept;
 
-		/*
-			输出错误信息
-			参数：
-				const CChar* _file 文件名
-				const CChar* _func 函数名
-				const Int32&& _line 行数
-				const TChar* _string 要输出的错误信息
-		*/
-		DLL_API const Void errorMessageConsolePrint(const CChar* _file, const CChar* _func, const Int32&& _line, const TChar* _string) noexcept;
 	}
 }
 
