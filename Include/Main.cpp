@@ -15,6 +15,16 @@ int main()
         a.push(index);
     }
     a.remove(10);
+    FIELD_OFFSET();
+    for (Int32 index = 0; index < a.getSize(); index++) {
+        cout << a(index) << endl;
+    }
+
+    Int32* b= new Int32(1);
+    Int32** c = &b;
+
+    cout << *b;
+    cout << **c;
 
     return 0;
  

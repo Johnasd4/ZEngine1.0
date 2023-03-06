@@ -227,6 +227,16 @@ namespace ZEngine
 		const Void autoExtend() noexcept;
 
 		/*
+			替换内存块
+			参数：
+				const Int32 _usedMemorySize 原本使用的内存块大小
+				const Int32 _applyMemorySize 替换内存块需要的大小
+		*/
+		const Void changeMemoryPiece(const Int32 _usedMemorySize, const Int32 _applyMemorySize);
+
+
+
+		/*
 			移动语义摧毁容器
 			会将所有容器属性清空而不进行任何操作
 			不会归还内存，仅用于移动语义
@@ -369,6 +379,8 @@ namespace ZEngine
 	private:
 		//内存块指针
 		ZMemoryPiece* memoryPiecePtr;
+		//指向容器的指针
+		_Object* objectPtr;
 		//容器的大小
 		Int32 capacity;
 		//容器的object数量
@@ -388,6 +400,8 @@ namespace ZEngine
 		ZMemoryPiece::MemoryPieceSizeType memorySize = DEFAULT_CAPACITY * sizeof(_Object);
 		//申请内存
 		memoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(memorySize);
+		//初始化容器指针
+		objectPtr = (_Object*)memoryPiecePtr->memoryAddress;
 		//申请成功则在指定地址上new该对象或数据（如果需要的话）,并保存到容器指针上		
 		newContainer<_Object>(memoryPiecePtr->memoryAddress, DEFAULT_CAPACITY);
 	}
@@ -409,6 +423,8 @@ namespace ZEngine
 		ZMemoryPiece::MemoryPieceSizeType memorySize = _capacity * sizeof(_Object);
 		//申请内存
 		memoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(memorySize);
+		//初始化容器指针
+		objectPtr = (_Object*)memoryPiecePtr->memoryAddress;
 		//申请成功则在指定地址上new该对象或数据（如果需要的话）,并保存到容器指针上		
 		newContainer<_Object>(memoryPiecePtr->memoryAddress, _capacity);
 	}
@@ -429,6 +445,8 @@ namespace ZEngine
 		ZMemoryPiece::MemoryPieceSizeType memorySize = capacity * sizeof(_Object);
 		//申请内存
 		memoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(memorySize);
+		//初始化容器指针
+		objectPtr = (_Object*)memoryPiecePtr->memoryAddress;
 		//申请成功则在指定地址上new该对象或数据（如果需要的话）,并保存到容器指针上		
 		newCopyContainer<_Object>(_container);
 	}
@@ -443,6 +461,7 @@ namespace ZEngine
 	__forceinline ZContainer<_Object>::ZContainer(ZContainer&& _container) :
 		ZObject(std::forward<ZContainer>(_container)),
 		memoryPiecePtr(_container.memoryPiecePtr),
+		objectPtr(_container.objectPtr),
 		capacity(_container.capacity),
 		size(_container.size)
 	{
@@ -474,20 +493,11 @@ namespace ZEngine
 	__forceinline const Void ZContainer<_Object>::operator=(const ZContainer& _container) 
 	{
 		ZObject::operator=(_container);
-
 		//容器需要的内存大小
 		ZMemoryPiece::MemoryPieceSizeType memorySize = _container.capacity * sizeof(_Object);
-
 		//判断当前内存块是否不够大
 		if (memorySize > memoryPiecePtr->size) {
-			//向内存池申请内存
-			ZMemoryPiece* tempMemoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(memorySize);
-			//将当前内存块保存的数据转化到临时内存快上
-			memcpy(tempMemoryPiecePtr->memoryAddress, memoryPiecePtr->memoryAddress, capacity * sizeof(_Object));
-			//释放当前内存块
-			ZMemoryPool::InstancePtr->releaseMemory(memoryPiecePtr);
-			//修改当前容器的内存块
-			memoryPiecePtr = tempMemoryPiecePtr;
+			changeMemoryPiece(capacity * sizeof(_Object), memorySize);
 		}
 		//复制object
 		copyContainer<_Object>(_container);
@@ -508,6 +518,7 @@ namespace ZEngine
 	{
 		ZObject::operator=(std::forward<ZContainer>(_container));
 		memoryPiecePtr = _container.memoryPiecePtr;
+		objectPtr = _container.objectPtr;
 		capacity = _container.capacity;
 		size = _container.size;
 		//防止内存块被释放两次
@@ -553,7 +564,7 @@ namespace ZEngine
 	template<typename _Object>
 	__forceinline _Object* ZContainer<_Object>::getObjectPtr() 
 	{
-		return (_Object*)memoryPiecePtr->memoryAddress;
+		return objectPtr;
 	}
 
 	/*
@@ -564,7 +575,7 @@ namespace ZEngine
 	template<typename _Object>
 	__forceinline const _Object* ZContainer<_Object>::getObjectPtr() const 
 	{
-		return (_Object*)memoryPiecePtr->memoryAddress;
+		return objectPtr;
 	}
 
 	/*
@@ -637,22 +648,15 @@ namespace ZEngine
 	const Void ZContainer<_Object>::extend(const Int32 _capacity) noexcept
 	{
 		//拓展前容器需要的内存大小
-		ZMemoryPiece::MemoryPieceSizeType originMemorySize = capacity * sizeof(_Object);
+		ZMemoryPiece::MemoryPieceSizeType usedMemorySize = capacity * sizeof(_Object);
 		//拓展后容器需要的内存大小
-		ZMemoryPiece::MemoryPieceSizeType currentMemorySize = _capacity * sizeof(_Object);
+		ZMemoryPiece::MemoryPieceSizeType applyMemorySize = _capacity * sizeof(_Object);
 		//判断当前内存块是否不够大
-		if (currentMemorySize > memoryPiecePtr->size) {
-			//向内存池申请内存
-			ZMemoryPiece* tempMemoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(currentMemorySize);
-			//将当前内存块保存的数据转化到临时内存快上
-			memcpy(tempMemoryPiecePtr->memoryAddress, memoryPiecePtr->memoryAddress, originMemorySize);
-			//释放当前内存块
-			ZMemoryPool::InstancePtr->releaseMemory(memoryPiecePtr);
-			//修改当前容器的内存块
-			memoryPiecePtr = tempMemoryPiecePtr;
+		if (applyMemorySize > memoryPiecePtr->size) {
+			changeMemoryPiece(usedMemorySize, applyMemorySize);
 		}
 		//如果需要在拓展的位置上调用构造函数初始化内存
-		newContainer<_Object>((Address)(((UIntAddress)(memoryPiecePtr->memoryAddress)) + originMemorySize), currentMemorySize - originMemorySize);
+		newContainer<_Object>((Address)(((UIntAddress)(memoryPiecePtr->memoryAddress)) + usedMemorySize), applyMemorySize - usedMemorySize);
 		//修改容器大小
 		capacity = _capacity;
 	}
@@ -661,7 +665,8 @@ namespace ZEngine
 		容器自动拓展函数
 	*/
 	template<typename _Object>
-	const Void ZContainer<_Object>::autoExtend() noexcept {
+	const Void ZContainer<_Object>::autoExtend() noexcept 
+	{
 		Float32 tempCapacity = (Float32)capacity;
 		do {
 			tempCapacity *= AUTO_EXTEND_MUL_FACTOR;
@@ -670,11 +675,37 @@ namespace ZEngine
 	}
 
 	/*
-		摧毁容器
+		替换内存块
+		参数：
+			const Int32 _usedMemorySize 原本使用的内存块大小
+			const Int32 _applyMemorySize 替换内存块需要的大小
 	*/
 	template<typename _Object>
-	__forceinline const Void ZContainer<_Object>::move_destroy() {
+	const Void ZContainer<_Object>::changeMemoryPiece(const Int32 _usedMemorySize, const Int32 _applyMemorySize)
+	{
+		//向内存池申请内存
+		ZMemoryPiece* tempMemoryPiecePtr = ZMemoryPool::InstancePtr->applyMemory(_applyMemorySize);
+		//将当前内存块保存的数据转化到临时内存快上
+		memcpy(tempMemoryPiecePtr->memoryAddress, memoryPiecePtr->memoryAddress, _usedMemorySize);
+		//释放当前内存块
+		ZMemoryPool::InstancePtr->releaseMemory(memoryPiecePtr);
+		//修改当前容器的内存块
+		memoryPiecePtr = tempMemoryPiecePtr;
+		//修改容器指针
+		objectPtr = (_Object*)memoryPiecePtr->memoryAddress;
+	}
+
+
+	/*
+		移动语义摧毁容器
+		会将所有容器属性清空而不进行任何操作
+		不会归还内存，仅用于移动语义
+	*/
+	template<typename _Object>
+	__forceinline const Void ZContainer<_Object>::move_destroy() 
+	{
 		memoryPiecePtr = nullptr;
+		objectPtr = nullptr;
 		capacity = 0;
 		size = 0;
 	}
