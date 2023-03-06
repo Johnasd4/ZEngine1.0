@@ -54,7 +54,7 @@ namespace ZEngine
 			参数：
 				const ObjectPointer& _objectPtr 物体指针
 			返回：
-				const _Object& 对象的引用 
+				const _Object& 对象的引用
 		*/
 		__forceinline Boolean operator==(const ObjectPointer& _objectPtr) const;
 
