@@ -5,7 +5,8 @@
 
 #include"ZContainer.h"
 
-namespace ZEngine {
+namespace ZEngine 
+{
 
 	/*
 		动态数组，顺序存储
@@ -24,9 +25,9 @@ namespace ZEngine {
 		/*
 			构造函数，创造指定大小的数组
 			参数：
-				const Int32& _capacity 数组大小 
+				const Int32 _capacity 数组大小 
 		*/
-		ZArray(const Int32& _capacity);
+		ZArray(const Int32 _capacity);
 
 		/*
 			构造函数
@@ -53,20 +54,20 @@ namespace ZEngine {
 		/*
 			重载()
 			参数：
-				const Int32& _index object下标
+				const Int32 _index object下标
 			返回：
 				_Object& 下标对应的object的引用
 		*/
-		__forceinline _Object& operator()(const Int32& _index);
+		__forceinline _Object& operator()(const Int32 _index);
 
 		/*
 			重载()
 			参数：
-				const Int32& _index object下标
+				const Int32 _index object下标
 			返回：
 				const _Object& 下标对应的object的引用
 		*/
-		__forceinline const _Object& operator()(const Int32& _index) const;
+		__forceinline const _Object& operator()(const Int32 _index) const;
 
 		/*
 			重载=
@@ -97,39 +98,39 @@ namespace ZEngine {
 		/*
 			添加空的object
 			参数：
-				const Int32& _num 添加的object数量
+				const Int32 _num 添加的object数量
 		*/
-		const Void pushEmpty(const Int32& _num);
+		const Void pushEmpty(const Int32 _num);
 
 
 		/*
 			设置object数量
 			会判断是否需要拓展空间
 			参数：
-				const Int32& 容器object数量
+				const Int32 容器object数量
 		*/
-		const Void setSize(const Int32& _num);
+		const Void setSize(const Int32 _num);
 
 		/*
 			插入object到指定位置，将其余object依次后移
 			非常费时，无特别需要慎用
 			参数：
-				const Int32& _index 插入的下标
+				const Int32 _index 插入的下标
 				const _Object& _object 需要插入的object
 			返回：
 				const Boolean 是否成功
 		*/
-		const Boolean insert(const Int32& _index, const _Object& _object);
+		const Boolean insert(const Int32 _index, const _Object& _object);
 
 		/*
 			删除指定位置的object，将后置object前移
 			非常费时，无特别需要慎用
 			参数：
-				const Int32& _index 删除的下标
+				const Int32 _index 删除的下标
 			返回：
 				const Boolean 是否成功
 		*/
-		const Boolean remove(const Int32& _index);
+		const Boolean remove(const Int32 _index);
 
 		/*
 			清空数组
@@ -150,10 +151,10 @@ namespace ZEngine {
 	/*
 		构造函数，创造指定大小的数组
 		参数：
-			const Int32& _capacity 数组大小
+			const Int32 _capacity 数组大小
 	*/
 	template<typename _Object>
-	ZArray<_Object>::ZArray(const Int32& _capacity) :
+	ZArray<_Object>::ZArray(const Int32 _capacity) :
 		ZContainer<_Object>(_capacity)
 	{}
 
@@ -189,12 +190,12 @@ namespace ZEngine {
 	/*
 		重载()
 		参数：
-			const Int32& _index object下标
+			const Int32 _index object下标
 		返回：
 			_Object& 下标对应的object的引用
 	*/
 	template<typename _Object>
-	__forceinline _Object& ZArray<_Object>::operator()(const Int32& _index) 
+	__forceinline _Object& ZArray<_Object>::operator()(const Int32 _index) 
 	{
 		return ZContainer<_Object>::operator()(_index);
 	}
@@ -202,12 +203,12 @@ namespace ZEngine {
 	/*
 		重载()
 		参数：
-			const Int32& _index object下标
+			const Int32 _index object下标
 		返回：
 			const _Object& 下标对应的object的引用
 	*/
 	template<typename _Object>
-	__forceinline const _Object& ZArray<_Object>::operator()(const Int32& _index) const 
+	__forceinline const _Object& ZArray<_Object>::operator()(const Int32 _index) const 
 	{
 		return ZContainer<_Object>::operator()(_index);
 	}
@@ -254,10 +255,10 @@ namespace ZEngine {
 	/*
 		添加空的object
 		参数：
-			const Int32& _num 添加的object数量
+			const Int32 _num 添加的object数量
 	*/
 	template<typename _Object>
-	const Void ZArray<_Object>::pushEmpty(const Int32& _num) 
+	const Void ZArray<_Object>::pushEmpty(const Int32 _num) 
 	{
 		ZContainer<_Object>::changeSize(_num);
 	}
@@ -266,10 +267,10 @@ namespace ZEngine {
 		设置object数量
 		会判断是否需要拓展空间
 		参数：
-			const Int32& 容器object数量
+			const Int32 容器object数量
 	*/
 	template<typename _Object>
-	const Void ZArray<_Object>::setSize(const Int32& _num) 
+	const Void ZArray<_Object>::setSize(const Int32 _num) 
 	{
 		ZContainer<_Object>::setSize(_num);
 	}
@@ -278,13 +279,13 @@ namespace ZEngine {
 		插入object到指定位置，将其余object依次后移
 		非常费时，无特别需要慎用
 		参数：
-			const Int32& _index 插入的下标
+			const Int32 _index 插入的下标
 			const _Object& _object 需要插入的object
 		返回：
 			const Boolean 是否成功
 	*/
 	template<typename _Object>
-	const Boolean ZArray<_Object>::insert(const Int32& _index, const _Object& _object)
+	const Boolean ZArray<_Object>::insert(const Int32 _index, const _Object& _object)
 	{
 		if (_index > ZContainer<_Object>::getSize()) 
 		{
@@ -306,12 +307,12 @@ namespace ZEngine {
 		删除指定位置的object，将后置object前移
 		非常费时，无特别需要慎用
 		参数：
-			const Int32& _index 删除的下标
+			const Int32 _index 删除的下标
 		返回：
 			const Boolean 是否成功
 	*/
 	template<typename _Object>
-	const Boolean ZArray<_Object>::remove(const Int32& _index) {
+	const Boolean ZArray<_Object>::remove(const Int32 _index) {
 		if (_index >= ZContainer<_Object>::getSize()) {
 			return false;
 		}

@@ -188,8 +188,10 @@ ZMemoryPool::~ZMemoryPool() noexcept
 
 /*
 	添加内存块
+	参数：
+		const Int32 _type 内存块类型
 */
-const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) noexcept
+const Void ZMemoryPool::initMemoryPieceList(const Int32 _type) noexcept
 {
 	//需要申请内存块数量
 	Int32 addPieceNum = MEMORY_POOL_SIZE_DEFAULT_ARRAY(_type);
@@ -219,9 +221,9 @@ const Void ZMemoryPool::initMemoryPieceList(const Int32& _type) noexcept
 /*
 	添加内存块
 	参数：
-		const Int32& _type 内存块类型
+		const Int32 _type 内存块类型
 */
-const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) noexcept
+const Void ZMemoryPool::autoAddMemoryPiece(const Int32 _type) noexcept
 {
 	Int32 addPieceNum = (Int32)(momoryPieceListArray(_type).num * MEMORY_PIECE_AUTO_EXTEND_MUL_FACTOR);
 	//判断数量是否过少或者过多
@@ -240,10 +242,10 @@ const Void ZMemoryPool::autoAddMemoryPiece(const Int32& _type) noexcept
 /*
 	为内存池添加内存块
 	参数：
-		const Int32& _type 内存块类型
-		const Int32& _num 内存块数量
+		const Int32 _type 内存块类型
+		const Int32 _num 内存块数量
 */
-const Void ZMemoryPool::addMemoryPiece(const Int32& _type, const Int32& _num) noexcept
+const Void ZMemoryPool::addMemoryPiece(const Int32 _type, const Int32 _num) noexcept
 {
 	//申请内存
 	Address memoryApplyAddress = malloc(_num * MEMORY_PIECE_WITH_CLASS_SIZE_ARRAY(_type) + sizeof(Address));//多申请一个地址大小的内存用于链表存储

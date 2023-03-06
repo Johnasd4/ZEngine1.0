@@ -75,7 +75,10 @@
     <ClInclude Include="ZEngine.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZBasic\ZInstance.h">
+    <ClInclude Include="ZCore\ZErrorMessageMacro.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\ZObjectPointer.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

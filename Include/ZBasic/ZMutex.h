@@ -4,12 +4,14 @@
 #include"ZBasicDrive.h"
 
 
-namespace ZEngine {
+namespace ZEngine 
+{
 
 	/*
 		»¥³âËø
 	*/
-	class ZMutex {
+	class ZMutex 
+	{
 
 	public:
 

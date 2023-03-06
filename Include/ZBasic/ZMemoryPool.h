@@ -44,7 +44,8 @@ namespace ZEngine {
 			维护N个内存块指针链表，从64B开始，每个指针链表相差2倍
 
 	*/
-	class ZMemoryPool {
+	class ZMemoryPool 
+	{
 
 
 
@@ -109,7 +110,7 @@ namespace ZEngine {
 		static constexpr ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> APPLY_MEMORY_MAX_SIZE_ARRAY = ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
 			ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, APPLY_MEMORY_MAX_SIZE);
 		//每次申请内存时的最小值
-		static constexpr ZMemoryPiece::MemoryPieceSizeType APPLY_MEMORY_MIN_SIZE = 16 * KB_SIZE;
+		static constexpr ZMemoryPiece::MemoryPieceSizeType APPLY_MEMORY_MIN_SIZE = 4 * KB_SIZE;
 		static constexpr ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM> APPLY_MEMORY_MIN_SIZE_ARRAY = ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>(
 			ZConstArray<ZMemoryPiece::MemoryPieceSizeType, MEMORY_PIECE_TYPE_NUM>::Init_FillSameElement, APPLY_MEMORY_MIN_SIZE);
 		//内存块申请最大数量
@@ -156,25 +157,25 @@ namespace ZEngine {
 		/*
 			添加内存块
 			参数：
-				const Int32& _type 内存块类型
+				const Int32 _type 内存块类型
 		*/
-		const Void initMemoryPieceList(const Int32& _type) noexcept;
+		const Void initMemoryPieceList(const Int32 _type) noexcept;
 
 		/*
 			添加内存块
 			参数：
-				const Int32& _type 内存块类型
+				const Int32 _type 内存块类型
 		*/
-		const Void autoAddMemoryPiece(const Int32& _type) noexcept;
+		const Void autoAddMemoryPiece(const Int32 _type) noexcept;
 
 
 		/*
 			为内存池添加内存块
 			参数：
-				const Int32& _type 内存块类型
-				const Int32& _num 内存块数量
+				const Int32 _type 内存块类型
+				const Int32 _num 内存块数量
 		*/
-		const Void addMemoryPiece(const Int32& _type, const Int32& _num) noexcept;
+		const Void addMemoryPiece(const Int32 _type, const Int32 _num) noexcept;
 
 		/*
 			添加大内存块

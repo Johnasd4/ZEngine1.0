@@ -14,10 +14,10 @@ extern ZMutex ZEngine::Console::Private::ConsoleMutex = ZMutex();
 /*
 	设置输出字符串到屏幕的颜色
 	参数：
-		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+		const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+		const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::setPrintColour(const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+DLL_API const Void ZEngine::Console::setPrintColour(const UInt16 _frontColour, const UInt16 _backColour) noexcept 
 {
 	ConsoleMutex.lock();
 	ConsoleFrontColour = _frontColour;
@@ -79,10 +79,10 @@ DLL_API const Void ZEngine::Console::printInLine(const TChar* _string) noexcept
 	输出字符串到屏幕
 	参数：
 		const CChar* _string 要输出的字符串
-		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+		const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+		const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::print(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+DLL_API const Void ZEngine::Console::print(const CChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept 
 {
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色
@@ -95,10 +95,10 @@ DLL_API const Void ZEngine::Console::print(const CChar* _string, const UInt16&& 
 	输出字符串到屏幕，自动换行
 	参数：
 		const CChar* _string 要输出的字符串
-		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+		const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+		const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::printInLine(const CChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+DLL_API const Void ZEngine::Console::printInLine(const CChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept 
 {
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色
@@ -111,10 +111,10 @@ DLL_API const Void ZEngine::Console::printInLine(const CChar* _string, const UIn
 	输出字符串到屏幕
 	参数：
 		const CChar* _string 要输出的字符串
-		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+		const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+		const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::print(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+DLL_API const Void ZEngine::Console::print(const TChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept 
 {
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色
@@ -127,10 +127,10 @@ DLL_API const Void ZEngine::Console::print(const TChar* _string, const UInt16&& 
 	输出字符串到屏幕，自动换行
 	参数：
 		const CChar* _string 要输出的字符串
-		const UInt16&& _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
-		const UInt16&& _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
+		const UInt16 _frontColour 输出的前景色,颜色变量名称为：CONSOLE_PRINT_FRONT_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_FRONT_COLOUR_DARK_WHITE
+		const UInt16 _backColour 输出的背景色,颜色变量名称为：CONSOLE_PRINT_BACK_COLOUR_XXXX_XXXXX，原色为 CONSOLE_PRINT_BACK_COLOUR_DARK_BLACK
 */
-DLL_API const Void ZEngine::Console::printInLine(const TChar* _string, const UInt16&& _frontColour, const UInt16&& _backColour) noexcept 
+DLL_API const Void ZEngine::Console::printInLine(const TChar* _string, const UInt16 _frontColour, const UInt16 _backColour) noexcept 
 {
 	ConsoleMutex.lock();
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), std::forward<const Int32&&>(_frontColour | _backColour));//设置颜色，没有添加颜色，故为原色

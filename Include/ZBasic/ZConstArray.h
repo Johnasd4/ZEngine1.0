@@ -122,38 +122,22 @@ namespace ZEngine {
 		/*
 			重载()
 			参数：
-				const Int32& _index 元素下标
+				const Int32 _index 元素下标
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline _ElementType& operator()(const Int32& _index);
+		constexpr __forceinline _ElementType& operator()(const Int32 _index);
 
 		/*
 			重载()
 			参数：
-				const Int32& _index 元素下标
+				const Int32 _index 元素下标
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline const _ElementType& operator()(const Int32& _index) const;
+		constexpr __forceinline const _ElementType& operator()(const Int32 _index) const;
 
-		/*
-			重载()
-			参数：
-				const Int32&& _index 元素下标
-			返回：
-				ElementType& 下标对应的元素的引用
-		*/
-		constexpr __forceinline _ElementType& operator()(const Int32&& _index) ;
 
-		/*
-			重载()
-			参数：
-				const Int32&& _index 元素下标
-			返回：
-				ElementType& 下标对应的元素的引用
-		*/
-		constexpr __forceinline const _ElementType& operator()(const Int32&& _index) const;
 
 		/*
 			获取数组的大小
@@ -165,10 +149,10 @@ namespace ZEngine {
 		/*
 			交换数组中两个元素的位置
 			返回：
-				const Int32& _index1 元素1的下标
-				const Int32& _index2 元素2的下标
+				const Int32 _index1 元素1的下标
+				const Int32 _index2 元素2的下标
 		*/
-		constexpr __forceinline const Void swap(const Int32& _index1, const Int32& _index2);
+		constexpr __forceinline const Void swap(const Int32 _index1, const Int32 _index2);
 
 
 	private:
@@ -515,12 +499,12 @@ namespace ZEngine {
 	/*
 		重载()
 		参数：
-			const Int32& _index 元素下标
+			const Int32 _index 元素下标
 		返回：
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) 
+	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32 _index) 
 	{
 		return this->array[_index];
 	}
@@ -528,38 +512,12 @@ namespace ZEngine {
 	/*
 		重载()
 		参数：
-			const Int32& _index 元素下标
+			const Int32 _index 元素下标
 		返回：
 			_ElementType& 下标对应的元素的引用
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32& _index) const 
-	{
-		return this->array[_index];
-	}
-
-	/*
-		重载()
-		参数：
-			const Int32&& _index 元素下标
-		返回：
-			_ElementType& 下标对应的元素的引用
-	*/
-	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) 
-	{
-		return this->array[_index];
-	}
-
-	/*
-		重载()
-		参数：
-			const Int32&& _index 元素下标
-		返回：
-			_ElementType& 下标对应的元素的引用
-	*/
-	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32&& _index) const 
+	constexpr __forceinline const _ElementType& ZConstArray<_ElementType, _size>::operator()(const Int32 _index) const 
 	{
 		return this->array[_index];
 	}
@@ -580,11 +538,11 @@ namespace ZEngine {
 	/*
 		交换数组中两个元素的位置
 		返回：
-			const Int32& _index1 元素1的下标
-			const Int32& _index2 元素2的下标
+			const Int32 _index1 元素1的下标
+			const Int32 _index2 元素2的下标
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32& _index1, const Int32& _index2) 
+	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32 _index1, const Int32 _index2) 
 	{
 		_ElementType tempElement = (*this)(_index1);
 		(*this)(_index1) = (*this)(_index2);
