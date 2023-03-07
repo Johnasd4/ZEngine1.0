@@ -24,7 +24,7 @@ namespace ZEngine {
 		//内存块大小存储类型
 		typedef UInt32 MemoryPieceSizeType;
 
-		//下一块内存块的地址
+		//内存的地址
 		Address memoryAddress;
 		//内存块类型
 		MemoryPieceSizeType size;

@@ -319,11 +319,11 @@ namespace ZEngine
 		//减少object数量
 		ZContainer<_ObjectType>::changeSize(-1);
 		//先释放删除object的资源
-		ZContainer<_ObjectType>::template freeObject<_ObjectType>(_index);
+		ZContainer<_ObjectType>::deleteObject(_index);
 		//将删除object后面的object前移
 		memcpy((Address)(&(*this)(_index)), (Address)(&(*this)(_index + 1)), (ZContainer<_ObjectType>::getSize() - _index) * sizeof(_ObjectType));
 		//空余元素位置补充，防止析构时二次释放
-		ZContainer<_ObjectType>::template newObject<_ObjectType>(ZContainer<_ObjectType>::getSize());
+		ZContainer<_ObjectType>::newObject(ZContainer<_ObjectType>::getSize());
 		return true;
 	}
 

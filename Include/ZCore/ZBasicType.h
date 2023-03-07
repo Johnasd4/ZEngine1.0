@@ -42,10 +42,14 @@ typedef unsigned char Byte;
 //无类型
 typedef void Void;
 
+//记录大小的数据类型
+typedef size_t SizeT;
+
 //地址
 typedef void* Address;
-//地址整形
-typedef UInt64 UIntAddress;
+//地址整型
+typedef SizeT UIntAddress;
+
 
 //句柄
 typedef void* Handle;

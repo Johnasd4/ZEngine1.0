@@ -93,21 +93,15 @@ namespace ZEngine {
 				如果需要自定义初始化函数，函数的第一个参数必须是【ZConstArray*】，后续为公式所需参数
 		*/
 		template<typename _InitFunc, typename... _Args>
-		constexpr __forceinline ZConstArray(_InitFunc&& _initFunc, _Args&&... _args);
+		consteval ZConstArray(_InitFunc&& _initFunc, _Args&&... _args);
 
 		/*
 			复制函数
 			参数：
 				const ZConstArray& _array 倍复制的数组
 		*/
-		constexpr ZConstArray(const ZConstArray& _array);
+		consteval ZConstArray(const ZConstArray& _array);
 
-
-
-		/*
-			析构函数
-		*/
-		constexpr __forceinline ~ZConstArray();
 
 		/*
 			数组初始化
@@ -116,7 +110,7 @@ namespace ZEngine {
 				_Args&&... _args 函数对应的参数，不需要填入第一个参数，第一个参数为对象本身
 		*/
 		template<typename _InitFunc, typename... _Args>
-		constexpr __forceinline const Void init(_InitFunc&& _initFunc, _Args&&... _args);
+		consteval const Void init(_InitFunc&& _initFunc, _Args&&... _args);
 
 
 		/*
@@ -126,7 +120,7 @@ namespace ZEngine {
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline _ElementType& operator()(const Int32 _index);
+		constexpr _ElementType& operator()(const Int32 _index);
 
 		/*
 			重载()
@@ -135,7 +129,7 @@ namespace ZEngine {
 			返回：
 				ElementType& 下标对应的元素的引用
 		*/
-		constexpr __forceinline const _ElementType& operator()(const Int32 _index) const;
+		constexpr const _ElementType& operator()(const Int32 _index) const;
 
 
 
@@ -144,7 +138,7 @@ namespace ZEngine {
 			返回：
 				const Int32 数组大小
 		*/
-		constexpr static __forceinline const Int32 getSize();
+		consteval static const Int32 getSize();
 
 		/*
 			交换数组中两个元素的位置
@@ -152,7 +146,7 @@ namespace ZEngine {
 				const Int32 _index1 元素1的下标
 				const Int32 _index2 元素2的下标
 		*/
-		constexpr __forceinline const Void swap(const Int32 _index1, const Int32 _index2);
+		constexpr const Void swap(const Int32 _index1, const Int32 _index2);
 
 
 	private:
@@ -237,7 +231,7 @@ namespace ZEngine {
 			const _ElementType& _element 填充的元素
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _arrayPtr, const _ElementType& _element) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_FillSameElement(ZConstArray* _arrayPtr, const _ElementType& _element)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -255,7 +249,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FactorType>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_ArithmeticSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor)
 	{
 		(*_arrayPtr)(0) = _firstElement;
 		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) 
@@ -273,7 +267,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FactorType>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_GeometricSequence(ZConstArray* _arrayPtr, const _ElementType& _firstElement, const _FactorType& _factor)
 	{
 		(*_arrayPtr)(0) = _firstElement;
 		for (Int32 index = 1; index < _arrayPtr->getSize(); index++) 
@@ -291,7 +285,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor, typename... _OtherFactors>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_Polynomial(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_Polynomial(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -309,7 +303,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor, typename... _OtherFactors>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor, const _OtherFactors&... _otherFactors)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -331,7 +325,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstFactor>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_PolynomialRecurse(ZConstArray* _arrayPtr, const _FirstFactor& _firstFactor)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -349,7 +343,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -367,7 +361,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -384,7 +378,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_AddSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -401,7 +395,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequence(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -419,7 +413,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence, typename... _OtherSequences>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence, const _OtherSequences&... _otherSequences)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -437,7 +431,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _FirstSequence>
-	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence) 
+	constexpr const Void ZConstArray<_ElementType, _size>::Init_DevideSequenceRecurse(ZConstArray* _arrayPtr, const _FirstSequence& _firstSequence)
 	{
 		for (Int32 index = 0; index < _arrayPtr->getSize(); index++) 
 		{
@@ -457,7 +451,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _InitFunc, typename... _Args>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::ZConstArray(_InitFunc&& _initFunc, _Args&&... _args) 
+	consteval ZConstArray<_ElementType, _size>::ZConstArray(_InitFunc&& _initFunc, _Args&&... _args)
 	{
 		this->init(std::forward<_InitFunc>(_initFunc), std::forward<_Args>(_args)...);
 	}
@@ -468,7 +462,7 @@ namespace ZEngine {
 			const ZConstArray& _array 倍复制的数组
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr ZConstArray<_ElementType, _size>::ZConstArray(const ZConstArray& _array) 
+	consteval ZConstArray<_ElementType, _size>::ZConstArray(const ZConstArray& _array)
 	{
 		for (Int32 index = 0; index < _size; index++) 
 		{
@@ -476,11 +470,6 @@ namespace ZEngine {
 		}
 	}
 
-	/*
-		析构函数
-	*/
-	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline ZConstArray<_ElementType, _size>::~ZConstArray() {}
 
 	/*
 		数组初始化
@@ -490,7 +479,7 @@ namespace ZEngine {
 	*/
 	template<typename _ElementType, Int32 _size>
 	template<typename _InitFunc, typename... _Args>
-	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::init(_InitFunc&& _initFunc, _Args&&... _args) 
+	consteval const Void ZConstArray<_ElementType, _size>::init(_InitFunc&& _initFunc, _Args&&... _args)
 	{
 		_initFunc(this, std::forward<_Args>(_args)...);
 	}
@@ -529,7 +518,7 @@ namespace ZEngine {
 			const Int32 数组大小
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const Int32 ZConstArray<_ElementType, _size>::getSize() 
+	consteval const Int32 ZConstArray<_ElementType, _size>::getSize()
 	{
 		return _size;
 	}
@@ -542,7 +531,7 @@ namespace ZEngine {
 			const Int32 _index2 元素2的下标
 	*/
 	template<typename _ElementType, Int32 _size>
-	constexpr __forceinline const Void ZConstArray<_ElementType, _size>::swap(const Int32 _index1, const Int32 _index2) 
+	constexpr const Void ZConstArray<_ElementType, _size>::swap(const Int32 _index1, const Int32 _index2)
 	{
 		_ElementType tempElement = (*this)(_index1);
 		(*this)(_index1) = (*this)(_index2);

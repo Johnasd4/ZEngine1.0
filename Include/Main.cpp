@@ -6,25 +6,44 @@ using namespace ZEngine::Console;
 
 
 
+template<typename T>
+concept Check = requires{
+    T::a;
+};
+
+template<typename T>
+Int32 testFunc1() 
+{
+    if constexpr (requires{T::a;})
+    {
+        return 1;
+    }
+    else
+    {
+        return 2;
+    }
+}
+
+
+
+struct A {
+
+    operator Int32() {
+        cout << "test";
+        return 1;
+    }
+    int a;
+};
+
 
 int main()
 {
+
+    cout << testFunc1<A>() << endl;
+    cout << testFunc1<Int32>() << endl;
+    A a = A{1};
+    (Int32)a;
     ZMemoryPool::CreateInstance();
-    ZArray<Int32> a(10);
-    for (Int32 index = 0; index < 100; index++) {
-        a.push(index);
-    }
-    a.remove(10);
-    FIELD_OFFSET();
-    for (Int32 index = 0; index < a.getSize(); index++) {
-        cout << a(index) << endl;
-    }
-
-    Int32* b= new Int32(1);
-    Int32** c = &b;
-
-    cout << *b;
-    cout << **c;
 
     return 0;
  
