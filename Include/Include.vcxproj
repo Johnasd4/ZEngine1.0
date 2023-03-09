@@ -28,8 +28,8 @@
     <ClInclude Include="ZBasic\ZMemoryPool.h" />
     <ClInclude Include="ZBasic\ZMutex.h" />
     <ClInclude Include="ZBasic\ZObject.h" />
-    <ClInclude Include="ZBasic\ZObjectPointer.h" />
     <ClInclude Include="ZBasic\ZTuple.h" />
+    <ClInclude Include="ZBasic\ZSmartPtr.h" />
     <ClInclude Include="ZCore.h" />
     <ClInclude Include="ZCore\ZBasicConstant.h" />
     <ClInclude Include="ZCore\ZBasicType.h" />
