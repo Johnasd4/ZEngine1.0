@@ -9,7 +9,7 @@
 #include"ZBasic/ZMemoryPool.h"
 #include"ZBasic/ZMutex.h"
 #include"ZBasic/ZObject.h"
-#include"ZBasic/ZTuple.h"
+#include"ZBasic/ZPoolList.h"
 
 
 #endif // !ZBasic_h
