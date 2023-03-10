@@ -25,11 +25,19 @@ namespace ZEngine
 
 	namespace Private {
 
+
+		
+
 		/*
 			智能指针所指向的实例
 		*/
 		template<typename _ObjectType>
 		class ZSmartPtrInstance {
+
+			friend class ZUniquePtr<_ObjectType>;
+			friend class ZSharedPtr<_ObjectType>;
+			friend class ZWeakPtr<_ObjectType>;
+			//friend class ZSharedRef<_ObjectType>;
 
 
 		private:
@@ -47,7 +55,8 @@ namespace ZEngine
 			*/
 			__forceinline ~ZSmartPtrInstance();
 
-
+			/*
+							
 			//智能指针友元
 			friend class ZUniquePtr<_ObjectType>;
 			friend class ZSharedPtr<_ObjectType>;
@@ -56,6 +65,8 @@ namespace ZEngine
 
 		private:
 
+			//内存块
+			ZMemoryPiece* memoryPiecePtr;
 			//强指针计数器
 			Int32 usedCount;
 			//弱指针计数器
