@@ -1,7 +1,8 @@
 #ifndef ZErrorMessageMacro_h
 #define ZErrorMessageMacro_h
 
-
+//使用控制台错误输出
+#define USE_ERROR_MESSAGE_CONSOLE_PRINT
 
 
 #include"ZBasicType.h"

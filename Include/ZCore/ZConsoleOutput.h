@@ -1,5 +1,5 @@
-#ifndef ZConsole_h
-#define ZConsole_h
+#ifndef ZConsoleOutput_h
+#define ZConsoleOutput_h
 
 #include"ZBasicType.h"
 #include"..\ZBasic\ZMutex.h"
@@ -9,12 +9,6 @@ namespace ZEngine
 
 	namespace Console 
 	{
-
-
-	/*
-		控制台输出
-	*/
-#pragma region 控制台输出
 
 		namespace Private
 		{
@@ -192,15 +186,10 @@ namespace ZEngine
 
 
 
-#pragma endregion 控制台输出
-
-
-
-
 
 
 
 	}
 }
 
-#endif // !ZConsole_h
+#endif // !ZConsoleOutput_h

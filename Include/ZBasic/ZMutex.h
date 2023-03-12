@@ -1,7 +1,7 @@
 #ifndef ZMutex_h
 #define ZMutex_h
 
-#include"ZBasicDrive.h"
+#include"Private/ZBasicDrive.h"
 
 
 namespace ZEngine 

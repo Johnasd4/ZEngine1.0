@@ -1,7 +1,7 @@
 #ifndef ZSmartPtr_h
 #define ZSmartPtr_h
 
-#include"ZBasicDrive.h"
+#include"Private/ZBasicDrive.h"
 
 #include"ZMemoryPool.h"
 

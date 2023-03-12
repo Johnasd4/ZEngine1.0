@@ -1,9 +1,8 @@
 #ifndef ZArray_h
 #define ZArray_h
 
-#include"ZBasicDrive.h"
-
-#include"ZContainer.h"
+#include"Private/ZBasicDrive.h"
+#include"Private/ZContainerBase.h"
 
 namespace ZEngine 
 {
@@ -12,7 +11,7 @@ namespace ZEngine
 		动态数组，顺序存储
 	*/
 	template<typename _ObjectType>
-	class ZArray :public ZContainer<_ObjectType> 
+	class ZArray :public ZContainerBase<_ObjectType> 
 	{
 
 	public:
@@ -145,7 +144,7 @@ namespace ZEngine
 	*/
 	template<typename _ObjectType>
 	ZArray<_ObjectType>::ZArray() :
-		ZContainer<_ObjectType>()
+		ZContainerBase<_ObjectType>()
 	{}
 
 	/*
@@ -155,7 +154,7 @@ namespace ZEngine
 	*/
 	template<typename _ObjectType>
 	ZArray<_ObjectType>::ZArray(const Int32 _capacity) :
-		ZContainer<_ObjectType>(_capacity)
+		ZContainerBase<_ObjectType>(_capacity)
 	{}
 
 	/*
@@ -166,7 +165,7 @@ namespace ZEngine
 	*/
 	template<typename _ObjectType>
 	ZArray<_ObjectType>::ZArray(const ZArray& _array) :
-		ZContainer<_ObjectType>(_array)
+		ZContainerBase<_ObjectType>(_array)
 	{}
 
 	/*
@@ -177,7 +176,7 @@ namespace ZEngine
 	*/
 	template<typename _ObjectType>
 	ZArray<_ObjectType>::ZArray(const ZArray&& _array) :
-		ZContainer<_ObjectType>(std::forward<ZArray>(_array))
+		ZContainerBase<_ObjectType>(std::forward<ZArray>(_array))
 	{}
 
 
@@ -197,7 +196,7 @@ namespace ZEngine
 	template<typename _ObjectType>
 	__forceinline _ObjectType& ZArray<_ObjectType>::operator()(const Int32 _index) 
 	{
-		return ZContainer<_ObjectType>::operator()(_index);
+		return ZContainerBase<_ObjectType>::operator()(_index);
 	}
 
 	/*
@@ -210,7 +209,7 @@ namespace ZEngine
 	template<typename _ObjectType>
 	__forceinline const _ObjectType& ZArray<_ObjectType>::operator()(const Int32 _index) const 
 	{
-		return ZContainer<_ObjectType>::operator()(_index);
+		return ZContainerBase<_ObjectType>::operator()(_index);
 	}
 
 	/*
@@ -222,7 +221,7 @@ namespace ZEngine
 	template<typename _ObjectType>
 	const Void ZArray<_ObjectType>::operator=(const ZArray& _array) 
 	{
-		ZContainer<_ObjectType>::operator=(_array);
+		ZContainerBase<_ObjectType>::operator=(_array);
 	}
 
 	/*
@@ -234,7 +233,7 @@ namespace ZEngine
 	template<typename _ObjectType>
 	const Void ZArray<_ObjectType>::operator=(const ZArray&& _array) 
 	{
-		ZContainer<_ObjectType>::operator=(std::forward<ZArray>(_array));
+		ZContainerBase<_ObjectType>::operator=(std::forward<ZArray>(_array));
 	}
 
 
@@ -246,8 +245,8 @@ namespace ZEngine
 	template<typename _ObjectType>
 	const Void ZArray<_ObjectType>::push(const _ObjectType& _object)
 	{
-		ZContainer<_ObjectType>::changeSize(1);
-		(*this)(ZContainer<_ObjectType>::getSize() - 1) = _object;
+		ZContainerBase<_ObjectType>::changeSize(1);
+		(*this)(ZContainerBase<_ObjectType>::getSize() - 1) = _object;
 	}
 
 
@@ -260,7 +259,7 @@ namespace ZEngine
 	template<typename _ObjectType>
 	const Void ZArray<_ObjectType>::pushEmpty(const Int32 _num) 
 	{
-		ZContainer<_ObjectType>::changeSize(_num);
+		ZContainerBase<_ObjectType>::changeSize(_num);
 	}
 
 	/*
@@ -272,7 +271,7 @@ namespace ZEngine
 	template<typename _ObjectType>
 	const Void ZArray<_ObjectType>::setSize(const Int32 _num) 
 	{
-		ZContainer<_ObjectType>::setSize(_num);
+		ZContainerBase<_ObjectType>::setSize(_num);
 	}
 
 	/*
@@ -287,14 +286,14 @@ namespace ZEngine
 	template<typename _ObjectType>
 	const Boolean ZArray<_ObjectType>::insert(const Int32 _index, const _ObjectType& _object)
 	{
-		if (_index > ZContainer<_ObjectType>::getSize()) 
+		if (_index > ZContainerBase<_ObjectType>::getSize()) 
 		{
 			return false;
 		}
 		//增加object数量
-		ZContainer<_ObjectType>::changeSize(1);
+		ZContainerBase<_ObjectType>::changeSize(1);
 		//插入位置后的object后移
-		for (Int32 index = ZContainer<_ObjectType>::getSize() - 1; index > _index; index--) 
+		for (Int32 index = ZContainerBase<_ObjectType>::getSize() - 1; index > _index; index--) 
 		{
 			(*this)(index) = (*this)(index - 1);
 		}
@@ -313,17 +312,17 @@ namespace ZEngine
 	*/
 	template<typename _ObjectType>
 	const Boolean ZArray<_ObjectType>::remove(const Int32 _index) {
-		if (_index >= ZContainer<_ObjectType>::getSize()) {
+		if (_index >= ZContainerBase<_ObjectType>::getSize()) {
 			return false;
 		}
 		//减少object数量
-		ZContainer<_ObjectType>::changeSize(-1);
+		ZContainerBase<_ObjectType>::changeSize(-1);
 		//先释放删除object的资源
-		ZContainer<_ObjectType>::deleteObject(_index);
+		ZContainerBase<_ObjectType>::deleteObject(_index);
 		//将删除object后面的object前移
-		memcpy((Address)(&(*this)(_index)), (Address)(&(*this)(_index + 1)), (ZContainer<_ObjectType>::getSize() - _index) * sizeof(_ObjectType));
+		memcpy((Address)(&(*this)(_index)), (Address)(&(*this)(_index + 1)), (ZContainerBase<_ObjectType>::getSize() - _index) * sizeof(_ObjectType));
 		//空余元素位置补充，防止析构时二次释放
-		ZContainer<_ObjectType>::newObject(ZContainer<_ObjectType>::getSize());
+		ZContainerBase<_ObjectType>::newObject(ZContainerBase<_ObjectType>::getSize());
 		return true;
 	}
 
@@ -332,7 +331,7 @@ namespace ZEngine
 	*/
 	template<typename _ObjectType>
 	__forceinline const Void ZArray<_ObjectType>::clear() {
-		ZContainer<_ObjectType>::clear();
+		ZContainerBase<_ObjectType>::clear();
 	}
 
 

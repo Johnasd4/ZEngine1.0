@@ -27,7 +27,7 @@
     <ClInclude Include="ZBasic\ZConstArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZBasic\ZContainer.h">
+    <ClInclude Include="ZBasic\Private\ZContainerBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZBasic\ZFixedArray.h">
@@ -51,16 +51,13 @@
     <ClInclude Include="ZCore\ZBasicType.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZCore\ZConsole.h">
+    <ClInclude Include="ZCore\ZConsoleOutput.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZCore\ZCoreDrive.h">
+    <ClInclude Include="ZCore\Private\ZCoreDrive.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZCore\ZErrorMessageMacro.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ZCore\ZMainHeadFile.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZCore\ZMetaProgram.h">
@@ -81,7 +78,13 @@
     <ClInclude Include="ZBasic\ZSmartPtr.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZBasic\Private\ZPoolListBase.h">
+    <ClInclude Include="ZBasic\Private\ZPoolBase.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\Private\ZMemoryPiecePool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\Private\ZMemoryPiece.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

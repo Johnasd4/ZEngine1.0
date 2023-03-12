@@ -1,7 +1,8 @@
 #ifndef ZMemoryPool_h
 #define ZMemoryPool_h
 
-#include"ZBasicDrive.h"
+#include"Private/ZBasicDrive.h"
+#include"Private/ZPoolListBase.h"
 
 #include"ZConstArray.h"
 #include"ZFixedArray.h"

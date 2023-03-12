@@ -1,6 +1,5 @@
-#ifndef ZMainHeadFile_h
-#define ZMainHeadFile_h
-
+#ifndef ZCoreDrive_h
+#define ZCoreDrive_h
 
 
 //忽视安全函数警告
@@ -15,11 +14,6 @@
 #include<process.h>
 
 
-//使用控制台错误输出
-#define USE_ERROR_MESSAGE_CONSOLE_PRINT
-
-
-
 #ifdef DLL_API_FILE
 #define DLL_API __declspec(dllexport)//导出
 #else
@@ -27,5 +21,10 @@
 #endif
 
 
+#ifndef DLL_API_FILE
+#pragma comment(lib,"ZCore.lib")
+#endif // !DLL_API_FILE
 
-#endif // !ZMainHeadFile_h
+
+
+#endif // !ZCoreDrive_h

@@ -3,9 +3,7 @@
 
 #pragma warning(disable : 26439)
 
-#include"ZBasicDrive.h"
-
-//#include"ZObjectPointer.h"
+#include"Private/ZBasicDrive.h"
 
 
 
@@ -20,7 +18,6 @@ namespace ZEngine
 		Object类
 		说明：
 			该类为所有类的基类
-			自带垃圾回收。
 	*/
 	class ZObject 
 	{
