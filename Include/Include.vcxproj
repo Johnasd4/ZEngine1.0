@@ -30,6 +30,7 @@
     <ClInclude Include="ZBasic\ZObject.h" />
     <ClInclude Include="ZBasic\ZTuple.h" />
     <ClInclude Include="ZBasic\ZSmartPtr.h" />
+    <ClInclude Include="ZBasic\ZPoolList.h" />
     <ClInclude Include="ZCore.h" />
     <ClInclude Include="ZCore\ZBasicConstant.h" />
     <ClInclude Include="ZCore\ZBasicType.h" />
