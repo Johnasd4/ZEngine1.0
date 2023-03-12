@@ -19,8 +19,8 @@ namespace ZEngine
 	template<typename _ObjectType>
 	class ZWeakPtr;
 	//共享引用
-	//template<typename _ObjectType>
-	//class ZSharedRef;
+	template<typename _ObjectType>
+	class ZSharedRef;
 
 
 	namespace Private {
@@ -57,26 +57,20 @@ namespace ZEngine
 
 			/*
 							
-			*/
-			__forceinline const _ObjectType* addSharedPtr();
-			__forceinline const Void removeSharedPtr();
-			__forceinline const Void addWeakPtr();
-			__forceinline const _ObjectType* addUniquePtr();
-			__forceinline const Void removeUniquePtr();
-			//const Void addSharedRef();
-
-
-
-
+			//智能指针友元
+			friend class ZUniquePtr<_ObjectType>;
+			friend class ZSharedPtr<_ObjectType>;
+			friend class ZWeakPtr<_ObjectType>;
+			friend class ZSharedRef<_ObjectType>;
 
 		private:
 
 			//内存块
 			ZMemoryPiece* memoryPiecePtr;
 			//强指针计数器
-			UInt32 usedCount;
+			Int32 usedCount;
 			//弱指针计数器
-			UInt32 weakCount;
+			Int32 weakCount;
 
 		};
 
@@ -104,7 +98,7 @@ namespace ZEngine
 		__forceinline ZSmartPtrInstance<_ObjectType>::~ZSmartPtrInstance() 
 		{
 			//析构对象
-			((_ObjectType*)(memoryPiecePtr->memoryAddress))->~_ObjectType();
+			(_ObjectType*)memoryPiecePtr->memoryAddress->~_ObjectType();
 			//归还内存碎片
 			ZMemoryPool::releaseMemory(memoryPiecePtr);
 		}

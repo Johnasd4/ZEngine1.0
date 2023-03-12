@@ -3,7 +3,7 @@
 
 
 
-#include"..\ZCore.h"
+#include"..\..\ZCore.h"
 
 
 #ifndef DLL_API_FILE

@@ -21,7 +21,7 @@
     <ClInclude Include="ZBasic\ZArray.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ZBasic\ZBasicDrive.h">
+    <ClInclude Include="ZBasic\Private\ZBasicDrive.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZBasic\ZConstArray.h">
@@ -79,6 +79,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="ZBasic\ZSmartPtr.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ZBasic\Private\ZPoolListBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

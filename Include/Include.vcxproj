@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="ZBasic.h" />
     <ClInclude Include="ZBasic\ZArray.h" />
-    <ClInclude Include="ZBasic\ZBasicDrive.h" />
+    <ClInclude Include="ZBasic\Private\ZBasicDrive.h" />
     <ClInclude Include="ZBasic\ZConstArray.h" />
     <ClInclude Include="ZBasic\ZContainer.h" />
     <ClInclude Include="ZBasic\ZFixedArray.h" />
@@ -30,6 +30,7 @@
     <ClInclude Include="ZBasic\ZObject.h" />
     <ClInclude Include="ZBasic\ZTuple.h" />
     <ClInclude Include="ZBasic\ZSmartPtr.h" />
+    <ClInclude Include="ZBasic\Private\ZPoolListBase.h" />
     <ClInclude Include="ZCore.h" />
     <ClInclude Include="ZCore\ZBasicConstant.h" />
     <ClInclude Include="ZCore\ZBasicType.h" />
