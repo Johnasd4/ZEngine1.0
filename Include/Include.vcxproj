@@ -22,6 +22,8 @@
     <ClInclude Include="ZBasic.h" />
     <ClInclude Include="ZBasic\Private\ZMemoryPiecePool.h" />
     <ClInclude Include="ZBasic\Private\ZMemoryPiece.h" />
+    <ClInclude Include="ZBasic\Private\ZSystemMemoryController.h" />
+    <ClInclude Include="ZBasic\Private\ZThreadSafe.h" />
     <ClInclude Include="ZBasic\ZArray.h" />
     <ClInclude Include="ZBasic\Private\ZBasicDrive.h" />
     <ClInclude Include="ZBasic\ZConstArray.h" />

@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ZConsole.cpp">
+    <ClCompile Include="ZConsoleOutput.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ZErrorMessageMacro.cpp">

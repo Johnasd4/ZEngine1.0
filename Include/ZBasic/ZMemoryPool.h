@@ -2,7 +2,7 @@
 #define ZMemoryPool_h
 
 #include"Private/ZBasicDrive.h"
-#include"Private/ZPoolListBase.h"
+#include"Private/ZPoolBase.h"
 
 #include"ZConstArray.h"
 #include"ZFixedArray.h"
@@ -58,6 +58,7 @@ namespace ZEngine {
 			创建单例
 		*/
 		DLL_API static const Void CreateInstance() noexcept;
+
 
 		//单例指针
 		DLL_API static ZMemoryPool* InstancePtr;

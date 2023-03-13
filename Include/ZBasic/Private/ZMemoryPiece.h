@@ -6,8 +6,13 @@
 namespace ZEngine 
 {
 
-	namespace Private 
+	namespace Private
 	{
+
+		struct ZSystemMemoryPiece {
+
+		};
+
 
 		/*
 			小内存块，用链表形式存储

@@ -1,17 +1,14 @@
-#ifndef ZMemoryPiecePool_h
-#define ZMemoryPiecePool_h
+#ifndef ZSystemMemoryController_h
+#define ZSystemMemoryController_h
 
 #include"ZBasicDrive.h"
-#include"ZPoolBase.h"
-#include"ZMemoryPiece.h"
-#include"..\ZMutex.h"
+#include"ZThreadSafe.h"
 
 namespace ZEngine
 {
 
 	namespace Private
 	{
-
 
 		/*
 			池类链表基
@@ -20,10 +17,8 @@ namespace ZEngine
 			Boolean _threadSafe 是否线程安全
 		*/
 		template<Boolean _threadSafe>
-		class ZSmallMemoryPiecePool :public ZPoolBase<ZSmallMemoryPiece, sizeof(ZSmallMemoryPiece), _threadSafe>
+		class ZSystemMemoryController :protected ZThreadSafe<_threadSafe>
 		{
-
-
 
 		protected:
 
@@ -59,7 +54,7 @@ namespace ZEngine
 
 		private:
 
-			
+
 
 		};
 
@@ -100,10 +95,10 @@ namespace ZEngine
 		template<Boolean _threadSafe>
 		const Void ZSmallMemoryPiecePool<_threadSafe>::extend(const Int32 _num)
 		{
-			
+
 		}
 
 	}
 }
 
-#endif // !ZMemoryPiecePool_h
+#endif // !ZSystemMemoryController_h

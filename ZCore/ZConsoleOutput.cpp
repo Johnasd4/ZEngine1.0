@@ -1,6 +1,6 @@
 #define DLL_API_FILE
 
-#include"ZConsole.h"
+#include"ZConsoleOutput.h"
 
 using namespace ZEngine;
 using namespace ZEngine::Console;

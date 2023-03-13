@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ZConsole.cpp" />
+    <ClCompile Include="ZConsoleOutput.cpp" />
     <ClCompile Include="ZErrorMessageMacro.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
