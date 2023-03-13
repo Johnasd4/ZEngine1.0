@@ -54,6 +54,12 @@ namespace ZEngine {
 
 	public:
 
+		static __forceinline ZMemoryPool& Instance() 
+		{
+			static ZMemoryPool memoryPool;
+			return memoryPool;
+		}
+
 		/*
 			创建单例
 		*/
@@ -142,12 +148,12 @@ namespace ZEngine {
 		/*
 			构造函数
 		*/
-		ZMemoryPool() noexcept;
+		DLL_API ZMemoryPool() noexcept;
 
 		/*
 			析构函数
 		*/
-		~ZMemoryPool() noexcept;
+		DLL_API ~ZMemoryPool() noexcept;
 
 
 

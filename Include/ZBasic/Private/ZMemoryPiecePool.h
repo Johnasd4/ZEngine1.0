@@ -4,8 +4,8 @@
 #include"ZBasicDrive.h"
 #include"ZPoolBase.h"
 #include"ZMemoryPiece.h"
+#include"ZSystemMemoryController.h"
 #include"..\ZMutex.h"
-
 namespace ZEngine
 {
 
@@ -36,7 +36,6 @@ namespace ZEngine
 				构造函数
 				参数：
 					const Int32 _capacity 池子初始object数量
-
 			*/
 			__forceinline ZSmallMemoryPiecePool(const Int32 _capacity);
 

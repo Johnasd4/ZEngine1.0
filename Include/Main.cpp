@@ -6,13 +6,16 @@ using namespace ZEngine::Private;
 using namespace ZEngine::Console;
 
 
+const Int32 test(int a) {
+    return a++;
+}
+
 
 int main()
 {
-
-    ZMemoryPool::CreateInstance();
+    cout<<test(1);
+    ZMemoryPool::Instance();
 
     return 0;
-    std::list<Int32> testList;
 
 }

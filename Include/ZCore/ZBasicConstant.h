@@ -11,9 +11,14 @@ constexpr Float32 FLOAT32_MIN = -3.402823466e+38F;
 
 
 //文件大小
-constexpr UInt64 B_SIZE = 1ULL;
-constexpr UInt64 KB_SIZE = 1024ULL;
-constexpr UInt64 MB_SIZE = 1048576ULL;
-constexpr UInt64 GB_SIZE = 1073741824ULL;
+constexpr SizeT B_SIZE = 1;
+constexpr SizeT KB_SIZE = 1024;
+constexpr SizeT MB_SIZE = 1048576;
+constexpr SizeT GB_SIZE = 1073741824;
+
+//系统申请内存单元大小
+constexpr SizeT SYSTEM_APPLY_MEMORY_UNIT_SIZE = 4 * KB_SIZE;
+
+
 
 #endif // !ZBasicConstant_h

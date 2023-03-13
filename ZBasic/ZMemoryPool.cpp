@@ -121,7 +121,7 @@ DLL_API const Void ZMemoryPool::releaseMemory(ZMemoryPiece* _memoryPiecePtr) noe
 /*
 	构造函数
 */
-ZMemoryPool::ZMemoryPool() noexcept :
+DLL_API ZMemoryPool::ZMemoryPool() noexcept :
 	momoryPieceSystemMemoryAddress(nullptr)
 {
 	//初始化每种内存块链表
@@ -147,7 +147,7 @@ ZMemoryPool::ZMemoryPool() noexcept :
 /*
 	析构函数
 */
-ZMemoryPool::~ZMemoryPool() noexcept
+DLL_API ZMemoryPool::~ZMemoryPool() noexcept
 {
 
 	/*释放内存池的内存*/
