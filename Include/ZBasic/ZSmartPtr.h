@@ -55,7 +55,7 @@ namespace ZEngine
 			*/
 			__forceinline ~ZSmartPtrInstance();
 
-			/*
+			
 							
 			//ÖÇÄÜÖ¸ÕëÓÑÔª
 			friend class ZUniquePtr<_ObjectType>;
