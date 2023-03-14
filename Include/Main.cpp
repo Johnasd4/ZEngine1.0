@@ -11,11 +11,13 @@ const Int32 test(int a) {
 }
 
 
+#include<tuple>
+
 int main()
 {
     cout<<test(1);
     ZMemoryPool::Instance();
-
+    std::tuple<Int32>;
     return 0;
 
 }

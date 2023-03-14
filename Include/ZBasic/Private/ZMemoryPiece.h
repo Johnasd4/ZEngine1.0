@@ -15,17 +15,13 @@ namespace ZEngine
 
 
 		/*
-			小内存块，用链表形式存储
+			内存块
 		*/
-		struct ZSmallMemoryPiece
+		template<UInt32 _size>
+		struct ZMemoryPiece
 		{
-			//下一块内存块的地址
-			ZSmallMemoryPiece* nextMemoryPiecePtr;
 			//内存块类型
 			UInt32 type;
-			//内存块大小
-			UInt32 size;
-
 		};
 
 		/*

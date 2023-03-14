@@ -19,8 +19,8 @@ namespace ZEngine
 			Int32 _objectOffset 节点类型实际使用的地址偏移量
 			Boolean _threadSafe 是否线程安全
 		*/
-		template<Boolean _threadSafe>
-		class ZSmallMemoryPiecePool :public ZPoolBase<ZSmallMemoryPiece, sizeof(ZSmallMemoryPiece), _threadSafe>
+		template<Int32 Memory, Boolean _threadSafe>
+		class ZSmallMemoryPiecePool :public ZPoolBase<ZMemoryPiece, sizeof(ZMemoryPiece), _threadSafe>
 		{
 
 

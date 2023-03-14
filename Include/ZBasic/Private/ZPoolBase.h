@@ -102,7 +102,7 @@ namespace ZEngine
 
 
 
-		private:
+		protected:
 
 			//节点头到object使用位置的偏移量
 			static constexpr SizeT OBJECT_BODY_OFFSET = sizeof(Node*) + _objectHeadOffset;
